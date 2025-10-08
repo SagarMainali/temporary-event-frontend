@@ -1,27 +1,16 @@
+@import "tailwindcss";
+
 /* 2 Google Fonts */
 
 @import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
-
-
-
-
 
 /*=====================================
     BODY HTML CSS DECALARATIONS
 =====================================*/
 /****************GOOD TO HAVES*****************/
-
-
 
 :root {
 
@@ -44,21 +33,16 @@
   /* Roboto is the secondary font-family */
   --font-secondary: "Roboto", sans-serif;
   
- 
-
   /* Text colors */
   --text-primary: #333333;
   --text-seondary: #FF7C10;
   --text-white: #ffffff;
 }
 
-
 /* Light theme (default) */
 .light-theme {
-  
-  
+   
 }
-
 
 /* Dark theme */
 .dark-theme {
@@ -69,7 +53,6 @@
   --bgbook-card: #451a0136;
   --color-bglocation: #451a0136;
   --color-white:#451a0136;
-
 }
 
 .font-scheme2{
@@ -81,30 +64,22 @@
   --font-secondary: "Source Code Pro", sans-serif;
 }
 
-
-
-
 * {
   box-sizing: border-box;
 }
-
 
 html {
   font-size: 16px;
   scroll-behavior: smooth;
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
-
 }
-
 
 body p, body li{
   font-family: var(--font-secondary);
 
 }
  
-
-
 body h1,
 body h2,
 body h3,
@@ -123,7 +98,6 @@ body h1 {
 
 }
 
-
 body h2 {
   font-weight: bold;
   letter-spacing: -4%;
@@ -137,21 +111,13 @@ body h3 {
   font-size: 1rem;
 }
 
-
-
-
-
 /* Smooth theme transition */
 .light-theme,
 .dark-theme {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-
-
 @media(max-width:768px) {
-
   body h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
@@ -162,7 +128,6 @@ body h3 {
   }
 
 }
-
 
 @media(max-width:640px) {
 
@@ -176,7 +141,6 @@ body h3 {
   }
 
 }
-
 
 body em {
   font-weight: 700;
@@ -195,8 +159,6 @@ img {
   vertical-align: top;
 }
 
-
-
 .btn_main,
 .btn_secondary {
   padding: 20px 30px;
@@ -213,14 +175,11 @@ img {
   line-height: 1;
 }
 
-
 .btn_secondary {
   background: var(--color-white);
   border: 1px solid #808080;
   color: var(--text-primary);
 }
-
-
 
 .btn_main:hover,
 .btn_secondary:hover {
@@ -228,7 +187,6 @@ img {
   transition: all 0.2s ease-in-out;
   
 }
-
 
 /* Base dark mode toggle button */
 .btn_dark {
@@ -244,7 +202,6 @@ img {
   font-size: 1rem;
 }
 
-
 /* Light Theme Hover: white → black */
 .light-theme .btn_dark:hover {
   background: #121212;      
@@ -259,7 +216,6 @@ img {
   /* opacity: 1;          */
 }
 
-
 .dark-theme .btn_secondary:hover {
     background: #ffffff;  
     color: #121212; 
@@ -272,8 +228,6 @@ img {
   }
 }
 
-
-
 @media(max-width:500px) {
 
   .btn_main,
@@ -281,10 +235,4 @@ img {
     padding: 15px 15px;
     font-size: 12px
   }
-
-
 }
-
-
-
-@import "tailwindcss";

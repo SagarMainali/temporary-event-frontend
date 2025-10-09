@@ -12,7 +12,7 @@ import { RxCross2 } from "react-icons/rx";
 
 // this below 2 import is useContext
 import { useContext } from "react";
-import { ThemeContext } from "../../../components/usecontext"; 
+import { ThemeContext } from "../../../components/usecontext";
 
 
 
@@ -35,14 +35,14 @@ const LandingPage = ({ formRef, scheduleRef }) => {
 
   // Get theme context
   const {
-     theme, 
-    toggleTheme, 
-    toggleFontFamily, 
-    fontFamily, 
+    theme,
+    toggleTheme,
+    toggleFontFamily,
+    fontFamily,
     // fontSize, 
-    increaseFontSize, 
-    decreaseFontSize, 
-    resetFontSize 
+    increaseFontSize,
+    decreaseFontSize,
+    resetFontSize
   } = useContext(ThemeContext);
 
   const landingDetail = [
@@ -83,18 +83,18 @@ const LandingPage = ({ formRef, scheduleRef }) => {
 
 
 
-<div className="flex items-center justify-between w-full fixed left-0 top-1 z-10">
+      <div className="flex items-center justify-between w-full fixed left-0 top-1 z-10">
 
-    
+
         <button onClick={toggleFontFamily} className="btn_dark" title="Change font family">
-                  {fontFamily === "fontFamily" ? "Sorcecode" : "Montserrat"}
+          {fontFamily === "fontFamily" ? "Sorcecode" : "Montserrat"}
         </button>
 
         <div className="flex items-center gap-2">
 
-    
-         <button 
-            onClick={decreaseFontSize} 
+
+          <button
+            onClick={decreaseFontSize}
             className="btn_dark text-sm px-2 py-1"
             title="Decrease font size">
             - 2px
@@ -104,33 +104,33 @@ const LandingPage = ({ formRef, scheduleRef }) => {
             {fontSize}px
           </span> */}
 
-          <button 
-            onClick={increaseFontSize} 
+          <button
+            onClick={increaseFontSize}
             className="btn_dark text-sm px-2 py-1"
             title="Increase font size">
             + 2px
           </button>
-        <button 
-          onClick={resetFontSize} 
-          className="btn_dark text-xs px-2 py-1"
-          title="Reset font size to default (16px)">
-          Reset
+          <button
+            onClick={resetFontSize}
+            className="btn_dark text-xs px-2 py-1"
+            title="Reset font size to default (16px)">
+            Reset
+          </button>
+
+
+        </div>
+
+
+        <button onClick={toggleTheme} className="btn_dark" title="Dark mode">
+          {theme === "light" ? "🌙 Dark" : "☀️ Light"}
         </button>
 
-      
+
       </div>
 
-      
-       <button onClick={toggleTheme} className="btn_dark" title="Dark mode">
-                  {theme === "light" ? "🌙 Dark" : "☀️ Light"}
-        </button>
-        
 
-  </div>
 
- 
-      
- 
+
       <div className="landing_wrapper">
         {landingDetail.map((landing, index) => (
           <div

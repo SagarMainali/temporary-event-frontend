@@ -15,6 +15,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
+import { Button } from "./ui/button";
+
 import { useLogin } from "@/context/authContext";
 
 const navMain = [
@@ -100,7 +102,7 @@ export function AppSidebar({
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
-        <button className="mt-auto text-white bg-gray-500/90 mb-2 mx-3 p-2 font-semibold" onClick={() => logout()}>Logout</button>
+        <Button className="mt-auto mb-2 mx-3" onClick={() => logout()}>Logout</Button>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

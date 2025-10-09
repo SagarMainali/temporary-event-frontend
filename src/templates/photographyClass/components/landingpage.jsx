@@ -12,7 +12,7 @@ import { RxCross2 } from "react-icons/rx";
 
 // this below 2 import is useContext
 import { useContext } from "react";
-import { ThemeContext } from "./usecontext"; 
+import { ThemeContext } from "../../../components/usecontext"; 
 
 
 

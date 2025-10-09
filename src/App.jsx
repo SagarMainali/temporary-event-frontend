@@ -15,7 +15,7 @@ function App() {
   const { isLoggedIn } = useLogin();
 
   if (subdomain) {
-    // Public-facing site (for visitors)
+    // Public-site (for visitors)
     return <PublicSite subdomain={subdomain} />;
   }
 
@@ -23,17 +23,28 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Root Route ("/") - Redirect to login or dashboard */}
+        <Route
+          path="/"
+          element={<Navigate to={isLoggedIn ? "/dashboard/" : "/login"} />}
+        />
+
+        {/* Login Route */}
         <Route
           path="/login"
-          element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />}
+          element={isLoggedIn ? <Navigate to="/dashboard/" /> : <Login />}
         />
+
+        {/* Dashboard Route */}
         <Route
           path="/dashboard/*"
           element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
         />
+
+        {/* Catch-all Route for any invalid path */}
         <Route
           path="*"
-          element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} />}
+          element={<h3>Page doesn't exist.</h3>}
         />
       </Routes>
     </Router>

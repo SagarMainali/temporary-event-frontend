@@ -7,7 +7,7 @@ export default function LoginPage() {
     const [formData, setFormData] = useState(
         {
             email: 'tester@gmail.com',
-            password: 'tester123'
+            password: 'asdf1234!@#$'
         }
     )
 

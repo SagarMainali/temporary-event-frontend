@@ -1,5 +1,9 @@
 import { useState } from "react"
 import { useLogin } from "../../context/authContext";
+import { loginUrl } from "@/config/urls"
+import { toast } from "sonner"
+// import axios from "@/axiosConfig"
+import axios from "axios";
 
 export default function LoginPage() {
     const { login } = useLogin();
@@ -7,7 +11,7 @@ export default function LoginPage() {
     const [formData, setFormData] = useState(
         {
             email: 'tester@gmail.com',
-            password: 'asdf1234!@#$'
+            password: '!@#$TESTER1234'
         }
     )
 
@@ -28,7 +32,22 @@ export default function LoginPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        login();
+        const logInUser = async () => {
+            try {
+                const response = await axios.post(loginUrl, {
+                    ...formData
+                });
+                console.log(response)
+                if (response.data.success)
+                    toast.success("Successfully logged in");
+                login()
+            } catch (error) {
+                toast.error("Failed to login");
+                console.error("Error logging in", error);
+            }
+        };
+
+        logInUser();
     };
 
     return (

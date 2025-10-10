@@ -6,6 +6,7 @@ import { extractSubdomain } from './utils/utils'
 
 import './App.css'
 import { useLogin } from "./context/authContext";
+import { Toaster } from "sonner";
 
 function App() {
   const subdomain = extractSubdomain();
@@ -21,33 +22,36 @@ function App() {
 
   // Main domain (for organizers)
   return (
-    <Router>
-      <Routes>
-        {/* Root Route ("/") - Redirect to login or dashboard */}
-        <Route
-          path="/"
-          element={<Navigate to={isLoggedIn ? "/dashboard/" : "/login"} />}
-        />
+    <>
+      <Router>
+        <Routes>
+          {/* Root Route ("/") - Redirect to login or dashboard */}
+          <Route
+            path="/"
+            element={<Navigate to={isLoggedIn ? "/dashboard/" : "/login"} />}
+          />
 
-        {/* Login Route */}
-        <Route
-          path="/login"
-          element={isLoggedIn ? <Navigate to="/dashboard/" /> : <Login />}
-        />
+          {/* Login Route */}
+          <Route
+            path="/login"
+            element={isLoggedIn ? <Navigate to="/dashboard/" /> : <Login />}
+          />
 
-        {/* Dashboard Route */}
-        <Route
-          path="/dashboard/*"
-          element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
-        />
+          {/* Dashboard Route */}
+          <Route
+            path="/dashboard/*"
+            element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
+          />
 
-        {/* Catch-all Route for any invalid path */}
-        <Route
-          path="*"
-          element={<h3>Page doesn't exist.</h3>}
-        />
-      </Routes>
-    </Router>
+          {/* Catch-all Route for any invalid path */}
+          <Route
+            path="*"
+            element={<h3>Page doesn't exist.</h3>}
+          />
+        </Routes>
+      </Router>
+      <Toaster />
+    </>
   );
 }
 

@@ -3,66 +3,28 @@ import { Button } from "@/components/ui/button";
 import { IoMdAddCircle } from "react-icons/io";
 import EventForm from "@/components/EventForm";
 import EventCard from "@/components/EventCard";
-
-const mockEvents = [
-    {
-        eventName: "Tech Conference 2025",
-        description: "A tech conference for developers and tech enthusiasts.",
-        location: "San Francisco, CA",
-        date: "2025-11-12",
-        time: "09:00 AM",
-        expectedNumberOfPeople: 500,
-        phone: "+1 123-456-7890",
-        email: "info@techconference.com",
-        status: "Completed",
-    },
-    {
-        eventName: "Music Fest 2025",
-        description: "A live music festival featuring top artists.",
-        location: "Los Angeles, CA",
-        date: "2025-12-05",
-        time: "04:00 PM",
-        expectedNumberOfPeople: 10000,
-        phone: "+1 987-654-3210",
-        email: "contact@musicfest.com",
-        status: "Failed",
-    },
-    {
-        eventName: "Startup Pitch Night",
-        description: "An event for startups to pitch their ideas to investors.",
-        location: "New York, NY",
-        date: "2025-10-22",
-        time: "06:00 PM",
-        expectedNumberOfPeople: 200,
-        phone: "+1 555-234-5678",
-        email: "hello@startuppitch.com",
-        status: "Completed",
-    },
-    {
-        eventName: "Yoga Retreat",
-        description: "A peaceful retreat for relaxation and yoga practice.",
-        location: "Boulder, CO",
-        date: "2025-10-15",
-        time: "07:00 AM",
-        expectedNumberOfPeople: 50,
-        phone: "+1 444-555-6666",
-        email: "retreat@holistic.com",
-        status: "Failed",
-    },
-    {
-        eventName: "Art Exhibition",
-        description: "An art exhibition showcasing modern artists.",
-        location: "Chicago, IL",
-        date: "2025-11-02",
-        time: "10:00 AM",
-        expectedNumberOfPeople: 300,
-        phone: "+1 333-444-5555",
-        email: "artshow@exhibit.com",
-        status: "Planned",
-    },
-];
+import axios from "@/axiosConfig"
+import { useEffect, useState } from "react";
+import { fetchUserEventsUrl } from "@/config/urls";
 
 function ManageEvent() {
+    const [events, setEvents] = useState([]);
+    
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const response = await axios.get(fetchUserEventsUrl);
+                setEvents(response.data.data);
+            } catch (error) {
+                console.error("Error fetching data", error);
+            }
+        };
+        
+        fetchEvents();
+    }, []);
+    
+    console.log("🚀 ~ ManageEvent ~ events:", events);
+
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -76,7 +38,7 @@ function ManageEvent() {
             </div>
 
             <div className="flex gap-6 flex-wrap">
-                {mockEvents.map((event, index) => (
+                {events.length > 0 && events.map((event, index) => (
                     <EventCard key={index} event={event} />
                 ))}
             </div>

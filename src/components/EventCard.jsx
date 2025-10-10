@@ -10,7 +10,7 @@ import { EllipsisVertical, Pen, Trash } from 'lucide-react';
 
 const EventCard = ({ event }) => {
     return (
-        <Card className="w-full max-w-sm px-4 py-4 shadow-lg">
+        <Card className="w-full max-w-sm px-4 py-4 shadow-lg cursor-pointer hover:scale-[1.04] transition-all">
             <CardHeader className="flex justify-between">
                 <div>
                     <h2 className="text-lg font-semibold">{event.eventName}</h2>

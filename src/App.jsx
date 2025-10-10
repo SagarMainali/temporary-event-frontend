@@ -3,6 +3,8 @@ import Login from "./pages/auth/Login";
 import DashboardLayout from "./pages/user/DashboardLayout";
 import PublicSite from "./pages/publicUser/PublicSite";
 import { extractSubdomain } from './utils/utils'
+import ManageEvents from "@/pages/user/components/ManageEvents";
+import ManageWebsites from "@/pages/user/components/ManageWebsites";
 
 import './App.css'
 import { useLogin } from "./context/authContext";
@@ -28,20 +30,32 @@ function App() {
           {/* Root Route ("/") - Redirect to login or dashboard */}
           <Route
             path="/"
-            element={<Navigate to={isLoggedIn ? "/dashboard/" : "/login"} />}
+            element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} />}
           />
 
           {/* Login Route */}
           <Route
             path="/login"
-            element={isLoggedIn ? <Navigate to="/dashboard/" /> : <Login />}
+            element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />}
           />
 
           {/* Dashboard Route */}
           <Route
-            path="/dashboard/*"
+            path="/dashboard"
             element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
           />
+
+          {/* Protected Routes */}
+          <Route
+            element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
+          >
+            <Route path="/dashboard" element={<h3 >*Dashboard Contents*</h3>} />
+            <Route path="/events" element={<ManageEvents />} />
+            <Route path="/websites" element={<ManageWebsites />} />
+            <Route path="/emails" element={<h3>*To TRACK EMAILS HERE*</h3>} />
+            <Route path="/profile" element={<h3>*TO MANAGE PROFILE HERE*</h3>} />
+            <Route path="/settings" element={<h3>*To HANDLE SETTINGS HERE*</h3>} />
+          </Route>
 
           {/* Catch-all Route for any invalid path */}
           <Route

@@ -13,9 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Routes, Route } from "react-router-dom";
-import ManageEvent from "./components/ManageEvent";
-import ManageWebsites from "./components/ManageWebsite";
+import { Outlet } from "react-router-dom"; // Import Outlet
 
 export default function Page() {
   return (
@@ -45,14 +43,7 @@ export default function Page() {
         </header>
 
         <div className="flex-1 p-6">
-          <Routes>
-            <Route path="/" element={<h3 >*Dashboard Contents*</h3>} />
-            <Route path="events" element={<ManageEvent />} />
-            <Route path="websites" element={<ManageWebsites />} />
-            <Route path="emails" element={<h3>*To TRACK EMAILS HERE*</h3>} />
-            <Route path="profile" element={<h3>*TO MANAGE PROFILE HERE*</h3>} />
-            <Route path="settings" element={<h3>*To HANDLE SETTINGS HERE*</h3>} />
-          </Routes>
+          <Outlet />
         </div>
       </SidebarInset>
     </SidebarProvider>

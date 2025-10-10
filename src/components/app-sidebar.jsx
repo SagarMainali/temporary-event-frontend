@@ -26,7 +26,7 @@ const navMain = [
     items: [
       {
         title: "Dashboard",
-        url: "/dashboard/",
+        url: "/dashboard",
       },
     ],
   },
@@ -36,11 +36,11 @@ const navMain = [
     items: [
       {
         title: "Events",
-        url: "/dashboard/events",
+        url: "/events",
       },
       {
         title: "Websites",
-        url: "/dashboard/websites",
+        url: "/websites",
       },
     ],
   },
@@ -50,7 +50,7 @@ const navMain = [
     items: [
       {
         title: "Emails",
-        url: "/dashboard/emails",
+        url: "/emails",
       },
     ],
   },
@@ -60,11 +60,11 @@ const navMain = [
     items: [
       {
         title: "Profile",
-        url: "/dashboard/profile",
+        url: "/profile",
       },
       {
         title: "Settings",
-        url: "/dashboard/settings",
+        url: "/settings",
       },
     ],
   },

@@ -1,63 +1,81 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { CalendarIcon } from "lucide-react"
+import * as React from "react";
+import { CalendarIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 function formatDate(date) {
   if (!date) {
-    return ""
+    return "";
   }
 
   return date.toLocaleDateString("en-US", {
     day: "2-digit",
     month: "long",
     year: "numeric",
-  })
+  });
 }
 
 function isValidDate(date) {
   if (!date) {
-    return false
+    return false;
   }
-  return !isNaN(date.getTime())
+  return !isNaN(date.getTime());
 }
 
-export default function Calendar28() {
-  const [open, setOpen] = React.useState(false)
-  const [date, setDate] = React.useState(new Date())
-  const [month, setMonth] = React.useState(date)
-  const [value, setValue] = React.useState(formatDate(date))
+export default function DatePicker({ value, onSelect }) {
+  const [open, setOpen] = React.useState(false);
+  const [date, setDate] = React.useState(value ? new Date(value) : new Date());
+  const [month, setMonth] = React.useState(date);
+  const [inputValue, setInputValue] = React.useState(formatDate(date));
+
+  React.useEffect(() => {
+    // Update date and input value when `value` prop changes
+    if (value && value !== inputValue) {
+      const newDate = new Date(value);
+      setDate(newDate);
+      setInputValue(formatDate(newDate));
+    }
+  }, [value, inputValue]);
+
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
+    const formattedDate = formatDate(newDate);
+    setInputValue(formattedDate);
+    if (onSelect) {
+      onSelect(newDate); // Notify parent component of the date change
+    }
+    setOpen(false); // Close the calendar popup
+  };
 
   return (
     <div>
       <div className="relative flex gap-2">
         <Input
           id="date"
-          value={value}
+          value={inputValue}
           placeholder="Enter event date"
           className="bg-background pr-10"
           onChange={(e) => {
-            const date = new Date(e.target.value)
-            setValue(e.target.value)
+            const date = new Date(e.target.value);
+            setInputValue(e.target.value);
             if (isValidDate(date)) {
-              setDate(date)
-              setMonth(date)
+              setDate(date);
+              setMonth(date);
             }
           }}
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
-              e.preventDefault()
-              setOpen(true)
+              e.preventDefault();
+              setOpen(true);
             }
           }}
         />
@@ -84,15 +102,11 @@ export default function Calendar28() {
               captionLayout="dropdown"
               month={month}
               onMonthChange={setMonth}
-              onSelect={(date) => {
-                setDate(date)
-                setValue(formatDate(date))
-                setOpen(false)
-              }}
+              onSelect={handleDateChange}
             />
           </PopoverContent>
         </Popover>
       </div>
     </div>
-  )
+  );
 }

@@ -2,8 +2,7 @@ import { useState } from "react"
 import { useLogin } from "../../context/authContext";
 import { loginUrl } from "@/config/urls"
 import { toast } from "sonner"
-// import axios from "@/axiosConfig"
-import axios from "axios";
+import axios from "@/axiosConfig"
 
 export default function LoginPage() {
     const { login } = useLogin();

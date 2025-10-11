@@ -13,7 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Outlet } from "react-router-dom"; // Import Outlet
+import { Outlet } from "react-router-dom";
 
 export default function Page() {
   return (

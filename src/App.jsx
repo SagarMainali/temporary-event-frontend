@@ -9,6 +9,7 @@ import ManageWebsites from "@/pages/user/components/ManageWebsites";
 import './App.css'
 import { useLogin } from "./context/authContext";
 import { Toaster } from "sonner";
+import EventDetail from "./pages/user/EventDetail";
 
 function App() {
   const subdomain = extractSubdomain();
@@ -39,22 +40,17 @@ function App() {
             element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />}
           />
 
-          {/* Dashboard Route */}
-          <Route
-            path="/dashboard"
-            element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
-          />
-
           {/* Protected Routes */}
           <Route
             element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
           >
-            <Route path="/dashboard" element={<h3 >*Dashboard Contents*</h3>} />
+            <Route path="/dashboard" element={<h3>*Dashboard Contents*</h3>} />
             <Route path="/events" element={<ManageEvents />} />
+            <Route path="/events/:eventId" element={<EventDetail />} />
             <Route path="/websites" element={<ManageWebsites />} />
-            <Route path="/emails" element={<h3>*To TRACK EMAILS HERE*</h3>} />
+            <Route path="/emails" element={<h3>*TO TRACK EMAILS HERE*</h3>} />
             <Route path="/profile" element={<h3>*TO MANAGE PROFILE HERE*</h3>} />
-            <Route path="/settings" element={<h3>*To HANDLE SETTINGS HERE*</h3>} />
+            <Route path="/settings" element={<h3>*TO HANDLE SETTINGS HERE*</h3>} />
           </Route>
 
           {/* Catch-all Route for any invalid path */}
@@ -64,7 +60,13 @@ function App() {
           />
         </Routes>
       </Router>
-      <Toaster />
+      <Toaster
+        theme="dark" // light, dark or system
+        toastOptions={{
+          className: "bg-background text-foreground border border-border shadow-lg rounded-md",
+          duration: 1500,
+        }}
+      />
     </>
   );
 }

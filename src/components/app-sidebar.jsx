@@ -86,15 +86,15 @@ export function AppSidebar({
         {/* We create a SidebarGroup for each parent. */}
         {navMain.map((item) => (
           <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-sidebar-foreground/50">{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((subItem) => {
-                  const isActive = location.pathname === subItem.url;
-                  
+                  const isActive = location.pathname.includes(subItem.url);
+
                   return <SidebarMenuItem key={subItem.title}>
-                    <SidebarMenuButton asChild isActive={isActive}>
-                      <Link to={subItem.url}>{subItem.title}</Link>
+                    <SidebarMenuButton asChild isActive={isActive} className="data-[active=true]:font-semibold">
+                      <Link to={subItem.url} aria-current={isActive ? 'page' : undefined}>{subItem.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 })}

@@ -16,7 +16,7 @@ export default function Modal({ triggerer, title, description, content }) {
 
     return <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{triggerer}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="max-h-[90vh] overflow-y-auto">
             <DialogHeader>
                 <DialogTitle>{title}</DialogTitle>
                 <DialogDescription>{description}</DialogDescription>

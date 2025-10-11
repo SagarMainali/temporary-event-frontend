@@ -6,10 +6,11 @@ import EventCard from "@/components/EventCard";
 import axios from "@/axiosConfig"
 import { useEffect, useState } from "react";
 import { fetchUserEventsUrl } from "@/config/urls";
+import { Link } from "react-router-dom";
 
 function ManageEvent() {
     const [events, setEvents] = useState([]);
-    
+
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -19,10 +20,10 @@ function ManageEvent() {
                 console.error("Error fetching data", error);
             }
         };
-        
+
         fetchEvents();
     }, []);
-    
+
     console.log("🚀 ~ ManageEvent ~ events:", events);
 
     return (
@@ -37,9 +38,11 @@ function ManageEvent() {
                 />
             </div>
 
-            <div className="flex gap-6 flex-wrap">
-                {events.length > 0 && events.map((event, index) => (
-                    <EventCard key={index} event={event} />
+            <div className="flex gap-8 flex-wrap">
+                {events.length > 0 && events.map((event) => (
+                    <Link to={`/events/${event._id}`} key={event._id}>
+                        <EventCard event={event} />
+                    </Link>
                 ))}
             </div>
         </div>

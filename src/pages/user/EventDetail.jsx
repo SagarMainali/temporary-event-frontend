@@ -35,11 +35,11 @@ const EventDetail = () => {
   }
 
   const handleCreateWebsite = () => {
-    navigate(`/events/${eventId}/create-website/select-template`);
+    navigate(`create-website/select-template`);
   };
 
   const handleViewWebsite = () => {
-    navigate(`/events/${eventId}/view-website`);
+    navigate(`view-website`);
   };
 
   return (

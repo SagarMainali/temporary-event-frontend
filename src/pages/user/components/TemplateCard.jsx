@@ -12,8 +12,9 @@ const TemplateCard = ({ template, isSelected, onClick }) => {
                 isSelected ? "border-2 border-blue-500 shadow-2xl" : "border-2 border-gray-100"
             )}
             onClick={onClick}
+            title="Select template"
         >
-            <CardHeader className="flex justify-between items-center p-6 bg-accent">
+            <CardHeader className="flex justify-between items-start p-6 bg-accent h-[110px]">
                 <div>
                     <div className="flex items-center gap-2">
                         <h2 className="text-xl font-semibold">{template.templateName}</h2>
@@ -24,10 +25,12 @@ const TemplateCard = ({ template, isSelected, onClick }) => {
                     </div>
                     <p className="text-sm text-gray-600 mt-1">{template.description}</p>
                 </div>
-                <Link to="/template"><ExternalLink /></Link>
+                <Link to={`/preview-template/${template._id}`} target="blank" title="Open template preview in new tab">
+                    <ExternalLink className="hover:translate-x-0.5 hover:-translate-y-0.5 transition-all" />
+                </Link>
             </CardHeader>
             <CardContent className="p-6">
-                <img src={template.previewImage} alt="template_preview_image" />
+                <img src={template.previewImage} alt="template_preview_image" className="max-h-[250px] w-full object-contain" />
             </CardContent>
         </Card>
     );

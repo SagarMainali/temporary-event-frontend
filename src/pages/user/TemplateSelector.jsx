@@ -4,12 +4,14 @@ import { getAllTemplatesUrl } from '@/config/urls';
 import TemplateCard from './components/TemplateCard';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link, useParams } from 'react-router-dom';
 
 export default function TemplateSelector() {
 
     const [templates, setTemplates] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedTemplate, setSelectedTemplate] = useState(null);
+    const { eventId } = useParams();
 
     useEffect(() => {
         const fetchTemplates = async () => {
@@ -50,7 +52,9 @@ export default function TemplateSelector() {
                 ))}
             </div>
 
-            <Button disabled={!selectedTemplate}>Start Editing</Button>
+            <Link to={`/events/${eventId}/create-website/edit-template/${selectedTemplate}`} >
+                <Button disabled={!selectedTemplate} className="bg-blue-500 hover:bg-blue-600">Start Editing</Button>
+            </Link>
         </div>
     )
 }

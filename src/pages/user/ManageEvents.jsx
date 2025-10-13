@@ -1,8 +1,8 @@
-import Modal from "@/components/Modal";
+import Modal from "@/pages/user/components/Modal";
 import { Button } from "@/components/ui/button";
 import { IoMdAddCircle } from "react-icons/io";
-import EventForm from "@/components/EventForm";
-import EventCard from "@/components/EventCard";
+import EventForm from "@/pages/user/components/EventForm";
+import EventCard from "@/pages/user/components/EventCard";
 import axios from "@/axiosConfig"
 import { useEffect, useState } from "react";
 import { fetchUserEventsUrl } from "@/config/urls";

@@ -1,0 +1,56 @@
+import React, { useState, useEffect } from 'react'
+import axios from "@/axiosConfig";
+import { getAllTemplatesUrl } from '@/config/urls';
+import TemplateCard from './components/TemplateCard';
+import { Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+export default function TemplateSelector() {
+
+    const [templates, setTemplates] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+    useEffect(() => {
+        const fetchTemplates = async () => {
+            try {
+                const response = await axios.get(getAllTemplatesUrl);
+                setTemplates(response.data.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching templates", error);
+            }
+        };
+
+        fetchTemplates();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-full">
+                <Loader2 className="animate-spin text-gray-600" size={40} />
+            </div>
+        );
+    }
+
+    const toggleTemplateSelect = (id) => setSelectedTemplate(prev => prev === id ? null : id);
+
+    return (
+        <div className='space-y-6'>
+            <h2 className="text-xl">Choose suitable template for your website</h2>
+
+            <div className="flex gap-8 flex-wrap">
+                {templates.length > 0 && templates.map((template) => (
+                    <TemplateCard
+                        key={template._id}
+                        template={template}
+                        isSelected={selectedTemplate === template._id}
+                        onClick={() => toggleTemplateSelect(template._id)}
+                    />
+                ))}
+            </div>
+
+            <Button disabled={!selectedTemplate}>Start Editing</Button>
+        </div>
+    )
+}

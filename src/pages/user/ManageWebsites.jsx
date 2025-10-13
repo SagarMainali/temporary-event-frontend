@@ -3,7 +3,7 @@ function ManageWebsites() {
         <div className="flex flex-col gap-8 items-start">
             <div>
                 <h3>My Websites</h3>
-                *websites lists*
+                *to manage published websites directly*
             </div>
         </div>
     )

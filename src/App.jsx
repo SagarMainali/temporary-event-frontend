@@ -11,20 +11,27 @@ import EventDetail from "./pages/user/EventDetail";
 import { useLogin } from "./context/authContext";
 import { Toaster } from "sonner";
 import PhotographyClass from './templates/photographyClass/PhotographyClass';
-
+import { Loader2 } from 'lucide-react';
+import Profile from './pages/user/Profile';
 
 function App() {
   const subdomain = extractSubdomain();
-
   console.log("🚀 ~ App ~ subdomain:", subdomain)
 
-  const { isLoggedIn } = useLogin();
 
   if (subdomain) {
     // Public-site (for visitors)
     return <PublicSite subdomain={subdomain} />;
   }
 
+  const { loading, isLoggedIn } = useLogin();
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="animate-spin text-gray-600" size={40} />
+      </div>
+    );
+  }
   // Main domain (for organizers)
   return (
     <>
@@ -55,7 +62,7 @@ function App() {
             <Route path="/events/:eventId/create-website/edit-template/:templateId" element={<PhotographyClass />} />
             <Route path="/websites" element={<ManageWebsites />} />
             <Route path="/emails" element={<h3>*TO TRACK EMAILS HERE*</h3>} />
-            <Route path="/profile" element={<h3>*TO MANAGE PROFILE HERE*</h3>} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<h3>*TO HANDLE SETTINGS HERE*</h3>} />
           </Route>
 

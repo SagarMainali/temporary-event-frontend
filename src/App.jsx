@@ -10,9 +10,10 @@ import TemplateSelector from "./pages/user/TemplateSelector";
 import EventDetail from "./pages/user/EventDetail";
 import { useLogin } from "./context/authContext";
 import { Toaster } from "sonner";
-import PhotographyClass from './templates/photographyClass/PhotographyClass';
 import { Loader2 } from 'lucide-react';
 import Profile from './pages/user/Profile';
+import TemplatePreviewer from './pages/user/TemplatePreviewer';
+import WebsiteEditor from './pages/user/WebsiteEditor';
 
 function App() {
   const subdomain = extractSubdomain();
@@ -49,7 +50,7 @@ function App() {
             element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />}
           />
 
-          <Route path="/preview-template/:templateId/" element={isLoggedIn ? <PhotographyClass /> : <Login />} />
+          <Route path="/preview-template/:templateId/" element={!isLoggedIn ? <Navigate to="/login"/> : <TemplatePreviewer />} />
 
           {/* Protected Routes */}
           <Route
@@ -57,9 +58,9 @@ function App() {
           >
             <Route path="/dashboard" element={<h3>*Dashboard Contents*</h3>} />
             <Route path="/events" element={<ManageEvents />} />
-            <Route path="/events/:eventId" element={<EventDetail />} />
-            <Route path="/events/:eventId/select-website-template" element={<TemplateSelector />} />
-            <Route path="/website/edit/:websiteId" element={<PhotographyClass />} />
+            <Route path="/event/:eventId" element={<EventDetail />} />
+            <Route path="/event/:eventId/select-website-template" element={<TemplateSelector />} />
+            <Route path="/website/edit/:websiteId" element={<WebsiteEditor />} />
             {/* <Route path="/website/view/:websiteId" element={<PhotographyClass />} /> */}
             <Route path="/websites" element={<ManageWebsites />} />
             <Route path="/emails" element={<h3>*TO TRACK EMAILS HERE*</h3>} />

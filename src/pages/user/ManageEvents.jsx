@@ -5,7 +5,7 @@ import EventForm from "@/pages/user/components/EventForm";
 import EventCard from "@/pages/user/components/EventCard";
 import axios from "@/axiosConfig"
 import { useEffect, useState } from "react";
-import { fetchUserEventsUrl } from "@/config/urls";
+import { fetchEventsUrl } from "@/config/urls";
 import { Link } from "react-router-dom";
 
 function ManageEvent() {
@@ -14,7 +14,7 @@ function ManageEvent() {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get(fetchUserEventsUrl);
+                const response = await axios.get(fetchEventsUrl);
                 setEvents(response.data.data);
             } catch (error) {
                 console.error("Error fetching data", error);
@@ -40,7 +40,7 @@ function ManageEvent() {
 
             <div className="flex gap-8 flex-wrap">
                 {events.length > 0 && events.map((event) => (
-                    <Link to={`/events/${event._id}`} key={event._id}>
+                    <Link to={`/event/${event._id}`} key={event._id}>
                         <EventCard event={event} />
                     </Link>
                 ))}

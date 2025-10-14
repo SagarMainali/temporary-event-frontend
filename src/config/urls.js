@@ -10,19 +10,20 @@ export const refreshTokenUrl = '/auth/refresh-token'
 
 // ----------------- 🎡 Event API Routes -----------------
 export const createEventUrl = '/event/create'
-export const fetchUserEventsUrl = '/event'
-export const fetchSingleEventUrl = (eventId) => `/event/${eventId}`
+export const fetchEventsUrl = '/event'
+export const fetchEventUrl = (eventId) => `/event/${eventId}`
 export const updateEventUrl = (eventId) => `/event/${eventId}`
 export const deleteEventUrl = (eventId) => `/event/${eventId}`
 
 // ----------------- 💻 Event API Routes -----------------
-export const createWebsiteUrl = 'website/create'
-export const getWebsiteUrl = `website/:websiteId`
-export const updateSectionUrl = (websiteId, sectionId) => `website/${websiteId}/${sectionId}`
-export const deleteWebsiteUrl = (websiteId) => `website/${websiteId}`
-export const getPublicWebsiteUrl = (subdomain) => `website/public/${subdomain}`
-export const sendEmailUrl = 'website/sendEmail'
+export const createWebsiteUrl = '/website/create'
+export const getWebsiteUrl = (websiteId) => `/website/${websiteId}`
+export const updateSectionUrl = (websiteId, sectionId) => `/website/${websiteId}/${sectionId}`
+export const deleteWebsiteUrl = (websiteId) => `/website/${websiteId}`
+export const getPublicWebsiteUrl = (subdomain) => `/website/public/${subdomain}`
+export const sendEmailUrl = '/website/sendEmail'
 
-// ----------------- 📋 Event API Routes -----------------
-export const addTemplateUrl = 'template/add'
-export const getAllTemplatesUrl = 'template/all'
+// ----------------- 📋 Temmplate API Routes -----------------
+export const addTemplateUrl = '/template/add'
+export const getAllTemplatesUrl = '/template/all'
+export const getTemplateUrl = (templateId) => `/template/${templateId}`

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
-import { fetchSingleEventUrl } from '@/config/urls';
+import { fetchEventUrl } from '@/config/urls';
 import axios from "@/axiosConfig";
 
 const EventDetail = () => {
@@ -15,7 +15,7 @@ const EventDetail = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(fetchSingleEventUrl(eventId));
+        const response = await axios.get(fetchEventUrl(eventId));
         setEvent(response.data.data);
         setLoading(false);
       } catch (error) {

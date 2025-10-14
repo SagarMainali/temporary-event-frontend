@@ -83,7 +83,7 @@ const LandingPage = ({ formRef, scheduleRef }) => {
 
 
 
-      <div className="flex items-center justify-between w-full fixed left-0 top-1 z-10">
+      {/* <div className="flex items-center justify-between w-full fixed left-0 top-1 z-10">
 
 
         <button onClick={toggleFontFamily} className="btn_dark" title="Change font family">
@@ -98,13 +98,13 @@ const LandingPage = ({ formRef, scheduleRef }) => {
             className="btn_dark text-sm px-2 py-1"
             title="Decrease font size">
             - 2px
-          </button>
+          </button> */}
 
           {/* <span className="btn_dark text-xs px-2 py-1 cursor-default">
             {fontSize}px
           </span> */}
 
-          <button
+          {/* <button
             onClick={increaseFontSize}
             className="btn_dark text-sm px-2 py-1"
             title="Increase font size">
@@ -126,7 +126,7 @@ const LandingPage = ({ formRef, scheduleRef }) => {
         </button>
 
 
-      </div>
+      </div> */}
 
 
 

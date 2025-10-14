@@ -26,6 +26,8 @@ const EventDetail = () => {
     fetchEvent();
   }, []);
 
+  console.log(event)
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
@@ -35,11 +37,11 @@ const EventDetail = () => {
   }
 
   const handleCreateWebsite = () => {
-    navigate(`create-website/select-template`);
+    navigate(`select-website-template`);
   };
 
-  const handleViewWebsite = () => {
-    navigate(`view-website`);
+  const handleEditWebsite = (websiteId) => {
+    navigate(`/website/edit/${websiteId}`);
   };
 
   return (
@@ -85,8 +87,8 @@ const EventDetail = () => {
         <CardFooter className="flex justify-end">
           {
             event.website
-              ? <Button onClick={handleViewWebsite} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">
-                View Website
+              ? <Button onClick={() => handleEditWebsite(event.website._id)} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">
+                Edit Website
               </Button>
               : <Button onClick={handleCreateWebsite} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">
                 Create Website

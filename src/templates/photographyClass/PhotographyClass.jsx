@@ -10,9 +10,11 @@ import Carousel from './components/carousel'
 import Form from './components/form'
 import Footer from './components/footer'
 
-export default function PhotographyClass({ sections }) {
+export default function PhotographyClass({ data }) {
 
-    console.log("🚀 ~ PhotographyClass ~ sections:", sections)
+    console.log("🚀 ~ PhotographyClass ~ data:", data)
+
+    const { type, sections } = data;
 
     const formRef = useRef(null); // Create ref here to used for focused and scroll behaviour in form.jsx section
 
@@ -23,7 +25,12 @@ export default function PhotographyClass({ sections }) {
     return (
         <div className='bg-[var(--allbodybg-color)] '>
             <div className='max-w-[1400px] mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
-                <LandingPage formRef={formRef} scheduleRef={scheduleRef} /> {/* Pass ref to LandingPage */}
+                <LandingPage
+                    formRef={formRef}
+                    scheduleRef={scheduleRef}
+                    section={sections.find(section => section.sectionName === 'hero')}
+                    editable={type === 'website'}
+                /> {/* Pass ref to LandingPage */}
 
                 {/* <LandingPage formRef={formRef} /> Pass ref to LandingPage */}
 

@@ -9,7 +9,6 @@ import Alert from './components/Alert';
 import { toast } from 'sonner';
 
 export default function TemplateSelector() {
-
     const [templates, setTemplates] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -37,8 +36,9 @@ export default function TemplateSelector() {
                 templateId: selectedTemplate
             });
             if (response.data.success) {
+                console.log(response.data.data)
                 toast.success("Successfully selected template. Proceeding to edit page...");
-                setTimeout(() => navigate(`/website/edit/${response.data.data._id}`), 2000);
+                setTimeout(() => navigate(`/website/edit/${response.data.data.websiteId}`), 2000);
             }
         } catch (error) {
             toast.error("Couldn't select template at the moment. Please try again later.");

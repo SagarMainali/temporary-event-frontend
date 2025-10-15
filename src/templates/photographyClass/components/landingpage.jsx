@@ -1,22 +1,25 @@
 // import { useRef } from "react";
-import { useState } from "react";
 
-import landingphoto from "../assets/images/landingImage.png";
 import landingphotomobile from "../assets/images/landing_mobile.png";
 
 import { FaRegCircle } from "react-icons/fa";
 import { PiTriangleBold } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
 
-
-
 // this below 2 import is useContext
 import { useContext } from "react";
 import { ThemeContext } from "../../../components/usecontext";
 
+import { Pen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Modal from "@/pages/user/components/Modal";
+import SectionEditorForm from "@/pages/user/components/SectionEditorForm";
 
+const LandingPage = ({ formRef, scheduleRef, section, editable }) => {
+  console.log("🚀 ~ LandingPage ~ section:", section)
 
-const LandingPage = ({ formRef, scheduleRef }) => {
+  const { content } = section;
+
   // Scroll to form
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({
@@ -47,52 +50,44 @@ const LandingPage = ({ formRef, scheduleRef }) => {
 
   const landingDetail = [
     {
-      photo: landingphoto,
+      photo: content.bannerImage[0],
       photo2: landingphotomobile,
-      title: "3-Day Photography Masterclass with Sijan Tamang",
+      title: content.title,
       description:
-        "A 3-day immersive photography masterclass with Sijan Tamang — refine your eye, master creative techniques, and learn how to tell compelling stories through your lens.",
+        content.description,
 
-      btnPRM: "Register Now",
-      btnSCY: "View Schedule",
+      btnPRM: content.buttonNames[0],
+      btnSCY: content.buttonNames[1],
 
       // small cards
       smallCards: [
         {
           scard: "1",
           photoIcon: <PiTriangleBold size={"30px"} />,
-          cardTitle: "Lighting, focus, framing, strengths and weaknesses.",
+          cardTitle: content.topics[0],
         },
         {
           scard: "2",
           photoIcon: <RxCross2 size={"30px"} />,
-          cardTitle: "Tools, expert methods, and participant engagement.",
+          cardTitle: content.topics[1],
         },
         {
           scard: "3",
           photoIcon: <FaRegCircle size={"30px"} />,
-          cardTitle: "Individual assessment, a test, and personal consultation.",
+          cardTitle: content.topics[2],
         },
       ],
     },
   ];
 
   return (
-    <div className="landing mb-20">
-
-
-
-
+    <div className="landing mb-20 relative">
       {/* <div className="flex items-center justify-between w-full fixed left-0 top-1 z-10">
-
-
         <button onClick={toggleFontFamily} className="btn_dark" title="Change font family">
           {fontFamily === "fontFamily" ? "Sorcecode" : "Montserrat"}
         </button>
 
         <div className="flex items-center gap-2">
-
-
           <button
             onClick={decreaseFontSize}
             className="btn_dark text-sm px-2 py-1"
@@ -100,11 +95,11 @@ const LandingPage = ({ formRef, scheduleRef }) => {
             - 2px
           </button> */}
 
-          {/* <span className="btn_dark text-xs px-2 py-1 cursor-default">
+      {/* <span className="btn_dark text-xs px-2 py-1 cursor-default">
             {fontSize}px
           </span> */}
 
-          {/* <button
+      {/* <button
             onClick={increaseFontSize}
             className="btn_dark text-sm px-2 py-1"
             title="Increase font size">
@@ -116,20 +111,26 @@ const LandingPage = ({ formRef, scheduleRef }) => {
             title="Reset font size to default (16px)">
             Reset
           </button>
-
-
         </div>
-
 
         <button onClick={toggleTheme} className="btn_dark" title="Dark mode">
           {theme === "light" ? "🌙 Dark" : "☀️ Light"}
         </button>
-
-
       </div> */}
 
-
-
+      {editable &&
+        <Modal
+          triggerer={
+            <Button className="flex items-center gap-1 absolute left-1/2 -translate-x-1/2 bg-blue-400">
+              <Pen size={22} />
+              <span className="text-xs">Edit</span>
+            </Button>
+          }
+          title="Landing Page"
+          description="Edit landing page contents"
+          content={<SectionEditorForm section={section} sectionId={section._id}/>}
+        />
+      }
 
       <div className="landing_wrapper">
         {landingDetail.map((landing, index) => (
@@ -150,7 +151,6 @@ const LandingPage = ({ formRef, scheduleRef }) => {
               src={landing.photo2}
               alt="this is <1024px landing pictures"
             />
-
 
             {/* Content */}
             <div className="w-[50%] max-lg:w-full">

@@ -8,7 +8,7 @@ import { Loader2 } from 'lucide-react';
 export default function WebsiteEditor() {
   const { websiteId } = useParams();
   const [website, setWebsite] = useState();
-  console.log("🚀 ~ WebsiteEditor ~ website:", website)
+  console.log("🚀 ~ WebsiteEditor ~ website:", website);
 
   useEffect(() => {
     const fetchWebsite = async () => {
@@ -31,9 +31,9 @@ export default function WebsiteEditor() {
 
   switch (website.baseTemplate.templateName) {
     case 'Photography Class':
-      return <PhotographyClass sections={website.sections} />;
+      return <PhotographyClass data={website} />;
     // future cases for other templates
     default:
-      return <div>Template not found</div>;
+      return <div>Website not found</div>;
   }
 }

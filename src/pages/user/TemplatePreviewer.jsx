@@ -31,7 +31,7 @@ export default function TemplatePreviewer() {
 
     switch (template.templateName) {
         case 'Photography Class':
-            return <PhotographyClass sections={template.sections} />;
+            return <PhotographyClass data={template} />;
         // future cases for other templates
         default:
             return <div>Template not found</div>;

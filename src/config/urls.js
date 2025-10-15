@@ -18,6 +18,7 @@ export const deleteEventUrl = (eventId) => `/event/${eventId}`
 // ----------------- 💻 Event API Routes -----------------
 export const createWebsiteUrl = '/website/create'
 export const getWebsiteUrl = (websiteId) => `/website/${websiteId}`
+export const getSectionUrl = (websiteId, sectionId) => `/website/${websiteId}/${sectionId}`
 export const updateSectionUrl = (websiteId, sectionId) => `/website/${websiteId}/${sectionId}`
 export const deleteWebsiteUrl = (websiteId) => `/website/${websiteId}`
 export const getPublicWebsiteUrl = (subdomain) => `/website/public/${subdomain}`

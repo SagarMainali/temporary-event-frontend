@@ -72,7 +72,7 @@ const Portfolio = ({ editable, section, onUpdateSection }) => {
           {/* Section title */}
           <div className="flex items-center justify-center gap-2 text-center">
             <p className="w-2.5 h-2.5 rounded-full bg-[var(--color-primary)]"></p>
-            <p className="text-sm font-medium">{folio.section}</p>
+            <p className="text-lg font-medium">{folio.section}</p>
           </div>
 
           <h2 className="mb-14 text-2xl font-bold">{folio.title}</h2>

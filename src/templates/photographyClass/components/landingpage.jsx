@@ -153,8 +153,8 @@ const LandingPage = ({ formRef, scheduleRef, editable, section, onUpdateSection 
 
             {/* Content */}
             <div className="w-[50%] max-lg:w-full">
-              <h1 className="max-sm:text-2xl max-md:text-3xl">{landing.title}</h1>
-              <p className="leading-6 font-normal max-sm:text-xl/snug max-md:text-xl">
+              <h1 className="max-sm:text-2xl max-md:text-3xl text-2xl">{landing.title}</h1>
+              <p className="leading-6 font-normal max-sm:text-xl/snug max-md:text-xl text-lg">
                 {landing.description}
               </p>
 

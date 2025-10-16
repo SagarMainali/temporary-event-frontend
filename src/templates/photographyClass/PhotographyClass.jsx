@@ -47,9 +47,21 @@ export default function PhotographyClass({ data }) {
         setPortfolioSection(newSection);
     };
 
+    const [scheduleSection, setScheduleSection] = useState(() =>
+        getSectionData(
+            'photographyClassWebsite_ScheduleSection',
+            sections.find(section => section.sectionName === 'programDetails')
+        )
+    )
+
+    const handleUpdateScheduleSection = (newSection) => {
+        localStorage.setItem('photographyClassWebsite_ScheduleSection', JSON.stringify(newSection));
+        setScheduleSection(newSection);
+    };
+
     return (
-        <div className='bg-[var(--allbodybg-color)] '>
-            <div className='max-w-[1400px] border border-dashed border-blue-300 mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
+        <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto'>
+            <div className='border border-dashed border-blue-300 mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
                 <LandingPage
                     formRef={formRef}
                     scheduleRef={scheduleRef}
@@ -57,7 +69,6 @@ export default function PhotographyClass({ data }) {
                     section={heroSection}
                     onUpdateSection={handleUpdateHeroSection}
                 /> {/* Pass ref to LandingPage */}
-
                 {/* <LandingPage formRef={formRef} /> Pass ref to LandingPage */}
 
                 <Portfolio
@@ -66,7 +77,12 @@ export default function PhotographyClass({ data }) {
                     onUpdateSection={handleUpdatePortfolioSection}
                 />
 
-                <Schedule scheduleRef={scheduleRef} /> {/* Pass ref to schedule.jsx */}
+                <Schedule
+                    scheduleRef={scheduleRef}
+                    editable={type === 'website'}
+                    section={scheduleSection}
+                    onUpdateSection={handleUpdateScheduleSection}
+                /> {/* Pass ref to schedule.jsx */}
 
                 <div ref={ticketcardRef} className='flex gap-20 max-lg:gap-10 items-center justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
                     <div  >

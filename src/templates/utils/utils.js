@@ -12,12 +12,12 @@ export function getSectionData(localStorageKey, defaultSection) {
     try {
         const raw = localStorage.getItem(localStorageKey);
         if (!raw) {
-            console.log("🚀 ~ getSectionData ❌❌❌:", "Section data not found in localstorage. So using section data fetched from database.")
+            console.log(`🚀 ~ getSectionData ~ ${localStorageKey} ❌❌❌:", "Section data not found in localstorage. So using section data fetched from database.`)
             return defaultSection;
         }
 
         const parsed = JSON.parse(raw);
-        console.log("🚀 ~ getSectionData ✅✅✅:", "Section data found in localstorage.")
+        console.log(`🚀 ~ getSectionData ~ ${localStorageKey}✅✅✅:", "Section data found in localstorage.`)
         return parsed;
     } catch (error) {
         console.error(`Returning defaultSection data because failed to parse localStorage data for key: ${localStorageKey}`, error);

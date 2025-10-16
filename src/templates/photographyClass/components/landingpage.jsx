@@ -18,7 +18,7 @@ import LandingPageEditor from "@/templates/photographyClass/editorForms/LandingP
 const LandingPage = ({ formRef, scheduleRef, editable, section, onUpdateSection }) => {
   console.log("🚀 ~ LandingPage ~ section:", section)
 
-  const { content } = section;
+  const { title, description, bannerImage, buttonNames, topics } = section.content;
 
   // Scroll to form
   const scrollToForm = () => {
@@ -50,31 +50,31 @@ const LandingPage = ({ formRef, scheduleRef, editable, section, onUpdateSection 
 
   const landingDetail = [
     {
-      photo: content.bannerImage[0],
+      photo: bannerImage[0],
       photo2: landingphotomobile,
-      title: content.title,
+      title: title,
       description:
-        content.description,
+        description,
 
-      btnPRM: content.buttonNames[0],
-      btnSCY: content.buttonNames[1],
+      btnPRM: buttonNames[0],
+      btnSCY: buttonNames[1],
 
       // small cards
       smallCards: [
         {
           scard: "1",
           photoIcon: <PiTriangleBold size={"30px"} />,
-          cardTitle: content.topics[0],
+          cardTitle: topics[0],
         },
         {
           scard: "2",
           photoIcon: <RxCross2 size={"30px"} />,
-          cardTitle: content.topics[1],
+          cardTitle: topics[1],
         },
         {
           scard: "3",
           photoIcon: <FaRegCircle size={"30px"} />,
-          cardTitle: content.topics[2],
+          cardTitle: topics[2],
         },
       ],
     },
@@ -121,9 +121,8 @@ const LandingPage = ({ formRef, scheduleRef, editable, section, onUpdateSection 
       {editable &&
         <Modal
           triggerer={
-            <Button className="flex items-center gap-1 absolute left-1/2 -translate-x-1/2 bg-blue-400">
-              <Pen size={22} />
-              <span className="text-xs">Edit</span>
+            <Button className="flex absolute right-0">
+              <Pen size={16} />
             </Button>
           }
           title="Landing Page"

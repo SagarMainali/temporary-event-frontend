@@ -35,9 +35,21 @@ export default function PhotographyClass({ data }) {
         setHeroSection(newSection);
     };
 
+    const [portfolioSection, setPortfolioSection] = useState(() =>
+        getSectionData(
+            'photographyClassWebsite_PortfolioSection',
+            sections.find(section => section.sectionName === 'portfolio')
+        )
+    )
+
+    const handleUpdatePortfolioSection = (newSection) => {
+        localStorage.setItem('photographyClassWebsite_PortfolioSection', JSON.stringify(newSection));
+        setPortfolioSection(newSection);
+    };
+
     return (
         <div className='bg-[var(--allbodybg-color)] '>
-            <div className='max-w-[1400px] mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
+            <div className='max-w-[1400px] border border-dashed border-blue-300 mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
                 <LandingPage
                     formRef={formRef}
                     scheduleRef={scheduleRef}
@@ -48,7 +60,11 @@ export default function PhotographyClass({ data }) {
 
                 {/* <LandingPage formRef={formRef} /> Pass ref to LandingPage */}
 
-                <Portfolio />
+                <Portfolio
+                    editable={type === 'website'}
+                    section={portfolioSection}
+                    onUpdateSection={handleUpdatePortfolioSection}
+                />
 
                 <Schedule scheduleRef={scheduleRef} /> {/* Pass ref to schedule.jsx */}
 

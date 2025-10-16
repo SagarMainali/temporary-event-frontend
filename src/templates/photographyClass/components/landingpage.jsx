@@ -13,9 +13,9 @@ import { ThemeContext } from "../../../components/usecontext";
 import { Pen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Modal from "@/pages/user/components/Modal";
-import SectionEditorForm from "@/pages/user/components/SectionEditorForm";
+import LandingPageEditor from "@/templates/photographyClass/editorForms/LandingPageEditor";
 
-const LandingPage = ({ formRef, scheduleRef, section, editable }) => {
+const LandingPage = ({ formRef, scheduleRef, editable, section, onUpdateSection }) => {
   console.log("🚀 ~ LandingPage ~ section:", section)
 
   const { content } = section;
@@ -128,7 +128,7 @@ const LandingPage = ({ formRef, scheduleRef, section, editable }) => {
           }
           title="Landing Page"
           description="Edit landing page contents"
-          content={<SectionEditorForm section={section} sectionId={section._id}/>}
+          content={<LandingPageEditor section={section} onUpdateSection={onUpdateSection} />}
         />
       }
 
@@ -136,7 +136,7 @@ const LandingPage = ({ formRef, scheduleRef, section, editable }) => {
         {landingDetail.map((landing, index) => (
           <div
             key={index}
-            className="h-screen  flex flex-col lg:flex-row items-center gap-[89px] max-xl:gap-10  max-lg:h-fit"
+            className="h-screen max-h-[900px] flex flex-col lg:flex-row items-center gap-[89px] max-xl:gap-10  max-lg:h-fit"
           >
             {/* Desktop Photo (>=1024px) */}
             <img

@@ -3,23 +3,15 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea";
 import { useRef, useState } from "react";
-import { updateSectionUrl } from "@/config/urls";
-import axios from "@/axiosConfig";
 import { toast } from "sonner"
-import { useParams } from "react-router-dom";
+import { fileToBase64 } from "@/templates/utils/utils";
 
-function SectionEditorForm({ closeModal, section }) {
-    const { websiteId } = useParams();
-
-    const {
-        _id: sectionId,
-        content: {
-            title, description, topics, bannerImage
-        } } = section;
+function LandingPageEditor({ closeModal, section, onUpdateSection }) {
+    const { title, description, topics, bannerImage } = section.content;
 
     // Initializing state for form inputs
     const [formData, setFormData] = useState({
-        bannerImage: bannerImage[0],
+        bannerImage,
         title,
         description,
         topics
@@ -27,23 +19,23 @@ function SectionEditorForm({ closeModal, section }) {
 
     const imageInputRef = useRef();
 
-    const imagesToRemove = useRef({});
-
-    const [changedFields, setChangedFields] = useState(new Set());
-
-    // Handling input changes
-    const handleChange = (name, value) => {
-        if (name === 'bannerImage' && formData.bannerImage) {
-            imagesToRemove.current.bannerImage = [formData.bannerImage];
-        }
-
+    // handling input changes
+    const handleChange = (e) => {
+        const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-        // mark as changed
-        setChangedFields(prev => new Set(prev).add(name));
     };
+
+    // handle iamge change
+    const handleImageChange = async (file) => {
+        const processedFile = await fileToBase64(file);
+        setFormData((prevData) => ({
+            ...prevData,
+            bannerImage: [processedFile]
+        }))
+    }
 
     // Handling date change from DatePicker
     const handleTopicsChange = (index, value) => {
@@ -55,7 +47,6 @@ function SectionEditorForm({ closeModal, section }) {
                 topics
             }
         ));
-        setChangedFields(prev => new Set(prev).add("topics"));
     };
 
     // Handling form submission
@@ -63,44 +54,21 @@ function SectionEditorForm({ closeModal, section }) {
         e.preventDefault();
 
         try {
-            const form = new FormData();
-
-            changedFields.forEach(field => {
-                if (field === "topics") {
-                    formData.topics.forEach(topic => {
-                        if (topic.trim()) form.append("topics[]", topic); // can also be topics - using topics[] for relevancy
-                    });
-                } else if (field === "bannerImage" && formData.bannerImage) {
-                    form.append("bannerImage", formData.bannerImage);
-                    if (imagesToRemove.current.bannerImage) {
-                        form.append("imagesToRemove", JSON.stringify(imagesToRemove.current));
-                    }
-                } else {
-                    form.append(field, formData[field]);
+            const updatedSection = {
+                ...section,
+                content: {
+                    ...section.content,
+                    ...formData,
                 }
-            })
+            };
 
-            // log form
-            for (let [key, value] of form.entries()) {
-                console.log(`${key}:`, value);
-            }
-
-            const response = await axios.patch(updateSectionUrl(websiteId, sectionId), form);
-            if (response.data.success) {
-                toast.success("Section updated successfully");
-                // Resetting the form
-                setFormData({
-                    bannerImage: null,
-                    title: "",
-                    description: "",
-                    topics: ["", "", ""],
-                });
-                setChangedFields(new Set());
-                closeModal();
-            }
+            // update local storage as well as local state
+            onUpdateSection(updatedSection);
+            toast.success("Section saved locally.");
+            closeModal();
         } catch (error) {
-            toast.error("Failed to update section. Please try again later.")
-            console.error("Error updating section", error);
+            toast.error("Failed to update section locally. Please try again later.")
+            console.error("Error updating section locally", error);
         }
     };
 
@@ -113,10 +81,7 @@ function SectionEditorForm({ closeModal, section }) {
                     formData.bannerImage
                     &&
                     <div className="p-1 border border-gray-200 rounded-md flex justify-center">
-                        <img src={
-                            formData.bannerImage instanceof File
-                                ? URL.createObjectURL(formData.bannerImage)
-                                : formData.bannerImage}
+                        <img src={formData.bannerImage}
                             alt="banner_image"
                             className="max-h-[300px]"
                         />
@@ -136,7 +101,7 @@ function SectionEditorForm({ closeModal, section }) {
                     type="file"
                     id="bannerImage"
                     name="bannerImage"
-                    onChange={(e) => handleChange(e.target.name, e.target.files[0])}
+                    onChange={(e) => handleImageChange(e.target.files[0])}
                     placeholder="Choose banner image"
                     hidden
                     ref={imageInputRef}
@@ -150,7 +115,7 @@ function SectionEditorForm({ closeModal, section }) {
                     id="title"
                     name="title"
                     value={formData.title}
-                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    onChange={handleChange}
                     placeholder="Enter event title"
                 />
             </div>
@@ -162,7 +127,7 @@ function SectionEditorForm({ closeModal, section }) {
                     id="description"
                     name="description"
                     value={formData.description}
-                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    onChange={handleChange}
                     placeholder="Enter event description"
                 />
             </div>
@@ -198,4 +163,4 @@ function SectionEditorForm({ closeModal, section }) {
     );
 }
 
-export default SectionEditorForm;
+export default LandingPageEditor;

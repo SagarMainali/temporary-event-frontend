@@ -1,4 +1,4 @@
-import { getWebsiteUrl } from '@/config/urls';
+import { getWebsiteUrl, saveWebsiteUrl } from '@/config/urls';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from "@/axiosConfig";
@@ -9,22 +9,75 @@ import { Button } from '@/components/ui/button';
 export default function WebsiteEditor() {
   const { websiteId } = useParams();
   const [website, setWebsite] = useState();
+  const [loading, setLoading] = useState();
   console.log("🚀 ~ WebsiteEditor ~ website:", website);
 
-  useEffect(() => {
-    const fetchWebsite = async () => {
-      try {
-        const response = await axios.get(getWebsiteUrl(websiteId));
-        setWebsite(response.data.data);
-      } catch (error) {
-        console.error("Error fetching website", error);
-      }
-    };
+  const fetchWebsite = async () => {
+    try {
+      const response = await axios.get(getWebsiteUrl(websiteId));
+      setWebsite(response.data.data);
+    } catch (error) {
+      console.error("Error fetching website", error);
+    }
+  };
 
+  useEffect(() => {
     fetchWebsite();
   }, []);
 
-  if (!website) return (
+  const sectionKeys = [
+    'photographyClassWebsite_HeroSection',
+    'photographyClassWebsite_PortfolioSection',
+    'photographyClassWebsite_ScheduleSection',
+    // to add more here...
+  ];
+
+  // get all sections of photographyClass website from localstorage
+  const getAllWebsiteSections = () => {
+    const sections = sectionKeys.map((key) => {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : null;
+    }).filter(Boolean); // Removes any null entries
+
+    return sections;
+  };
+
+  // clear all sections data from localstorage
+  const clearAllWebsiteSections = () => {
+    sectionKeys.forEach((key) => {
+      localStorage.removeItem(key);
+    });
+  };
+
+  // send the section saved in localstorage to backend and clear localstorage
+  const updateWebsiteSections = async () => {
+    const sections = getAllWebsiteSections();
+
+    if (sections.length === 0) {
+      console.warn("Please edit contents before you can save. No sections found in localStorage");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.patch(saveWebsiteUrl(websiteId), {
+        sections
+      })
+
+      if (response.data.success) {
+        console.log("Sections updated:", response.data);
+        clearAllWebsiteSections(); // remove data from localstorage
+        await fetchWebsite(); // fetch saved data from db
+      }
+    } catch (err) {
+      console.error("Request error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  if (!website || loading) return (
     <div className="flex justify-center items-center h-screen" >
       <Loader2 className="animate-spin text-gray-600" size={40} />
     </div>
@@ -33,9 +86,7 @@ export default function WebsiteEditor() {
   return (
     <div>
       <div className="mb-4 flex justify-end">
-        <Button
-          onClick={() => console.log('Button action')}
-        >
+        <Button onClick={updateWebsiteSections}>
           Save All
         </Button>
       </div>
@@ -51,5 +102,4 @@ export default function WebsiteEditor() {
       })()}
     </div>
   );
-
 }

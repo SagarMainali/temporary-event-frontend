@@ -14,7 +14,7 @@ const Schedule = ({ scheduleRef, editable, section, onUpdateSection }) => {  //R
   const title = section.content.title;
 
   return (
-    <div ref={scheduleRef} className="mb-30 w-[100%] mx-auto relative border">
+    <div ref={scheduleRef} className="mb-30 w-[100%] mx-auto relative">
 
       {editable &&
         <Modal

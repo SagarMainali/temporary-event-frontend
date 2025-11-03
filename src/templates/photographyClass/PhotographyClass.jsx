@@ -10,9 +10,12 @@ import Carousel from './components/carousel'
 import Form from './components/form'
 import Footer from './components/footer'
 import { getSectionData } from '../utils/utils'
+import { extractSubdomain } from '@/utils/utils'
 
 export default function PhotographyClass({ data }) {
-    console.log("🚀 ~ PhotographyClass ~ data:", data)
+    console.log("🚀 ~ PhotographyClass ~ data:", data);
+
+    const subdomain = extractSubdomain();
 
     const { type, sections } = data;
 
@@ -61,25 +64,25 @@ export default function PhotographyClass({ data }) {
 
     return (
         <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto'>
-            <div className='border border-dashed border-blue-300 mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
+            <div className='mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
                 <LandingPage
                     formRef={formRef}
                     scheduleRef={scheduleRef}
-                    editable={type === 'website'}
+                    editable={type === 'website' && !subdomain}
                     section={heroSection}
                     onUpdateSection={handleUpdateHeroSection}
                 /> {/* Pass ref to LandingPage */}
                 {/* <LandingPage formRef={formRef} /> Pass ref to LandingPage */}
 
                 <Portfolio
-                    editable={type === 'website'}
+                    editable={type === 'website' && !subdomain}
                     section={portfolioSection}
                     onUpdateSection={handleUpdatePortfolioSection}
                 />
 
                 <Schedule
                     scheduleRef={scheduleRef}
-                    editable={type === 'website'}
+                    editable={type === 'website' && !subdomain}
                     section={scheduleSection}
                     onUpdateSection={handleUpdateScheduleSection}
                 /> {/* Pass ref to schedule.jsx */}

@@ -19,7 +19,6 @@ function App() {
   const subdomain = extractSubdomain();
   console.log("🚀 ~ App ~ subdomain:", subdomain)
 
-
   if (subdomain) {
     // Public-site (for visitors)
     return <PublicSite subdomain={subdomain} />;

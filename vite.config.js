@@ -34,6 +34,6 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 5173,
-    allowedHosts: ["event.local", "photography-class.event.local"] // add this in sytem hosts file as well
+    // allowedHosts: ["localhost", "photography-class.localhost"] // add this in sytem hosts file as well
   }
 })

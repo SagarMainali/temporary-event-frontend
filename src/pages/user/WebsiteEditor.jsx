@@ -1,10 +1,13 @@
 import { getWebsiteUrl, saveWebsiteUrl } from '@/config/urls';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from "@/axiosConfig";
 import PhotographyClass from '@/templates/photographyClass/PhotographyClass';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Modal from './components/Modal';
+import PublishWebsiteForm from './PublishWebsiteForm';
+import { toast } from 'sonner';
 
 export default function WebsiteEditor() {
   const { websiteId } = useParams();
@@ -54,7 +57,7 @@ export default function WebsiteEditor() {
     const sections = getAllWebsiteSections();
 
     if (sections.length === 0) {
-      console.warn("Please edit contents before you can save. No sections found in localStorage");
+      toast.warning("Nothnig to save. You have not edited any section.");
       return;
     }
 
@@ -66,6 +69,7 @@ export default function WebsiteEditor() {
 
       if (response.data.success) {
         console.log("Sections updated:", response.data);
+        toast.success("Successfully saved changes")
         clearAllWebsiteSections(); // remove data from localstorage
         await fetchWebsite(); // fetch saved data from db
       }
@@ -76,7 +80,6 @@ export default function WebsiteEditor() {
     }
   };
 
-
   if (!website || loading) return (
     <div className="flex justify-center items-center h-screen" >
       <Loader2 className="animate-spin text-gray-600" size={40} />
@@ -85,10 +88,24 @@ export default function WebsiteEditor() {
 
   return (
     <div>
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-end gap-2">
         <Button onClick={updateWebsiteSections}>
           Save All
         </Button>
+
+        {website.published
+          ?
+          <Link to={website.url} target="_blank" rel="noopener noreferrer">
+            <Button>View Website</Button>
+          </Link>
+          :
+          <Modal
+            triggerer={<Button>Publish Website</Button>}
+            title="Pubilsh Website"
+            description="Create a suitable subdomain name for your website"
+            content={<PublishWebsiteForm websiteId={websiteId} />}
+          />
+        }
       </div>
 
       {/* Template rendering */}

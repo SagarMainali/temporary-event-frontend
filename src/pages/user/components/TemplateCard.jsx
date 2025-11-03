@@ -25,7 +25,7 @@ const TemplateCard = ({ template, isSelected, onClick }) => {
                     </div>
                     <p className="text-sm text-gray-600 mt-1">{template.description}</p>
                 </div>
-                <Link to={`/preview-template/${template._id}`} target="blank" title="Open template preview in new tab">
+                <Link to={`/preview-template/${template._id}`} target="_blank" title="Open template preview in new tab">
                     <ExternalLink className="hover:translate-x-0.5 hover:-translate-y-0.5 transition-all" />
                 </Link>
             </CardHeader>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getPublicWebsiteUrl } from '@/config/urls';
-import PhotographyClass from '@/templates/photographyClass/PhotographyClass'
+import PhotographyClassView from '@/templates/photographyClass/components/PhotographyClassView'
 import { Loader2 } from 'lucide-react';
 import axios from "@/axiosConfig"
 
@@ -41,7 +41,7 @@ function PublicSite({ subdomain }) {
 
   return (
     // from switch case render corresponding Template Component through website.baseTemplate.templateName and pass website data
-    <PhotographyClass data={website} />
+    <PhotographyClassView data={website} />
   )
 }
 

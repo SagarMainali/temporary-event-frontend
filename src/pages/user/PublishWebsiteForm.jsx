@@ -4,7 +4,6 @@ import { Input } from '@/components/ui/input'
 import { publishWebsiteUrl } from '@/config/urls';
 import axios from "@/axiosConfig";
 import { toast } from 'sonner';
-import { Link } from 'react-router-dom';
 
 export default function PublishWebsiteForm({ closeModal, websiteId }) {
     const [subdomain, setSubdomain] = useState('');

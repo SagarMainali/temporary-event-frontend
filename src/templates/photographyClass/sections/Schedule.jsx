@@ -3,9 +3,9 @@ import sphoto from "../assets/images/dann.png";
 import Modal from "@/pages/user/components/Modal";
 import { Button } from "@/components/ui/button";
 import { Pen } from "lucide-react";
-import ScheduleEditor from "../editorForms/ScheduleEditor";
+import ScheduleEditor from "./editorForms/ScheduleEditor";
 
-const Schedule = ({ scheduleRef, editable, section, onUpdateSection }) => {  //Receive formRef as prop from app.jsx
+const Schedule = ({ scheduleSectionId, editable, section, onUpdateSection }) => {  //Receive formRef as prop from app.jsx
   console.log("🚀 ~ Schedule ~ section:", section)
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -14,7 +14,7 @@ const Schedule = ({ scheduleRef, editable, section, onUpdateSection }) => {  //R
   const title = section.content.title;
 
   return (
-    <div ref={scheduleRef} className="mb-30 w-[100%] mx-auto relative">
+    <div id={scheduleSectionId} className="mb-30 w-[100%] mx-auto relative">
 
       {editable &&
         <Modal

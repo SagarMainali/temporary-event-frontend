@@ -6,7 +6,7 @@ import LogoYoutube from "../assets/svgicons/youtube.svg?react";
 import Modal from "@/pages/user/components/Modal";
 import { Button } from "@/components/ui/button";
 import { Pen } from "lucide-react";
-import PortfolioEditor from "../editorForms/PortfolioEditor";
+import PortfolioEditor from "./editorForms/PortfolioEditor";
 
 const Portfolio = ({ editable, section, onUpdateSection }) => {
   console.log("🚀 ~ Portfolio ~ section:", section)

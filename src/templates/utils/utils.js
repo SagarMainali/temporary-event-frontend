@@ -24,3 +24,10 @@ export function getSectionData(localStorageKey, defaultSection) {
         return defaultSection;
     }
 }
+
+// scroll to certain section
+export const scrollToSection = (sectionId) => {
+    const el = document.getElementById(sectionId);
+    console.log("scrolling to:::", sectionId)
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };

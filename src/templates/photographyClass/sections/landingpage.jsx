@@ -13,28 +13,13 @@ import { ThemeContext } from "../../../components/usecontext";
 import { Pen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Modal from "@/pages/user/components/Modal";
-import LandingPageEditor from "@/templates/photographyClass/editorForms/LandingPageEditor";
+import LandingPageEditor from "@/templates/photographyClass/sections/editorForms/LandingPageEditor";
+import { scrollToSection } from "@/templates/utils/utils";
 
-const LandingPage = ({ formRef, scheduleRef, editable, section, onUpdateSection }) => {
+const LandingPage = ({ formSectionId, scheduleSectionId, editable, section, onUpdateSection }) => {
   console.log("🚀 ~ LandingPage ~ section:", section)
 
   const { title, description, bannerImage, buttonNames, topics } = section.content;
-
-  // Scroll to form
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
-  // Scroll to schedule
-  const scheduleToList = () => {
-    scheduleRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
 
   // Get theme context
   const {
@@ -161,13 +146,13 @@ const LandingPage = ({ formRef, scheduleRef, editable, section, onUpdateSection 
               {/* Buttons */}
               <div className="flex my-15 gap-8 max-sm:my-10 max-sm:justify-around max-[500px]:justify-between max-[500px]:my-0">
                 <button
-                  onClick={scrollToForm}
+                  onClick={() => scrollToSection(formSectionId)}
                   className="btn_main max-sm:text-sm max-sm:p-1 max-[500px]:p-0.5"
                 >
                   {landing.btnPRM}
                 </button>
 
-                <button onClick={scheduleToList} className="btn_secondary">
+                <button onClick={() => scrollToSection(scheduleSectionId)} className="btn_secondary">
                   {landing.btnSCY}
                 </button>
               </div>

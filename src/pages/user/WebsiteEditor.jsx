@@ -2,7 +2,7 @@ import { getWebsiteUrl, saveWebsiteUrl } from '@/config/urls';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from "@/axiosConfig";
-import PhotographyClass from '@/templates/photographyClass/PhotographyClass';
+import PhotographyClassEdit from '@/templates/photographyClass/components/PhotographyClassEdit';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Modal from './components/Modal';
@@ -112,7 +112,7 @@ export default function WebsiteEditor() {
       {(() => {
         switch (website.baseTemplate.templateName) {
           case 'Photography Class':
-            return <PhotographyClass data={website} />;
+            return <PhotographyClassEdit data={website} />;
           default:
             return <div>Website not found</div>;
         }

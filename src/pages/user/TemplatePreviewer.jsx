@@ -2,7 +2,7 @@ import { getTemplateUrl } from '@/config/urls';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from "@/axiosConfig";
-import PhotographyClass from '@/templates/photographyClass/PhotographyClass';
+import PhotographyClassView from '@/templates/photographyClass/components/PhotographyClassView';
 import { Loader2 } from 'lucide-react';
 
 export default function TemplatePreviewer() {
@@ -31,7 +31,7 @@ export default function TemplatePreviewer() {
 
     switch (template.templateName) {
         case 'Photography Class':
-            return <PhotographyClass data={template} />;
+            return <PhotographyClassView data={template} />;
         // future cases for other templates
         default:
             return <div>Template not found</div>;

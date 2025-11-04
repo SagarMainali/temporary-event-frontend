@@ -1,6 +1,5 @@
-import { useState } from 'react' //this is used for for focused and scroll behaviour in form section
+import { useState } from 'react'
 import sectionIds from '../scrollToSectionIds'
-
 import LandingPage from '../sections/landingpage'
 import Portfolio from '../sections/portfolio'
 import Schedule from '../sections/Schedule'
@@ -57,7 +56,7 @@ export default function PhotographyClassEdit({ data }) {
     };
 
     return (
-        <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto'>
+        <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto p-4'>
             <div className='mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
                 <LandingPage
                     formSectionId={formSectionId}
@@ -65,8 +64,7 @@ export default function PhotographyClassEdit({ data }) {
                     editable={true}
                     section={heroSection}
                     onUpdateSection={handleUpdateHeroSection}
-                /> {/* Pass ref to LandingPage */}
-                {/* <LandingPage formRef={formRef} /> Pass ref to LandingPage */}
+                />
 
                 <Portfolio
                     editable={true}
@@ -79,40 +77,26 @@ export default function PhotographyClassEdit({ data }) {
                     editable={true}
                     section={scheduleSection}
                     onUpdateSection={handleUpdateScheduleSection}
-                /> {/* Pass ref to schedule.jsx */}
+                />
 
                 <div id={ticketSectionId} className='flex gap-20 max-lg:gap-10 items-center justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
-                    <div  >
-                        <Booking />
-                    </div>
+                    <Booking />
 
-                    <div>
-                        <Bookticket
-                            scheduleSectionId={scheduleSectionId} />
-                        {/* now this for by card */}
-                    </div>
+                    <Bookticket />
                 </div>
 
-                {/* Location Section */}
-                <div>
-                    <Location
-                        Locationhead="Location"
-
-                    />
-
-                </div>
+                <Location Locationhead="Location" />
 
                 <Carousel />
 
                 <Form
                     title="Register for Pre-Booking"
-                    formSectionId={formSectionId}// Pass ref to Form
-                    ticketSectionId={ticketSectionId} // Pass ref to Form
+                    formSectionId={formSectionId}
+                    ticketSectionId={ticketSectionId}
                 />
 
                 <Footer
-                    day="3-Day Photography Masterclass with 
-          Sijan Tamang"
+                    day="3-Day Photography Masterclass with Sijan Tamang"
                     date="Apr 23rd -  Apr 26th"
                     location="Event Banquet, Lalitpur"
                     organiser="Event Organized by Lotus Events"
@@ -121,6 +105,5 @@ export default function PhotographyClassEdit({ data }) {
                 />
             </div>
         </div>
-
     )
 }

@@ -5,13 +5,8 @@ import gtwo from "../assets/images/grid2.png";
 import gthree from "../assets/images/grid3.png";
 import gfour from "../assets/images/grid4.png";
 import gfive from "../assets/images/grid5.png";
-
-
-
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
-
 import { BsQuote } from "react-icons/bs";
-
 
 // Swiper Imports
 import { Swiper, SwiperSlide } from "swiper/react";

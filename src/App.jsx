@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Login from "./pages/auth/Login";
 import DashboardLayout from "./pages/user/layout/DashboardLayout";
 import PublicSite from "./pages/publicUser/PublicSite";
-import { extractSubdomain } from './utils/utils'
+import { extractSubdomain, getQueryParams } from './utils/utils'
 import ManageEvents from "@/pages/user/ManageEvents";
 import ManageWebsites from "@/pages/user/ManageWebsites";
 import TemplateSelector from "./pages/user/TemplateSelector";
@@ -14,6 +14,7 @@ import { Loader2 } from 'lucide-react';
 import Profile from './pages/user/Profile';
 import TemplatePreviewer from './pages/user/TemplatePreviewer';
 import WebsiteEditor from './pages/user/WebsiteEditor';
+import ViewWebsite from './pages/website/ViewWebsite';
 
 function App() {
   const subdomain = extractSubdomain();
@@ -32,6 +33,15 @@ function App() {
       </div>
     );
   }
+
+  const { appMode, websiteId } = getQueryParams();
+
+  if (appMode === 'website' && websiteId) {
+    console.log("🚀 ~ App ~ appMode:", appMode)
+    console.log("🚀 ~ App ~ websiteId:", websiteId)
+    return <ViewWebsite websiteId={websiteId} />
+  }
+
   // Main domain (for organizers)
   return (
     <>
@@ -49,7 +59,7 @@ function App() {
             element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />}
           />
 
-          <Route path="/preview-template/:templateId/" element={!isLoggedIn ? <Navigate to="/login"/> : <TemplatePreviewer />} />
+          <Route path="/preview-template/:templateId/" element={!isLoggedIn ? <Navigate to="/login" /> : <TemplatePreviewer />} />
 
           {/* Protected Routes */}
           <Route

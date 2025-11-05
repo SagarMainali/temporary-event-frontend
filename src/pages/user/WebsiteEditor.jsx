@@ -13,6 +13,7 @@ export default function WebsiteEditor() {
   const { websiteId } = useParams();
   const [website, setWebsite] = useState();
   const [loading, setLoading] = useState();
+  const [publishSuccessful, setPublishSuccessful] = useState(false);
   console.log("🚀 ~ WebsiteEditor ~ website:", website);
 
   const fetchWebsite = async () => {
@@ -93,30 +94,37 @@ export default function WebsiteEditor() {
           Save All
         </Button>
 
-        {website.published
+        {website.published || publishSuccessful
           ?
           <Link to={website.url} target="_blank" rel="noopener noreferrer">
-            <Button>View Website</Button>
+            <Button>View Published Site</Button>
           </Link>
           :
-          <Modal
-            triggerer={<Button>Publish Website</Button>}
-            title="Pubilsh Website"
-            description="Create a suitable subdomain name for your website"
-            content={<PublishWebsiteForm websiteId={websiteId} />}
-          />
+          <>
+            <Link to={`http://localhost:5173/?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
+              <Button>View Saved Site</Button>
+            </Link>
+            <Modal
+              triggerer={<Button>Publish Website</Button>}
+              title="Pubilsh Website"
+              description="Create a suitable subdomain name for your website"
+              content={<PublishWebsiteForm websiteId={websiteId} setPublishSuccessful={setPublishSuccessful} />}
+            />
+          </>
         }
       </div>
 
       {/* Template rendering */}
-      {(() => {
-        switch (website.baseTemplate.templateName) {
-          case 'Photography Class':
-            return <PhotographyClassEdit data={website} />;
-          default:
-            return <div>Website not found</div>;
-        }
-      })()}
-    </div>
+      {
+        (() => {
+          switch (website.baseTemplate.templateName) {
+            case 'Photography Class':
+              return <PhotographyClassEdit data={website} />;
+            default:
+              return <div>Website not found</div>;
+          }
+        })()
+      }
+    </div >
   );
 }

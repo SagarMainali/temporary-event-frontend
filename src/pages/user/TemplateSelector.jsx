@@ -13,6 +13,8 @@ export default function TemplateSelector() {
     const [loading, setLoading] = useState(true);
     const [selectedTemplate, setSelectedTemplate] = useState(null);
     const { eventId } = useParams();
+    console.log("🚀 ~ TemplateSelector ~ eventId:", eventId)
+    
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,7 +40,7 @@ export default function TemplateSelector() {
             if (response.data.success) {
                 console.log(response.data.data)
                 toast.success("Successfully selected template. Proceeding to edit page...");
-                setTimeout(() => navigate(`/website/edit/${response.data.data.websiteId}`), 2000);
+                setTimeout(() => navigate(`/events/${eventId}/edit-website/${response.data.data.websiteId}`), 2000);
             }
         } catch (error) {
             toast.error("Couldn't select template at the moment. Please try again later.");

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from "@/axiosConfig";
 import PhotographyClassEdit from '@/templates/photographyClass/components/PhotographyClassEdit';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Modal from './components/Modal';
 import PublishWebsiteForm from './PublishWebsiteForm';
@@ -90,14 +90,15 @@ export default function WebsiteEditor() {
   return (
     <div>
       <div className="mb-4 flex justify-end gap-2">
-        <Button onClick={updateWebsiteSections}>
+        <Button className="ml-auto" onClick={updateWebsiteSections}>
           Save All
         </Button>
 
         {website.published || publishSuccessful
           ?
           <Link to={website.url} target="_blank" rel="noopener noreferrer">
-            <Button>View Published Site</Button>
+            <Button>View Published Site <Globe className='text-green-400 animate-pulse' /></Button>
+
           </Link>
           :
           <>

@@ -40,7 +40,7 @@ function ManageEvent() {
 
             <div className="flex gap-8 flex-wrap">
                 {events.length > 0 && events.map((event) => (
-                    <Link to={`/event/${event._id}`} key={event._id}>
+                    <Link to={`${event._id}`} key={event._id}>
                         <EventCard event={event} />
                     </Link>
                 ))}

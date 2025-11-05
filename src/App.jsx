@@ -66,11 +66,12 @@ function App() {
             element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
           >
             <Route path="/dashboard" element={<h3>*Dashboard Contents*</h3>} />
+
             <Route path="/events" element={<ManageEvents />} />
-            <Route path="/event/:eventId" element={<EventDetail />} />
-            <Route path="/event/:eventId/select-website-template" element={<TemplateSelector />} />
-            <Route path="/website/edit/:websiteId" element={<WebsiteEditor />} />
-            {/* <Route path="/website/view/:websiteId" element={<PhotographyClass />} /> */}
+            <Route path="/events/:eventId" element={<EventDetail />} />
+            <Route path="/events/:eventId/select-website-template" element={<TemplateSelector />} />
+            <Route path="/events/:eventId/edit-website/:websiteId" element={<WebsiteEditor />} />
+            
             <Route path="/websites" element={<ManageWebsites />} />
             <Route path="/emails" element={<h3>*TO TRACK EMAILS HERE*</h3>} />
             <Route path="/profile" element={<Profile />} />

@@ -16,59 +16,8 @@ import {
 } from "@/components/ui/sidebar"
 
 import { Button } from "./ui/button";
-
 import { useLogin } from "@/context/authContext";
-
-const navMain = [
-  {
-    title: "Home",
-    url: "#",
-    items: [
-      {
-        title: "Dashboard",
-        url: "/dashboard",
-      },
-    ],
-  },
-  {
-    title: "Manage",
-    url: "#",
-    items: [
-      {
-        title: "Events",
-        url: "/events",
-      },
-      {
-        title: "Websites",
-        url: "/websites",
-      },
-    ],
-  },
-  {
-    title: "Tracking",
-    url: "#",
-    items: [
-      {
-        title: "Emails",
-        url: "/emails",
-      },
-    ],
-  },
-  {
-    title: "Account",
-    url: "#",
-    items: [
-      {
-        title: "Profile",
-        url: "/profile",
-      },
-      {
-        title: "Settings",
-        url: "/settings",
-      },
-    ],
-  },
-]
+import { sidebarSections } from "@/lib/sidebar-config";
 
 export function AppSidebar({
   ...props
@@ -84,17 +33,17 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
-        {navMain.map((item) => (
+        {sidebarSections.map((item) => (
           <SidebarGroup key={item.title}>
             <SidebarGroupLabel className="text-sidebar-foreground/50">{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((subItem) => {
-                  const isActive = location.pathname.includes(subItem.url);
+                  const isActive = location.pathname.includes(subItem.href);
 
-                  return <SidebarMenuItem key={subItem.title}>
+                  return <SidebarMenuItem key={subItem.label}>
                     <SidebarMenuButton asChild isActive={isActive} className="data-[active=true]:font-semibold">
-                      <Link to={subItem.url} aria-current={isActive ? 'page' : undefined}>{subItem.title}</Link>
+                      <Link to={subItem.href} aria-current={isActive ? 'page' : undefined}>{subItem.label}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 })}

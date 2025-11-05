@@ -9,6 +9,7 @@ import axios from "@/axiosConfig";
 const EventDetail = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
+  console.log("🚀 ~ EventDetail ~ event:", event)
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -26,8 +27,6 @@ const EventDetail = () => {
     fetchEvent();
   }, []);
 
-  console.log(event)
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
@@ -41,7 +40,7 @@ const EventDetail = () => {
   };
 
   const handleEditWebsite = (websiteId) => {
-    navigate(`/website/edit/${websiteId}`);
+    navigate(`edit-website/${websiteId}`);
   };
 
   return (

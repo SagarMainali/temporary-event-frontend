@@ -6,11 +6,14 @@ import "./index.css";
 
 // this below import from useContex
 import { ThemeProvider } from "./components/usecontext.jsx";
+import { LoginProvider } from "./context/authContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
-      <App />
+      <LoginProvider>
+        <App />
+      </LoginProvider>
     </ThemeProvider>
   </StrictMode>
 );

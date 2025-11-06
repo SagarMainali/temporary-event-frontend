@@ -2,63 +2,42 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
-
-
-
-
 
 /*=====================================
     BODY HTML CSS DECALARATIONS
 =====================================*/
 /****************GOOD TO HAVES*****************/
 
-
-
 :root {
-
   /* Light mode (default) */
-  --color-primary: #FF7C10;
+  --color-primary: #ff7c10;
   --color-secondary: #999;
   --color-white: #ffffff;
-  --allbodybg-color: #FCF3EC;
+  --allbodybg-color: #fcf3ec;
   --color-bglocation: #fee5d0;
-  --bgbook-card: #FCF3EC;
+  --bgbook-card: #fcf3ec;
 
   /* --bg-primary: #322d2d; */
   /* --bg-secondary: #ee9b9b;   */
 
-
   /* Fonts */
   /* Overpass is the primary font-family */
-  --font-primary: "Overpass", sans-serif;
+  --font-primary: 'Overpass', sans-serif;
 
   /* Roboto is the secondary font-family */
-  --font-secondary: "Roboto", sans-serif;
-  
- 
+  --font-secondary: 'Roboto', sans-serif;
 
   /* Text colors */
   --text-primary: #333333;
-  --text-seondary: #FF7C10;
+  --text-seondary: #ff7c10;
   --text-white: #ffffff;
 }
 
-
 /* Light theme (default) */
 .light-theme {
-  
-  
 }
-
 
 /* Dark theme */
 .dark-theme {
@@ -68,42 +47,33 @@
   --color-white: #121212;
   --bgbook-card: #451a0136;
   --color-bglocation: #451a0136;
-  --color-white:#451a0136;
-
+  --color-white: #451a0136;
 }
 
-.font-scheme2{
+.font-scheme2 {
   /* Fonts */
   /* Overpass is the primary font-family */
-  --font-primary: "Montserrat", sans-serif;
+  --font-primary: 'Montserrat', sans-serif;
 
   /* Roboto is the secondary font-family */
-  --font-secondary: "Source Code Pro", sans-serif;
+  --font-secondary: 'Source Code Pro', sans-serif;
 }
-
-
-
 
 * {
   box-sizing: border-box;
 }
-
 
 html {
   font-size: 16px;
   scroll-behavior: smooth;
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
-
 }
 
-
-body p, body li{
+body p,
+body li {
   font-family: var(--font-secondary);
-
 }
- 
-
 
 body h1,
 body h2,
@@ -115,14 +85,19 @@ body h6 {
   line-height: 1.3;
 }
 
-body h1 {
+h1,
+h2,
+h3 {
+  font-weight: bold;
+}
+
+/* body h1 {
   font-weight: bold;
   letter-spacing: -4%;
   font-size: 3.75rem;
   margin-bottom: 2rem;
 
 }
-
 
 body h2 {
   font-weight: bold;
@@ -135,11 +110,7 @@ body h3 {
   line-height: 24px;
   letter-spacing: -3%;
   font-size: 1rem;
-}
-
-
-
-
+} */
 
 /* Smooth theme transition */
 .light-theme,
@@ -147,11 +118,7 @@ body h3 {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-
-
-@media(max-width:768px) {
-
+@media (max-width: 768px) {
   body h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
@@ -160,12 +127,9 @@ body h3 {
   body h2 {
     font-size: 2.8rem;
   }
-
 }
 
-
-@media(max-width:640px) {
-
+@media (max-width: 640px) {
   body h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -174,9 +138,7 @@ body h3 {
   body h2 {
     font-size: 1.8rem;
   }
-
 }
-
 
 body em {
   font-weight: 700;
@@ -195,8 +157,6 @@ img {
   vertical-align: top;
 }
 
-
-
 .btn_main,
 .btn_secondary {
   padding: 20px 30px;
@@ -213,22 +173,17 @@ img {
   line-height: 1;
 }
 
-
 .btn_secondary {
   background: var(--color-white);
   border: 1px solid #808080;
   color: var(--text-primary);
 }
 
-
-
 .btn_main:hover,
 .btn_secondary:hover {
   opacity: 0.8;
   transition: all 0.2s ease-in-out;
-  
 }
-
 
 /* Base dark mode toggle button */
 .btn_dark {
@@ -244,47 +199,36 @@ img {
   font-size: 1rem;
 }
 
-
 /* Light Theme Hover: white → black */
 .light-theme .btn_dark:hover {
-  background: #121212;      
-  color: #ffffff;   
+  background: #121212;
+  color: #ffffff;
   /* opacity: 1;           */
 }
 
 /* Dark Theme Hover: black → white */
 .dark-theme .btn_dark:hover {
-  background: #ffffff;   
-  color: #121212; 
+  background: #ffffff;
+  color: #121212;
   /* opacity: 1;          */
 }
 
-
 .dark-theme .btn_secondary:hover {
-    background: #ffffff;  
-    color: #121212; 
-    opacity: 1;
+  background: #ffffff;
+  color: #121212;
+  opacity: 1;
 }
 
-@media(max-width:1023px) {
+@media (max-width: 1023px) {
   .btn_dark {
     padding: 8px 12px;
   }
 }
 
-
-
-@media(max-width:500px) {
-
+@media (max-width: 500px) {
   .btn_main,
   .btn_secondary {
     padding: 15px 15px;
-    font-size: 12px
+    font-size: 12px;
   }
-
-
 }
-
-
-
-@import "tailwindcss";

@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
-
 import formimage from "../assets/images/fbi.png";
+import { scrollToSection } from "@/templates/utils/utils";
 
-
-const Form = ({ title, formRef, ticketcardRef }) => { // Receive formRef as prop
-
-  const scrollToBuycard = () => {
-    ticketcardRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-
-  };
+const Form = ({ title, formSectionId, ticketSectionId }) => { // Receive formRef as prop
 
   // this above  scrollToBuycard for "BUY NOW" ticket up scrolling
 
@@ -67,7 +58,7 @@ const Form = ({ title, formRef, ticketcardRef }) => { // Receive formRef as prop
   // };
 
   return (
-    <div ref={formRef} className="mt-[100px] mb-[100px] "> {/* Attach ref here and fix the className */}
+    <div id={formSectionId} className="mt-[100px] mb-[100px] "> {/* Attach ref here and fix the className */}
 
       {/* <h2 className="mb-6">{title}</h2> */}
       <div className="flex items-center justify-between gap-20 max-sm:flex-col max-md:flex-col max-lg:flex-col">
@@ -134,7 +125,7 @@ const Form = ({ title, formRef, ticketcardRef }) => { // Receive formRef as prop
 
               <button
                 type="button"
-                onClick={scrollToBuycard}
+                onClick={() => scrollToSection(ticketSectionId)}
                 className="btn_secondary w-full capitalize"
               >
                 View Tickets
@@ -146,8 +137,8 @@ const Form = ({ title, formRef, ticketcardRef }) => { // Receive formRef as prop
         </div>
 
         <div>
-          <img className="w-[600px] h-[500px] object-cover rounded-xs max-sm:object-none max-sm:hidden max-lg:w-full" src={formimage} alt="booking form image..." 
-        
+          <img className="w-[600px] h-[500px] object-cover rounded-xs max-sm:object-none max-sm:hidden max-lg:w-full" src={formimage} alt="booking form image..."
+
           />
         </div>
       </div>

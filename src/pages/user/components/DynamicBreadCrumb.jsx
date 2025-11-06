@@ -13,8 +13,6 @@ export function DynamicBreadCrumb() {
     const location = useLocation();
     const currentPath = location.pathname;
 
-    console.log("🚀 ~ DynamicBreadCrumb ~ currentPath:", currentPath)
-
     let currentItem = null;
     let currentSection = null;
 

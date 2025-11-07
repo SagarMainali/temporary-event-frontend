@@ -2,8 +2,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import DashboardLayout from "./pages/user/layout/DashboardLayout";
-import PublicSite from "./pages/publicUser/PublicSite";
-import { extractSubdomain, getQueryParams } from './utils/utils'
+import { getQueryParams } from './utils/utils'
 import ManageEvents from "@/pages/user/ManageEvents";
 import ManageWebsites from "@/pages/user/ManageWebsites";
 import TemplateSelector from "./pages/user/TemplateSelector";
@@ -17,14 +16,6 @@ import WebsiteEditor from './pages/user/WebsiteEditor';
 import ViewWebsite from './pages/website/ViewWebsite';
 
 function App() {
-  const subdomain = extractSubdomain();
-  console.log("🚀 ~ App ~ subdomain:", subdomain)
-
-  if (subdomain) {
-    // Public-site (for visitors)
-    return <PublicSite subdomain={subdomain} />;
-  }
-
   const { loading, isLoggedIn } = useLogin();
   if (loading) {
     return (
@@ -35,7 +26,6 @@ function App() {
   }
 
   const { appMode, websiteId } = getQueryParams();
-
   if (appMode === 'website' && websiteId) {
     console.log("🚀 ~ App ~ appMode:", appMode)
     console.log("🚀 ~ App ~ websiteId:", websiteId)

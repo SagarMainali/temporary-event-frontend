@@ -102,6 +102,7 @@ export default function WebsiteEditor() {
           </Link>
           :
           <>
+          {/* this is link for dev mode - need to change this link later for prod mode */}
             <Link to={`http://localhost:5173/?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
               <Button>View Saved Site</Button>
             </Link>

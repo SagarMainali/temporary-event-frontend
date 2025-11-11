@@ -37,6 +37,7 @@ export default function LoginPage() {
                 const response = await axios.post(loginUrl, {
                     ...formData
                 });
+                console.log("🚀 ~ logInUser ~ response:", response)
                 if (response.data.success)
                     toast.success("Successfully logged in");
                 setIsLoggedIn(true);

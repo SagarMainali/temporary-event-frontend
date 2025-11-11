@@ -1,9 +1,9 @@
 // extract subdomain from full url
 export const extractSubdomain = () => {
-    const host = window.location.hostname; // e.g. localfest.event.com
+    const host = window.location.hostname;
+    if (host === "localhost") return null; // dev handled separately
     const parts = host.split(".");
-    if (parts.length >= 2) return parts[0]; // "localfest"
-    return null;
+    return parts.length >= 2 ? parts[0] : null;
 };
 
 // get app mode and website id

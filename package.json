@@ -11,7 +11,10 @@
     "build:website": "vite build --mode website",
     "build:all": "npm run build:cms && npm run build:website",
     "preview": "vite preview",
-    "preview:website": "vite preview --mode website"
+    "preview:website": "vite preview --mode website",
+    "serve:local": "node server.local.js",
+    "build:cms:vercel": "cp vercel.cms.json vercel.json && npm run build:cms",
+    "build:website:vercel": "cp vercel.website.json vercel.json && npm run build:website"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",

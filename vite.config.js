@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import svgr from 'vite-plugin-svgr'
 import path from 'path';
+import fs from 'fs';
+import { StrictMode } from 'react';
 
 const base = {
   plugins: [
@@ -27,8 +29,10 @@ const base = {
     },
   },
   server: {
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     port: 5173,
+    strictPort: true,
+    allowedHosts: ['tempevents.local', 'photography-class.tempevents.local'],
   }
 }
 
@@ -37,7 +41,10 @@ export default defineConfig(({ mode, command }) => {
     if (mode === 'website') {
       return {
         ...base,
-        server: { ...base.server, port: 5174 },
+        server: {
+          ...base.server,
+          port: 5174,
+        },
       }
     }
     return base;

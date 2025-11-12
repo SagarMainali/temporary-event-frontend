@@ -102,8 +102,7 @@ export default function WebsiteEditor() {
           </Link>
           :
           <>
-          {/* this is link for dev mode - need to change this link later for prod mode */}
-            <Link to={`http://tempevents.local:5173/?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
+            <Link to={`${import.meta.env.VITE_FRONTEND_BASE_URL}?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
               <Button>View Saved Site</Button>
             </Link>
             <Modal

@@ -2,9 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import svgr from 'vite-plugin-svgr'
-import path from 'path';
+import path from 'path'
 
-const base = {
+export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
@@ -26,50 +26,20 @@ const base = {
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        cms: path.resolve(__dirname, 'index.html'),
+        website: path.resolve(__dirname, 'website.html'),
+      },
+    },
+  },
   server: {
     host: '0.0.0.0',
     port: 5173,
     strictPort: true,
     allowedHosts: ['tempevents.local', 'photography-class.tempevents.local'],
-  }
-}
-
-export default defineConfig(({ mode, command }) => {
-  if (command === 'serve') {
-    if (mode === 'website') {
-      return {
-        ...base,
-        server: {
-          ...base.server,
-          port: 5174,
-        },
-      }
-    }
-    return base;
-  }
-
-  if (mode === 'website') {
-    return {
-      ...base,
-      build: {
-        outDir: 'dist/website',
-        emptyOutDir: true,
-        rollupOptions: {
-          input: path.resolve(__dirname, 'website.html'),
-          output: { manualChunks: undefined },
-        },
-      },
-    }
-  }
-
-  return {
-    ...base,
-    build: {
-      outDir: 'dist/cms',
-      emptyOutDir: true,
-      rollupOptions: {
-        input: path.resolve(__dirname, 'index.html'),
-      },
-    },
-  }
+  },
 })

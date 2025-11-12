@@ -2,28 +2,28 @@
     "rewrites": [
       {
         "source": "/",
-        "destination": "/index.html" 
+        "destination": "/cms/index.html"
       },
       {
         "source": "/website",
-        "destination": "/website.html"
+        "destination": "/website/website.html"
       }
     ],
     "redirects": [
       {
-        "source": "/",
-        "destination": "/index.html",
-        "permanent": true
-      },
-      {
         "source": "/website",
-        "destination": "/website.html",
+        "destination": "/website/website.html",
         "permanent": true
+      }
+    ],
+    "builds": [
+      {
+        "src": "dist/cms/**/*",
+        "use": "@vercel/static"
       },
       {
-        "source": "/cms",
-        "destination": "/index.html",
-        "permanent": true
+        "src": "dist/website/**/*",
+        "use": "@vercel/static"
       }
     ],
     "cleanUrls": true

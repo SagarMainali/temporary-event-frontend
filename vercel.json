@@ -1,14 +1,6 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "temporary-event-cms.vercel.app" }],
-      "destination": "/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": ":subdomain.tempevents.vercel.app" }],
-      "destination": "/website.html"
-    }
+    { "source": "/sites/:slug([a-zA-Z0-9-]+)", "destination": "/website.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

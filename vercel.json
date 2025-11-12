@@ -1,0 +1,31 @@
+{
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/index.html" 
+      },
+      {
+        "source": "/website",
+        "destination": "/website.html"
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/",
+        "destination": "/index.html",
+        "permanent": true
+      },
+      {
+        "source": "/website",
+        "destination": "/website.html",
+        "permanent": true
+      },
+      {
+        "source": "/cms",
+        "destination": "/index.html",
+        "permanent": true
+      }
+    ],
+    "cleanUrls": true
+  }
+  

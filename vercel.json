@@ -1,31 +1,8 @@
 {
-    "rewrites": [
-      {
-        "source": "/",
-        "destination": "/cms/index.html"
-      },
-      {
-        "source": "/website",
-        "destination": "/website/website.html"
-      }
-    ],
-    "redirects": [
-      {
-        "source": "/website",
-        "destination": "/website/website.html",
-        "permanent": true
-      }
-    ],
-    "builds": [
-      {
-        "src": "dist/cms/**/*",
-        "use": "@vercel/static"
-      },
-      {
-        "src": "dist/website/**/*",
-        "use": "@vercel/static"
-      }
-    ],
-    "cleanUrls": true
-  }
-  
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}

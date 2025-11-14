@@ -24,6 +24,7 @@ export const updateSectionUrl = (websiteId, sectionId) => `/website/${websiteId}
 export const deleteWebsiteUrl = (websiteId) => `/website/${websiteId}`
 export const getPublicWebsiteUrl = (subdomain) => `/website/public/${subdomain}`
 export const publishWebsiteUrl = (websiteId) => `/website/publish/${websiteId}`
+export const getPublishedWebsitesUrl = '/website/published/'
 export const sendEmailUrl = '/website/sendEmail'
 
 // ----------------- 📋 Temmplate API Routes -----------------

@@ -8,7 +8,7 @@ import { createEventUrl } from "@/config/urls";
 import axios from "@/axiosConfig";
 import { toast } from "sonner"
 
-function EventForm({ closeModal }) {
+function EventForm({ closeModal, onAddSuccess }) {
 
     // Initializing state for form inputs
     const [formData, setFormData] = useState({
@@ -48,6 +48,8 @@ function EventForm({ closeModal }) {
                 ...formData
             });
             if (response.data.success) {
+                const newEvent = response.data.data;
+
                 toast.success("New event created successfully");
                 // Resetting the form
                 setFormData({
@@ -61,7 +63,8 @@ function EventForm({ closeModal }) {
                     email: "",
                 });
                 closeModal();
-                console.log("Event created:\n", formData);
+                onAddSuccess(newEvent);
+                console.log("Event created:\n", newEvent);
 
             }
         } catch (error) {

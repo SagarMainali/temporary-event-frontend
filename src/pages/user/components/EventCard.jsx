@@ -7,8 +7,26 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { EllipsisVertical, Pen, Trash } from "lucide-react";
+import axios from "@/axiosConfig";
+import { toast } from "sonner";
+import { deleteEventUrl } from "@/config/urls";
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, onDeleteSuccess }) => {
+
+    const deleteEvent = async (e) => {
+        e.stopPropagation();
+
+        try {
+            const response = await axios.delete(deleteEventUrl(event._id));
+            if (response.data.success) {
+                toast.success("The event has been successfully deleted");
+                onDeleteSuccess(event._id);
+            }
+        } catch (error) {
+            toast.error("Couldn't delete the event at the moment. Please try again later.")
+        }
+    }
+
     return (
         <Card className="w-full py-0 max-w-sm rounded-xl shadow-lg overflow-hidden transform transition-all gap-0 hover:scale-[1.03] hover:shadow-2xl">
             <CardHeader className="flex justify-between items-center p-6 bg-accent">
@@ -24,7 +42,7 @@ const EventCard = ({ event }) => {
                         <DropdownMenuItem className="cursor-pointer text-sm text-blue-600 hover:bg-blue-50 p-2 rounded-md flex items-center">
                             <Pen className="mr-2" size={16} /> Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer text-sm text-red-600 hover:bg-red-50 p-2 rounded-md flex items-center">
+                        <DropdownMenuItem className="cursor-pointer text-sm text-red-600 hover:bg-red-50 p-2 rounded-md flex items-center" onClick={deleteEvent}>
                             <Trash className="mr-2" size={16} /> Delete
                         </DropdownMenuItem>
                     </DropdownMenuContent>

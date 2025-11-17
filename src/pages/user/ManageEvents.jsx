@@ -26,6 +26,20 @@ function ManageEvent() {
 
     console.log("🚀 ~ ManageEvent ~ events:", events);
 
+    // update local state
+    const onAddSuccess = (newEvent) => {
+        setEvents(prevEvents => {
+            return [newEvent, ...prevEvents]
+        })
+    }
+
+    // update local state
+    const onDeleteSuccess = (eventId) => {
+        setEvents(prevEvents => (
+            prevEvents.filter(event => event._id !== eventId)
+        ))
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -34,14 +48,14 @@ function ManageEvent() {
                     title="Add New Event"
                     description="Add your upcoming"
                     triggerer={<Button><IoMdAddCircle /> New Event</Button>}
-                    content={<EventForm />}
+                    content={<EventForm onAddSuccess={onAddSuccess} />}
                 />
             </div>
 
             <div className="flex gap-8 flex-wrap">
                 {events.length > 0 && events.map((event) => (
                     <Link to={`${event._id}`} key={event._id}>
-                        <EventCard event={event} />
+                        <EventCard event={event} onDeleteSuccess={onDeleteSuccess} />
                     </Link>
                 ))}
             </div>

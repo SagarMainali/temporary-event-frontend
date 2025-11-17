@@ -1,10 +1,11 @@
-import { getWebsiteUrl, saveWebsiteUrl } from '@/config/urls';
+import { getWebsiteUrl, saveWebsiteUrl, unpublishWebsiteUrl } from '@/config/urls';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from "@/axiosConfig";
 import PhotographyClassEdit from '@/templates/photographyClass/components/PhotographyClassEdit';
-import { Loader2, Globe } from 'lucide-react';
+import { Loader2, Globe, GlobeLock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Alert from './components/Alert';
 import Modal from './components/Modal';
 import PublishWebsiteForm from './PublishWebsiteForm';
 import { toast } from 'sonner';
@@ -14,6 +15,7 @@ export default function WebsiteEditor() {
   const [website, setWebsite] = useState();
   const [loading, setLoading] = useState();
   const [publishSuccessful, setPublishSuccessful] = useState(false);
+  const [editedContentsPresentOnLocal, setEditedContentsPresentOnLocal] = useState(false);
   console.log("🚀 ~ WebsiteEditor ~ website:", website);
 
   const fetchWebsite = async () => {
@@ -62,8 +64,9 @@ export default function WebsiteEditor() {
       return;
     }
 
+    setLoading(true);
+
     try {
-      setLoading(true);
       const response = await axios.patch(saveWebsiteUrl(websiteId), {
         sections
       })
@@ -72,6 +75,7 @@ export default function WebsiteEditor() {
         console.log("Sections updated:", response.data);
         toast.success("Successfully saved changes")
         clearAllWebsiteSections(); // remove data from localstorage
+        setEditedContentsPresentOnLocal(false);
         await fetchWebsite(); // fetch saved data from db
       }
     } catch (err) {
@@ -80,6 +84,30 @@ export default function WebsiteEditor() {
       setLoading(false);
     }
   };
+
+  // to unpublish website through alert model
+  const confirmationAction = async () => {
+    setLoading(true);
+
+    try {
+      const response = await axios.patch(unpublishWebsiteUrl(websiteId));
+      if (response.data.success) {
+        toast.success("The website has been unpublished");
+        setPublishSuccessful(false);
+      }
+    } catch (error) {
+      toast.error("Couldn't unpublish this site at the moment. Please try again later.");
+      console.log("Error in unpublishing website:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // check if contents are saved locally
+  useEffect(() => {
+    const sections = getAllWebsiteSections();
+    setEditedContentsPresentOnLocal(sections.length > 0);
+  }, [])
 
   if (!website || loading) return (
     <div className="flex justify-center items-center h-screen" >
@@ -90,16 +118,26 @@ export default function WebsiteEditor() {
   return (
     <div>
       <div className="mb-4 flex justify-end gap-2">
-        <Button className="ml-auto" onClick={updateWebsiteSections}>
-          Save All
-        </Button>
+        {editedContentsPresentOnLocal && (
+          <Button className="ml-auto" onClick={updateWebsiteSections}>
+            Save All
+          </Button>
+        )
+        }
 
         {website.published || publishSuccessful
           ?
-          <Link to={website.url} target="_blank" rel="noopener noreferrer">
-            <Button>View Published Site <Globe className='text-green-400 animate-pulse' /></Button>
-
-          </Link>
+          <>
+            <Link to={website.url} target="_blank" rel="noopener noreferrer">
+              <Button>View Published Site <Globe className='text-green-400 animate-pulse' /></Button>
+            </Link>
+            <Alert
+              triggerer={<Button>Unpublish Site <GlobeLock className='text-red-400' /></Button>}
+              title="Unpublish Website?"
+              description="Your site will be removed from live along with linked subdomain. Do you want to proceed?"
+              confirmationAction={confirmationAction}
+            />
+          </>
           :
           <>
             <Link to={`${import.meta.env.VITE_FRONTEND_BASE_URL}?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
@@ -120,7 +158,7 @@ export default function WebsiteEditor() {
         (() => {
           switch (website.baseTemplate.templateName) {
             case 'Photography Class':
-              return <PhotographyClassEdit data={website} />;
+              return <PhotographyClassEdit data={website} setEditedContentsPresentOnLocal={setEditedContentsPresentOnLocal}/>;
             default:
               return <div>Website not found</div>;
           }

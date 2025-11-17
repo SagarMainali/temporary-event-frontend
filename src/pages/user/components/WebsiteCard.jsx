@@ -22,7 +22,7 @@ const WebsiteCard = ({ publishedWebsite: { eventName, website } }) => {
                 </Link>
             </CardHeader>
             <CardContent className="p-6">
-                <img src="" alt="website_preview_image" className="max-h-[250px] w-full object-contain" />
+                <img src="/" alt="website_preview_image" className="max-h-[250px] w-full object-contain" />
             </CardContent>
         </Card>
     );

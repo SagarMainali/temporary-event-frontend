@@ -21,7 +21,6 @@ export const LoginProvider = ({ children }) => {
           setUserData(data);
         }
       } catch (err) {
-        console.log("User authentication failed:", err);
         setIsLoggedIn(false);
       } finally {
         setLoading(false);

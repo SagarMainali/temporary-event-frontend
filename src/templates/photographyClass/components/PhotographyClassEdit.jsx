@@ -11,7 +11,7 @@ import Form from '../sections/form'
 import Footer from '../sections/footer'
 import { getSectionData } from '../../utils/utils'
 
-export default function PhotographyClassEdit({ data }) {
+export default function PhotographyClassEdit({ data, setEditedContentsPresentOnLocal }) {
     console.log("🚀 ~ PhotographyClassEdit ~ data:", data);
 
     const { sections } = data;
@@ -29,6 +29,7 @@ export default function PhotographyClassEdit({ data }) {
     const handleUpdateHeroSection = (newSection) => {
         localStorage.setItem('photographyClassWebsite_HeroSection', JSON.stringify(newSection));
         setHeroSection(newSection);
+        setEditedContentsPresentOnLocal(true);
     };
 
     const [portfolioSection, setPortfolioSection] = useState(() =>
@@ -41,6 +42,7 @@ export default function PhotographyClassEdit({ data }) {
     const handleUpdatePortfolioSection = (newSection) => {
         localStorage.setItem('photographyClassWebsite_PortfolioSection', JSON.stringify(newSection));
         setPortfolioSection(newSection);
+        setEditedContentsPresentOnLocal(true);
     };
 
     const [scheduleSection, setScheduleSection] = useState(() =>
@@ -53,6 +55,7 @@ export default function PhotographyClassEdit({ data }) {
     const handleUpdateScheduleSection = (newSection) => {
         localStorage.setItem('photographyClassWebsite_ScheduleSection', JSON.stringify(newSection));
         setScheduleSection(newSection);
+        setEditedContentsPresentOnLocal(true);
     };
 
     return (

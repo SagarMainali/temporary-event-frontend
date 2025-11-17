@@ -4,6 +4,7 @@ import React from 'react'
 export default function Profile() {
 
     const { userData } = useLogin();
+    console.log("🚀 ~ Profile ~ userData:", userData);
 
     return (
         <div>

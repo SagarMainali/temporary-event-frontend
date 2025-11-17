@@ -1,13 +1,13 @@
-import { getWebsiteUrl, saveWebsiteUrl, unpublishWebsiteUrl } from '@/config/urls';
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import axios from "@/axiosConfig";
 import PhotographyClassEdit from '@/templates/photographyClass/components/PhotographyClassEdit';
-import { Loader2, Globe, GlobeLock, Save, Eye } from 'lucide-react';
+import { Loader2, Globe, GlobeLock, Save, Eye, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Alert from './components/Alert';
 import Modal from './components/Modal';
 import PublishWebsiteForm from './PublishWebsiteForm';
+import { deleteWebsiteUrl, getWebsiteUrl, saveWebsiteUrl, unpublishWebsiteUrl } from '@/config/urls';
 import { toast } from 'sonner';
 
 export default function WebsiteEditor() {
@@ -17,6 +17,8 @@ export default function WebsiteEditor() {
   const [publishSuccessful, setPublishSuccessful] = useState(false);
   const [editedContentsPresentOnLocal, setEditedContentsPresentOnLocal] = useState(false);
   console.log("🚀 ~ WebsiteEditor ~ website:", website);
+
+  const navigate = useNavigate();
 
   const fetchWebsite = async () => {
     try {
@@ -86,7 +88,7 @@ export default function WebsiteEditor() {
   };
 
   // to unpublish website through alert model
-  const confirmationAction = async () => {
+  const unpublishWebsite = async () => {
     setLoading(true);
 
     try {
@@ -104,6 +106,20 @@ export default function WebsiteEditor() {
     }
   }
 
+  // to delete website through alert model
+  const deleteWebsite = async () => {
+    try {
+      const response = await axios.delete(deleteWebsiteUrl(websiteId));
+      if (response.data.success) {
+        toast.success("The website has been deleted. You are being redirected to another page...");
+        setTimeout(() => navigate(`/events`), 3000);
+      }
+    } catch (error) {
+      toast.error("Couldn't delete this site at the moment. Please try again later.");
+      console.log("Error in deleting website:", error);
+    }
+  }
+
   // check if contents are saved locally
   useEffect(() => {
     const sections = getAllWebsiteSections();
@@ -118,17 +134,19 @@ export default function WebsiteEditor() {
 
   return (
     <div>
-      <div className="mb-4 flex justify-center gap-2">
-        {editedContentsPresentOnLocal && (
-          <Button onClick={updateWebsiteSections}>
-            Save All <Save />
-          </Button>
-        )
-        }
+      <div className="mb-4 flex justify-between">
+        <div>
+          {editedContentsPresentOnLocal && (
+            <Button onClick={updateWebsiteSections}>
+              Save All <Save className='animate-pulse' />
+            </Button>
+          )
+          }
+        </div>
 
         {website.published || publishSuccessful
           ?
-          <>
+          <div className='space-x-2'>
             <Link to={website.url} target="_blank" rel="noopener noreferrer">
               <Button>View Published Site <Globe className='text-green-400 animate-pulse' /></Button>
             </Link>
@@ -136,22 +154,29 @@ export default function WebsiteEditor() {
               triggerer={<Button>Unpublish Site <GlobeLock className='text-red-400' /></Button>}
               title="Unpublish Website?"
               description="Your site will be removed from live along with linked subdomain. Do you want to proceed?"
-              confirmationAction={confirmationAction}
+              confirmationAction={unpublishWebsite}
             />
-          </>
+          </div>
           :
-          <>
+          <div className='space-x-2'>
             <Link to={`${import.meta.env.VITE_FRONTEND_BASE_URL}?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
               <Button>View Saved Site <Eye /></Button>
             </Link>
             <Modal
               triggerer={<Button>Publish Website <Globe /></Button>}
-              title="Pubilsh Website"
-              description="Create a suitable subdomain name for your website"
+              title="Pubilsh this website"
+              description="Add a suitable subdomain name for your website. This subdomain will be used to access your website once it goes live."
               content={<PublishWebsiteForm websiteId={websiteId} setPublishSuccessful={setPublishSuccessful} />}
             />
-          </>
+          </div>
         }
+
+        <Alert
+          triggerer={<Button>Delete Website <Trash2 className='text-red-400' /></Button>}
+          title="Delete this website?"
+          description="Your website and its entire data will be deleted. Do you want to proceed?"
+          confirmationAction={deleteWebsite}
+        />
       </div>
 
       {/* Template rendering */}

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from "@/axiosConfig";
 import PhotographyClassEdit from '@/templates/photographyClass/components/PhotographyClassEdit';
-import { Loader2, Globe, GlobeLock } from 'lucide-react';
+import { Loader2, Globe, GlobeLock, Save, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Alert from './components/Alert';
 import Modal from './components/Modal';
@@ -76,7 +76,7 @@ export default function WebsiteEditor() {
         toast.success("Successfully saved changes")
         clearAllWebsiteSections(); // remove data from localstorage
         setEditedContentsPresentOnLocal(false);
-        await fetchWebsite(); // fetch saved data from db
+        await fetchWebsite(); // fetch latest data from db
       }
     } catch (err) {
       console.error("Request error:", err);
@@ -94,6 +94,7 @@ export default function WebsiteEditor() {
       if (response.data.success) {
         toast.success("The website has been unpublished");
         setPublishSuccessful(false);
+        await fetchWebsite(); // fetch latest data from db
       }
     } catch (error) {
       toast.error("Couldn't unpublish this site at the moment. Please try again later.");
@@ -117,10 +118,10 @@ export default function WebsiteEditor() {
 
   return (
     <div>
-      <div className="mb-4 flex justify-end gap-2">
+      <div className="mb-4 flex justify-center gap-2">
         {editedContentsPresentOnLocal && (
-          <Button className="ml-auto" onClick={updateWebsiteSections}>
-            Save All
+          <Button onClick={updateWebsiteSections}>
+            Save All <Save />
           </Button>
         )
         }
@@ -141,10 +142,10 @@ export default function WebsiteEditor() {
           :
           <>
             <Link to={`${import.meta.env.VITE_FRONTEND_BASE_URL}?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
-              <Button>View Saved Site</Button>
+              <Button>View Saved Site <Eye /></Button>
             </Link>
             <Modal
-              triggerer={<Button>Publish Website</Button>}
+              triggerer={<Button>Publish Website <Globe /></Button>}
               title="Pubilsh Website"
               description="Create a suitable subdomain name for your website"
               content={<PublishWebsiteForm websiteId={websiteId} setPublishSuccessful={setPublishSuccessful} />}
@@ -158,7 +159,7 @@ export default function WebsiteEditor() {
         (() => {
           switch (website.baseTemplate.templateName) {
             case 'Photography Class':
-              return <PhotographyClassEdit data={website} setEditedContentsPresentOnLocal={setEditedContentsPresentOnLocal}/>;
+              return <PhotographyClassEdit data={website} setEditedContentsPresentOnLocal={setEditedContentsPresentOnLocal} />;
             default:
               return <div>Website not found</div>;
           }

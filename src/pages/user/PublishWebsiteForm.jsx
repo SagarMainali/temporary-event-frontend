@@ -12,7 +12,7 @@ export default function PublishWebsiteForm({ closeModal, websiteId, setPublishSu
         e.preventDefault();
 
         try {
-            const response = await axios.post(publishWebsiteUrl(websiteId), {
+            const response = await axios.patch(publishWebsiteUrl(websiteId), {
                 subdomain
             });
 

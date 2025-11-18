@@ -5,7 +5,7 @@ import { publishWebsiteUrl } from '@/config/urls';
 import axios from "@/axiosConfig";
 import { toast } from 'sonner';
 
-export default function PublishWebsiteForm({ closeModal, websiteId, setPublishSuccessful }) {
+export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUrl }) {
     const [subdomain, setSubdomain] = useState('');
 
     const handleSubmission = async (e) => {
@@ -24,7 +24,7 @@ export default function PublishWebsiteForm({ closeModal, websiteId, setPublishSu
 
                 closeModal();
 
-                setPublishSuccessful(true);
+                setWebsiteUrl(publishedUrl);
 
                 toast.success(
                     <div className='flex gap-1 items-center'>

@@ -30,8 +30,10 @@ function ManagePublishedWebsites() {
             <div className="flex gap-8 flex-wrap">
                 {
                     publishedWebsites.length > 0
-                    &&
+                    ?
                     publishedWebsites.map((publishedWebsite) => <WebsiteCard publishedWebsite={publishedWebsite} key={publishedWebsite.website._id} />)
+                    :
+                    <div>No websites have been published yet.</div>
                 }
             </div>
         </div>

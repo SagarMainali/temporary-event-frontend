@@ -14,7 +14,7 @@ export default function WebsiteEditor() {
   const { websiteId } = useParams();
   const [website, setWebsite] = useState();
   const [loading, setLoading] = useState();
-  const [publishSuccessful, setPublishSuccessful] = useState(false);
+  const [websiteUrl, setWebsiteUrl] = useState(null);
   const [editedContentsPresentOnLocal, setEditedContentsPresentOnLocal] = useState(false);
   console.log("🚀 ~ WebsiteEditor ~ website:", website);
 
@@ -24,6 +24,7 @@ export default function WebsiteEditor() {
     try {
       const response = await axios.get(getWebsiteUrl(websiteId));
       setWebsite(response.data.data);
+      setWebsiteUrl(response.data.data.url);
     } catch (error) {
       console.error("Error fetching website", error);
     }
@@ -95,8 +96,7 @@ export default function WebsiteEditor() {
       const response = await axios.patch(unpublishWebsiteUrl(websiteId));
       if (response.data.success) {
         toast.success("The website has been unpublished");
-        setPublishSuccessful(false);
-        await fetchWebsite(); // fetch latest data from db
+        setWebsiteUrl(null);
       }
     } catch (error) {
       toast.error("Couldn't unpublish this site at the moment. Please try again later.");
@@ -144,10 +144,10 @@ export default function WebsiteEditor() {
           }
         </div>
 
-        {website.published || publishSuccessful
+        {websiteUrl
           ?
           <div className='space-x-2'>
-            <Link to={website.url} target="_blank" rel="noopener noreferrer">
+            <Link to={websiteUrl} target="_blank" rel="noopener noreferrer">
               <Button>View Published Site <Globe className='text-green-400 animate-pulse' /></Button>
             </Link>
             <Alert
@@ -166,7 +166,7 @@ export default function WebsiteEditor() {
               triggerer={<Button>Publish Website <Globe /></Button>}
               title="Pubilsh this website"
               description="Add a suitable subdomain name for your website. This subdomain will be used to access your website once it goes live."
-              content={<PublishWebsiteForm websiteId={websiteId} setPublishSuccessful={setPublishSuccessful} />}
+              content={<PublishWebsiteForm websiteId={websiteId} setWebsiteUrl={setWebsiteUrl} />}
             />
           </div>
         }

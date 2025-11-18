@@ -4,22 +4,23 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea";
 import DatePicker from "./DatePicker";
 import { useState } from "react";
-import { createEventUrl } from "@/config/urls";
+import { updateEventUrl } from "@/config/urls";
 import axios from "@/axiosConfig";
 import { toast } from "sonner"
 
-function EventForm({ closeModal, onAddSuccess }) {
+function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
+    const { _id, eventName, description, location, date, time, expectedNumberOfPeople, phone, email } = event;
 
     // Initializing state for form inputs
     const [formData, setFormData] = useState({
-        eventName: "",
-        description: "",
-        location: "",
-        date: "",
-        time: "",
-        expectedNumberOfPeople: "",
-        phone: "",
-        email: "",
+        eventName,
+        description,
+        location,
+        date,
+        time,
+        expectedNumberOfPeople,
+        phone,
+        email,
     });
 
     // Handling input changes
@@ -44,13 +45,13 @@ function EventForm({ closeModal, onAddSuccess }) {
         e.preventDefault();
 
         try {
-            const response = await axios.post(createEventUrl, {
+            const response = await axios.patch(updateEventUrl(_id), {
                 ...formData
             });
             if (response.data.success) {
-                const newEvent = response.data.data;
+                const updatedEvent = response.data.data;
 
-                toast.success("New event created successfully");
+                toast.success("Event updated successfully");
                 // Resetting the form
                 setFormData({
                     eventName: "",
@@ -63,13 +64,13 @@ function EventForm({ closeModal, onAddSuccess }) {
                     email: "",
                 });
                 closeModal();
-                onAddSuccess(newEvent);
-                console.log("Event created:\n", newEvent);
+                onUpdateSuccess(updatedEvent);
+                console.log("Event updated:\n", updatedEvent);
 
             }
         } catch (error) {
-            toast.error("Failed to create new event. Please try again later.")
-            console.error("Error creating event", error);
+            toast.error("Failed to update event. Please try again later.")
+            console.error("Error updating event", error);
         }
     };
 
@@ -171,13 +172,12 @@ function EventForm({ closeModal, onAddSuccess }) {
                 />
             </div>
 
-
             {/* Submit Button */}
             <div className="flex justify-center">
-                <Button type="submit">Create Event</Button>
+                <Button type="submit">Update Event</Button>
             </div>
         </form>
     );
 }
 
-export default EventForm;
+export default UpdateEventForm;

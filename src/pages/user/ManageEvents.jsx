@@ -1,12 +1,11 @@
 import Modal from "@/pages/user/components/Modal";
 import { Button } from "@/components/ui/button";
 import { IoMdAddCircle } from "react-icons/io";
-import EventForm from "@/pages/user/components/EventForm";
+import AddEventForm from "@/pages/user/components/AddEventForm";
 import EventCard from "@/pages/user/components/EventCard";
 import axios from "@/axiosConfig"
 import { useEffect, useState } from "react";
 import { fetchEventsUrl } from "@/config/urls";
-import { Link } from "react-router-dom";
 
 function ManageEvent() {
     const [events, setEvents] = useState([]);
@@ -28,15 +27,22 @@ function ManageEvent() {
 
     // update local state
     const onAddSuccess = (newEvent) => {
-        setEvents(prevEvents => {
-            return [newEvent, ...prevEvents]
-        })
+        setEvents(prevEvents => (
+            [newEvent, ...prevEvents]
+        ))
     }
 
     // update local state
     const onDeleteSuccess = (eventId) => {
         setEvents(prevEvents => (
             prevEvents.filter(event => event._id !== eventId)
+        ))
+    }
+
+    // update local state
+    const onUpdateSuccess = (updatedEvent) => {
+        setEvents(prevEvents => (
+            prevEvents.map(event => event._id === updatedEvent._id ? updatedEvent : event)
         ))
     }
 
@@ -48,15 +54,13 @@ function ManageEvent() {
                     title="Add New Event"
                     description="Add your upcoming"
                     triggerer={<Button><IoMdAddCircle /> New Event</Button>}
-                    content={<EventForm onAddSuccess={onAddSuccess} />}
+                    content={<AddEventForm onAddSuccess={onAddSuccess} />}
                 />
             </div>
 
             <div className="flex gap-8 flex-wrap">
                 {events.length > 0 && events.map((event) => (
-                    <Link to={`${event._id}`} key={event._id}>
-                        <EventCard event={event} onDeleteSuccess={onDeleteSuccess} />
-                    </Link>
+                    <EventCard event={event} key={event._id} onDeleteSuccess={onDeleteSuccess} onUpdateSuccess={onUpdateSuccess} />
                 ))}
             </div>
         </div>

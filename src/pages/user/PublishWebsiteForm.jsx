@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input'
 import { publishWebsiteUrl } from '@/config/urls';
 import axios from "@/axiosConfig";
 import { toast } from 'sonner';
+import { X } from 'lucide-react';
 
 export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUrl }) {
     const [subdomain, setSubdomain] = useState('');
@@ -33,10 +34,29 @@ export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUr
                             View Website
                         </a>
                     </div>,
-                    { duration: 5000 } // will stay until manually closed
+                    {
+                        duration: 7000,
+                        action: (
+                            <span className='rounded-full cursor-pointer hover:bg-gray-700 p-1'>
+                                <X onClick={() => toast.dismiss()} size={14} />
+                            </span>
+                        )
+                    }
                 );
             }
         } catch (error) {
+            if (error.response && error.response.status === 409) {
+                return toast.error(
+                    "This subdomain is already in use by another website. Please choose another subdomain.",
+                    {
+                        duration: 7000,
+                        action: (
+                            <span className='rounded-full cursor-pointer hover:bg-gray-700 p-1'>
+                                <X onClick={() => toast.dismiss()} size={14} />
+                            </span>
+                        )
+                    })
+            }
             console.error("Error publishing website", error);
         }
     }

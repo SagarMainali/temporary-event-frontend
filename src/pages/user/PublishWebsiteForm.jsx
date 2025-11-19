@@ -5,6 +5,7 @@ import { publishWebsiteUrl } from '@/config/urls';
 import axios from "@/axiosConfig";
 import { toast } from 'sonner';
 import { X } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 
 export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUrl }) {
     const [subdomain, setSubdomain] = useState('');
@@ -16,8 +17,6 @@ export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUr
             const response = await axios.patch(publishWebsiteUrl(websiteId), {
                 subdomain
             });
-
-            console.log("Website Publish Status:🔔🔔🔔", response.data.success);
 
             if (response.data.success) {
                 const publishedUrl = response.data.data.url;
@@ -63,12 +62,18 @@ export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUr
 
     return (
         <form className='flex flex-col gap-4 items-center' onSubmit={handleSubmission}>
-            <Input
-                type="text"
-                placeholder="Enter suitable subdomain name for your site"
-                value={subdomain}
-                onChange={(e) => setSubdomain(e.target.value)}
-            />
+            <div className='w-full flex border rounded-md focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50 overflow-hidden'>
+                <Input
+                    type="text"
+                    placeholder="Enter subdomain"
+                    value={subdomain}
+                    onChange={(e) => setSubdomain(e.target.value)}
+                    className="rounded-tr-none rounded-br-none border-none focus-visible:ring-0"
+                />
+                <Label className="px-2 bg-gray-200 text-gray-600">
+                    .{import.meta.env.VITE_DOMAIN_NAME}
+                </Label>
+            </div>
 
             <Button type="submit">Publish Website</Button>
         </form>

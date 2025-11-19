@@ -165,7 +165,7 @@ export default function WebsiteEditor() {
             <Modal
               triggerer={<Button>Publish Website <Globe /></Button>}
               title="Pubilsh this website"
-              description="Add a suitable subdomain name for your website. This subdomain will be used to access your website once it goes live."
+              description="Add a suitable subdomain for your website. This subdomain will be used to access your website once it goes live."
               content={<PublishWebsiteForm websiteId={websiteId} setWebsiteUrl={setWebsiteUrl} />}
             />
           </div>

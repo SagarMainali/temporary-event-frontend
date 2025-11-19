@@ -23,6 +23,7 @@ export default defineConfig({
     }),
     {
       name: 'website-rewrite',
+      // this is for development mode only, in production vercel.json decides which file to load
       configureServer(server) {
         server.middlewares.use(async (req, res, next) => {
           if (req.url.startsWith('/sites/')) {
@@ -61,9 +62,10 @@ export default defineConfig({
     },
   },
   server: {
-    host: '0.0.0.0',
+    // VERY IMPORTANT:::this domain must be mapped to 127.0.0.1 in your hosts file, also be sure to update this domain in .env
+    host: 'tempevents.local',
     port: 5173,
     strictPort: true,
-    allowedHosts: ['tempevents.local'],
+    // the dev server now runs on 'tempevents.local:5173' with this config
   },
 })

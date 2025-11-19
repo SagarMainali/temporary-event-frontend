@@ -1,6 +1,14 @@
 {
   "rewrites": [
-    { "source": "/sites/:slug([a-zA-Z0-9-]+)", "destination": "/website.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "sagarmainali.com.np" }],
+      "destination": "/index.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "(.*)\\.sagarmainali\\.com.np" }],
+      "destination": "/website.html"
+    }
   ]
 }

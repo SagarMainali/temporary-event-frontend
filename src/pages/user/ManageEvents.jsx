@@ -6,6 +6,7 @@ import EventCard from "@/pages/user/components/EventCard";
 import axios from "@/axiosConfig"
 import { useEffect, useState } from "react";
 import { fetchEventsUrl } from "@/config/urls";
+import CMSLoader from "@/components/loaders/CMSLoader";
 
 function ManageEvent() {
     const [events, setEvents] = useState([]);
@@ -44,6 +45,10 @@ function ManageEvent() {
         setEvents(prevEvents => (
             prevEvents.map(event => event._id === updatedEvent._id ? updatedEvent : event)
         ))
+    }
+
+    if (events.length === 0) {
+        return <CMSLoader />
     }
 
     return (

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import axios from "@/axiosConfig";
 import { createWebsiteUrl, getAllTemplatesUrl } from '@/config/urls';
 import TemplateCard from './components/TemplateCard';
-import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useParams, useNavigate } from 'react-router-dom';
 import Alert from './components/Alert';
 import { toast } from 'sonner';
+import CMSLoader from '@/components/loaders/CMSLoader';
 
 export default function TemplateSelector() {
     const [templates, setTemplates] = useState(null);
@@ -49,11 +49,7 @@ export default function TemplateSelector() {
     }
 
     if (loading) {
-        return (
-            <div className="flex justify-center items-center h-full">
-                <Loader2 className="animate-spin text-gray-600" size={40} />
-            </div>
-        );
+        return <CMSLoader />
     }
 
     const toggleTemplateSelect = (id) => setSelectedTemplate(prev => prev === id ? null : id);

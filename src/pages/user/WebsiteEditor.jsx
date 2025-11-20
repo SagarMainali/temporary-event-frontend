@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import axios from "@/axiosConfig";
 import PhotographyClassEdit from '@/templates/photographyClass/components/PhotographyClassEdit';
-import { Loader2, Globe, GlobeLock, Save, Eye, Trash2 } from 'lucide-react';
+import { Globe, GlobeLock, Save, Eye, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Alert from './components/Alert';
 import Modal from './components/Modal';
 import PublishWebsiteForm from './PublishWebsiteForm';
 import { deleteWebsiteUrl, getWebsiteUrl, saveWebsiteUrl, unpublishWebsiteUrl } from '@/config/urls';
 import { toast } from 'sonner';
+import CMSLoader from '@/components/loaders/CMSLoader';
 
 export default function WebsiteEditor() {
   const { websiteId } = useParams();
@@ -126,11 +127,9 @@ export default function WebsiteEditor() {
     setEditedContentsPresentOnLocal(sections.length > 0);
   }, [])
 
-  if (!website || loading) return (
-    <div className="flex justify-center items-center h-screen" >
-      <Loader2 className="animate-spin text-gray-600" size={40} />
-    </div>
-  )
+  if (!website || loading) {
+    return <CMSLoader />
+  }
 
   return (
     <div>

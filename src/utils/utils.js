@@ -1,8 +1,11 @@
 // extract subdomain from full url
 export const extractSubdomain = () => {
+    const domain = import.meta.env.VITE_DOMAIN_NAME;
+
     const hostname = window.location.hostname;
-    const parts = hostname.split(".");
-    return parts.length >= 3 ? parts[0] : null
+    const parts = hostname.split(`.${domain}`);
+
+    return parts[0] !== domain ? parts[0] : null
 };
 
 // get app mode and website id

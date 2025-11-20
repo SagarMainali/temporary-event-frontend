@@ -35,7 +35,7 @@ function PublicSite({ subdomain }) {
 
   if (!website) return (
     <div className="flex justify-center items-center h-screen" >
-      <h2>No website found with the provided subdomain. Please recheck your subdomain or fix the URL.</h2>
+      <h2>No website found with the provided subdomain <b>"{subdomain}"</b>. Please recheck your subdomain in the URL.</h2>
     </div>
   )
 

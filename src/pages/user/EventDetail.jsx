@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
 import { fetchEventUrl } from '@/config/urls';
 import axios from "@/axiosConfig";
+import CMSLoader from '@/components/loaders/CMSLoader';
 
 const EventDetail = () => {
   const { eventId } = useParams();
@@ -28,11 +28,7 @@ const EventDetail = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-full">
-        <Loader2 className="animate-spin text-gray-600" size={40} />
-      </div>
-    );
+    return <CMSLoader />
   }
 
   const handleCreateWebsite = () => {

@@ -79,23 +79,27 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
                     scheduleSectionId={scheduleSectionId}
                     section={heroSection}
                     onUpdateSection={handleUpdateHeroSection}
+                    editable={true}
                 />
 
                 <Portfolio
                     section={portfolioSection}
                     onUpdateSection={handleUpdatePortfolioSection}
+                    editable={true}
                 />
 
                 <Schedule
                     scheduleSectionId={scheduleSectionId}
                     section={scheduleSection}
                     onUpdateSection={handleUpdateScheduleSection}
+                    editable={true}
                 />
 
                 <div id={ticketSectionId} className='flex gap-10 justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
                     <Booking
                         section={bookingDetailsSection}
                         onUpdateSection={handleUpdateBookingDetailsSection}
+                        editable={true}
                     />
 
                     <Bookticket />

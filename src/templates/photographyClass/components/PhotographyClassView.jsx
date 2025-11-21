@@ -38,7 +38,10 @@ export default function PhotographyClassView({ data }) {
                 />
 
                 <div id={ticketSectionId} className='flex gap-20 max-lg:gap-10 items-center justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
-                    <Booking />
+                    <Booking
+                        editable={false}
+                        section={sections.find(section => section.sectionName === 'bookingDetails')}
+                    />
 
                     <Bookticket />
                 </div>

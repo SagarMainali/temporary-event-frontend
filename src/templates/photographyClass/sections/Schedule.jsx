@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Pen } from "lucide-react";
 import ScheduleEditor from "./editorForms/ScheduleEditor";
 
-const Schedule = ({ scheduleSectionId, section, onUpdateSection }) => {  //Receive formRef as prop from app.jsx
+const Schedule = ({ editable, scheduleSectionId, section, onUpdateSection }) => {  //Receive formRef as prop from app.jsx
   console.log("🚀 ~ Schedule ~ section:", section)
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -16,16 +16,19 @@ const Schedule = ({ scheduleSectionId, section, onUpdateSection }) => {  //Recei
   return (
     <div id={scheduleSectionId} className="mb-30 w-[100%] mx-auto relative">
 
-      <Modal
-        triggerer={
-          <Button className="flex absolute right-0">
-            <Pen size={16} />
-          </Button>
-        }
-        title="Schedule Section"
-        description="Edit schedule section contents"
-        content={<ScheduleEditor section={section} onUpdateSection={onUpdateSection} />}
-      />
+      {
+        editable &&
+        <Modal
+          triggerer={
+            <Button className="flex absolute right-0">
+              <Pen size={16} />
+            </Button>
+          }
+          title="Schedule Section"
+          description="Edit schedule section contents"
+          content={<ScheduleEditor section={section} onUpdateSection={onUpdateSection} />}
+        />
+      }
 
       <h2 className="mb-16 max-sm:mb-8 text-center text-2xl">{title}</h2>
 

@@ -87,7 +87,7 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
             },
         }));
 
-        toast.success("Item removed")
+        toast.success(" removed")
     }
 
     // Handling form submission
@@ -140,6 +140,7 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
                 />
             </div>
 
+            {/* for inclusives */}
             <div className="space-y-2">
                 <Label htmlFor="includedTitle">Inclusives</Label>
                 <Input
@@ -174,12 +175,13 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
 
                     <div className="flex justify-center">
                         <Button type="button" variant="outline" size="sm" onClick={() => handleItemAddition('included')}>
-                            <CirclePlus /> Add item
+                            <CirclePlus /> Add Item
                         </Button>
                     </div>
                 </div>
             </div>
 
+            {/* non inclusives */}
             <div className="space-y-2">
                 <Label htmlFor="notIncludedTitle">Non inclusives</Label>
                 <Input
@@ -214,7 +216,7 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
 
                     <div className="flex justify-center">
                         <Button type="button" variant="outline" size="sm" onClick={() => handleItemAddition('notIncluded')}>
-                            <CirclePlus /> Add item
+                            <CirclePlus /> Add Item
                         </Button>
                     </div>
                 </div>

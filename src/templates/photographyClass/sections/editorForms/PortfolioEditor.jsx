@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useState } from "react";
 import { toast } from "sonner"
+import { CirclePlus, X } from "lucide-react";
 
 function PortfolioEditor({ closeModal, section, onUpdateSection }) {
     const { title, socials } = section.content;
@@ -12,6 +13,7 @@ function PortfolioEditor({ closeModal, section, onUpdateSection }) {
         title,
         socials
     });
+    console.log("🚀 ~ PortfolioEditor ~ formData:", formData)
 
     // handling input changes
     const handleChange = (e) => {
@@ -33,6 +35,38 @@ function PortfolioEditor({ closeModal, section, onUpdateSection }) {
             }
         ));
     };
+
+    // add item
+    const handleItemAddition = () => {
+        const updatedList = [
+            ...formData.socials,
+            {
+                link: '',
+                title: '',
+                username: ''
+            }
+        ]
+
+        setFormData((prevData) => ({
+            ...prevData,
+            socials: updatedList,
+        }));
+
+        toast.success("Social Added")
+    }
+
+    // remove item
+    const handleItemRemoval = (index) => {
+        const oldList = [...formData.socials]
+        const updatedList = oldList.filter((_, i) => index !== i)
+
+        setFormData((prevData) => ({
+            ...prevData,
+            socials: updatedList,
+        }));
+
+        toast.success("Social Removed")
+    }
 
     // Handling form submission
     const handleSubmit = async (e) => {
@@ -73,7 +107,14 @@ function PortfolioEditor({ closeModal, section, onUpdateSection }) {
 
             {formData.socials.map((social, i) => (
                 <div key={i} className="mb-[30px] bg-white shadow-md py-2 px-6 rounded-md">
-                    <Label>Social {i + 1}</Label>
+                    <div className="flex justify-between">
+                        <Label>Social {i + 1}</Label>
+                        <X
+                            size={13}
+                            className="text-red-500 cursor-pointer transition-transform hover:scale-150"
+                            onClick={() => handleItemRemoval(i)}
+                        />
+                    </div>
                     <div className="flex gap-4 items-start mt-4">
                         <div className="mb-0 flex flex-col gap-1 items-start">
                             <Label className="font-semibold text-xs">Title</Label>
@@ -114,6 +155,12 @@ function PortfolioEditor({ closeModal, section, onUpdateSection }) {
                     </div>
                 </div>
             ))}
+
+            <div className="flex justify-center">
+                <Button type="button" variant="outline" size="sm" onClick={handleItemAddition}>
+                    <CirclePlus /> Add Socials
+                </Button>
+            </div>
 
             {/* Submit Button */}
             <div className="flex justify-center">

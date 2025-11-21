@@ -16,7 +16,7 @@ import Modal from "@/pages/user/components/Modal";
 import LandingPageEditor from "@/templates/photographyClass/sections/editorForms/LandingPageEditor";
 import { scrollToSection } from "@/templates/utils/utils";
 
-const LandingPage = ({ formSectionId, scheduleSectionId, section, onUpdateSection }) => {
+const LandingPage = ({ editable, formSectionId, scheduleSectionId, section, onUpdateSection }) => {
   console.log("🚀 ~ LandingPage ~ section:", section)
 
   const { title, description, bannerImage, buttonNames, topics } = section.content;
@@ -103,16 +103,18 @@ const LandingPage = ({ formSectionId, scheduleSectionId, section, onUpdateSectio
         </button>
       </div> */}
 
-      <Modal
-        triggerer={
-          <Button className="flex absolute right-0">
-            <Pen size={16} />
-          </Button>
-        }
-        title="Landing Page"
-        description="Edit landing page contents"
-        content={<LandingPageEditor section={section} onUpdateSection={onUpdateSection} />}
-      />
+      {editable &&
+        <Modal
+          triggerer={
+            <Button className="flex absolute right-0">
+              <Pen size={16} />
+            </Button>
+          }
+          title="Landing Page"
+          description="Edit landing page contents"
+          content={<LandingPageEditor section={section} onUpdateSection={onUpdateSection} />}
+        />
+      }
 
       <div className="landing_wrapper">
         {landingDetail.map((landing, index) => (

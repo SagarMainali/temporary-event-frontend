@@ -6,23 +6,26 @@ import { Button } from "@/components/ui/button";
 import { Pen } from "lucide-react";
 import BookingDetailsEditor from './editorForms/BookingDetailsEditor';
 
-const Booking = ({ section, onUpdateSection }) => {
+const Booking = ({ editable, section, onUpdateSection }) => {
     console.log("🚀 ~ Booking ~ section:", section)
 
     const { title, description, included, notIncluded } = section.content;
 
     return (
         <div className='w-[75%] max-sm:w-[100%] max-md:w-full max-lg:w-[80%] max-xl:w-[100%] max-2xl:w-[80%] relative'>
-            <Modal
-                triggerer={
-                    <Button className="flex absolute right-0">
-                        <Pen size={16} />
-                    </Button>
-                }
-                title="Landing Page"
-                description="Edit landing page contents"
-                content={<BookingDetailsEditor section={section} onUpdateSection={onUpdateSection} />}
-            />
+            {
+                editable &&
+                <Modal
+                    triggerer={
+                        <Button className="flex absolute right-0">
+                            <Pen size={16} />
+                        </Button>
+                    }
+                    title="Landing Page"
+                    description="Edit landing page contents"
+                    content={<BookingDetailsEditor section={section} onUpdateSection={onUpdateSection} />}
+                />
+            }
 
             <div className="booking-card">
                 <h2 className='mb-4'>{title}</h2>

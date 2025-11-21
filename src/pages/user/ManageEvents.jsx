@@ -1,12 +1,12 @@
 import Modal from "@/pages/user/components/Modal";
 import { Button } from "@/components/ui/button";
-import { IoMdAddCircle } from "react-icons/io";
 import AddEventForm from "@/pages/user/components/AddEventForm";
 import EventCard from "@/pages/user/components/EventCard";
 import axios from "@/axiosConfig"
 import { useEffect, useState } from "react";
 import { fetchEventsUrl } from "@/config/urls";
 import CMSLoader from "@/components/loaders/CMSLoader";
+import { CirclePlus } from "lucide-react";
 
 function ManageEvent() {
     const [events, setEvents] = useState([]);
@@ -58,7 +58,7 @@ function ManageEvent() {
                 <Modal
                     title="Add New Event"
                     description="Add your upcoming"
-                    triggerer={<Button><IoMdAddCircle /> New Event</Button>}
+                    triggerer={<Button><CirclePlus /> New Event</Button>}
                     content={<AddEventForm onAddSuccess={onAddSuccess} />}
                 />
             </div>

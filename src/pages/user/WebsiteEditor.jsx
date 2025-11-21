@@ -39,6 +39,7 @@ export default function WebsiteEditor() {
     'photographyClassWebsite_HeroSection',
     'photographyClassWebsite_PortfolioSection',
     'photographyClassWebsite_ScheduleSection',
+    'photographyClassWebsite_BookingDetailsSection',
     // to add more here...
   ];
 

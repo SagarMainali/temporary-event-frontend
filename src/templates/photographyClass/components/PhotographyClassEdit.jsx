@@ -58,32 +58,45 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
         setEditedContentsPresentOnLocal(true);
     };
 
+    const [bookingDetailsSection, setBookingDetailsSection] = useState(() =>
+        getSectionData(
+            'photographyClassWebsite_BookingDetailsSection',
+            sections.find(section => section.sectionName === 'bookingDetails')
+        )
+    )
+
+    const handleUpdateBookingDetailsSection = (newSection) => {
+        localStorage.setItem('photographyClassWebsite_BookingDetailsSection', JSON.stringify(newSection));
+        setBookingDetailsSection(newSection);
+        setEditedContentsPresentOnLocal(true);
+    };
+
     return (
         <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto p-4'>
             <div className='mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
                 <LandingPage
                     formSectionId={formSectionId}
                     scheduleSectionId={scheduleSectionId}
-                    editable={true}
                     section={heroSection}
                     onUpdateSection={handleUpdateHeroSection}
                 />
 
                 <Portfolio
-                    editable={true}
                     section={portfolioSection}
                     onUpdateSection={handleUpdatePortfolioSection}
                 />
 
                 <Schedule
                     scheduleSectionId={scheduleSectionId}
-                    editable={true}
                     section={scheduleSection}
                     onUpdateSection={handleUpdateScheduleSection}
                 />
 
-                <div id={ticketSectionId} className='flex gap-20 max-lg:gap-10 items-center justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
-                    <Booking />
+                <div id={ticketSectionId} className='flex gap-10 justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
+                    <Booking
+                        section={bookingDetailsSection}
+                        onUpdateSection={handleUpdateBookingDetailsSection}
+                    />
 
                     <Bookticket />
                 </div>

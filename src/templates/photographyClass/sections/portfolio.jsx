@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Pen } from "lucide-react";
 import PortfolioEditor from "./editorForms/PortfolioEditor";
 
-const Portfolio = ({ editable, section, onUpdateSection }) => {
+const Portfolio = ({ section, onUpdateSection }) => {
   console.log("🚀 ~ Portfolio ~ section:", section)
 
   const { title, socials } = section.content;
@@ -54,18 +54,16 @@ const Portfolio = ({ editable, section, onUpdateSection }) => {
   return (
     <div className="text-center items-center mb-40 relative">
 
-      {editable &&
-        <Modal
-          triggerer={
-            <Button className="flex absolute right-0">
-              <Pen size={16} />
-            </Button>
-          }
-          title="Portfolio Section"
-          description="Edit portfolio section contents"
-          content={<PortfolioEditor section={section} onUpdateSection={onUpdateSection} />}
-        />
-      }
+      <Modal
+        triggerer={
+          <Button className="flex absolute right-0">
+            <Pen size={16} />
+          </Button>
+        }
+        title="Portfolio Section"
+        description="Edit portfolio section contents"
+        content={<PortfolioEditor section={section} onUpdateSection={onUpdateSection} />}
+      />
 
       {portfolioDetail.map((folio, index) => (
         <div key={index}>

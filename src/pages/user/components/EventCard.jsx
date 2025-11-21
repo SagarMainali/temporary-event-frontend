@@ -6,13 +6,14 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EllipsisVertical, Pen, Trash } from "lucide-react";
+import { EllipsisVertical, Pencil, Trash } from "lucide-react";
 import axios from "@/axiosConfig";
 import { toast } from "sonner";
 import { deleteEventUrl } from "@/config/urls";
 import UpdateEventForm from "./UpdateEventForm";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
+import { getformattedDate } from "@/utils/utils";
 
 const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
     // ref attached to hidden Modal triggerer element
@@ -38,7 +39,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
 
     return (
         <Card className="py-0 w-[300px] rounded-xl shadow-lg gap-0 overflow-hidden">
-            <CardHeader className="flex justify-between items-center p-6 bg-accent">
+            <CardHeader className="flex justify-between items-center p-6 bg-accent mb-auto">
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800">{event.eventName}</h2>
                     <p className="text-sm text-gray-600 mt-1">{event.description}</p>
@@ -49,7 +50,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-32">
                         <DropdownMenuItem className="cursor-pointer text-sm p-0 rounded-md flex items-center" onClick={triggerEventEditModal}>
-                            <span className="w-full h-full flex items-center text-blue-600 p-2"><Pen className="mr-2 text-blue-600" size={16} /> Edit</span>
+                            <span className="w-full h-full flex items-center text-blue-600 p-2"><Pencil className="mr-2 text-blue-600" size={16} /> Edit</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer text-sm p-0 rounded-md flex items-center" onClick={deleteEvent}>
                             <span className="w-full h-full flex items-center text-red-600 p-2"><Trash className="mr-2 text-red-600" size={16} /> Delete</span>
@@ -65,7 +66,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     content={<UpdateEventForm event={event} onUpdateSuccess={onUpdateSuccess} />}
                 />
             </CardHeader>
-            <CardContent className="p-6 bg-white transition-all cursor-pointer hover:scale-[1.03] hover:shadow-2xl">
+            <CardContent className="p-6 bg-white transition-all cursor-pointer hover:scale-[1.03] hover:shadow-2xl h-full">
                 <Link to={event._id}>
                     <div className="mb-3">
                         <strong className="text-sm text-gray-600">Location:</strong>
@@ -73,7 +74,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     </div>
                     <div className="mb-3">
                         <strong className="text-sm text-gray-600">Date:</strong>
-                        <p className="text-sm text-gray-700">{new Date(event.date).toLocaleDateString()}</p>
+                        <p className="text-sm text-gray-700">{getformattedDate(event.date)}</p>
                     </div>
                     <div className="mb-3">
                         <strong className="text-sm text-gray-600">Time:</strong>
@@ -89,7 +90,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     </div>
                 </Link>
             </CardContent>
-            <CardFooter className="p-6 bg-accent flex items-center gap-1 font-semibold">
+            <CardFooter className="p-6 bg-accent flex items-center gap-1 font-semibold mt-auto">
                 <span>
                     Status:
                 </span>

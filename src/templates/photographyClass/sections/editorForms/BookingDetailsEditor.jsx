@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react";
 import { toast } from "sonner"
 import { Textarea } from "@/components/ui/textarea";
+import { CirclePlus, X } from 'lucide-react';
 
 function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
     const { title, description, included, notIncluded } = section.content;
@@ -57,6 +58,37 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
             }
         }
     };
+
+    // add item
+    const handleItemAddition = (field) => {
+        const updatedList = [...formData[field].list, '']
+
+        setFormData((prevData) => ({
+            ...prevData,
+            [field]: {
+                ...prevData[field],
+                list: updatedList
+            },
+        }));
+
+        toast.success("Item Added")
+    }
+
+    // remove item
+    const handleItemRemoval = (field, index) => {
+        const oldList = [...formData[field].list]
+        const updatedList = oldList.filter((_, i) => index !== i)
+
+        setFormData((prevData) => ({
+            ...prevData,
+            [field]: {
+                ...prevData[field],
+                list: updatedList
+            },
+        }));
+
+        toast.success("Item removed")
+    }
 
     // Handling form submission
     const handleSubmit = async (e) => {
@@ -123,7 +155,7 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
                     {
                         formData.included.list.map((item, index) => {
                             const itemNumber = index + 1;
-                            return <div className="flex gap-2 items-center">
+                            return <div key={itemNumber} className="flex gap-2 items-center">
                                 <span>{itemNumber}</span>
                                 <Input
                                     name={`included#${index}`}
@@ -131,9 +163,20 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
                                     onChange={handleChange}
                                     placeholder={`Inclusive # ${itemNumber}`}
                                 />
+                                <X
+                                    size={13}
+                                    className="text-red-500 cursor-pointer transition-transform hover:scale-150"
+                                    onClick={() => handleItemRemoval('included', index)}
+                                />
                             </div>
                         })
                     }
+
+                    <div className="flex justify-center">
+                        <Button type="button" variant="outline" size="sm" onClick={() => handleItemAddition('included')}>
+                            <CirclePlus /> Add item
+                        </Button>
+                    </div>
                 </div>
             </div>
 
@@ -152,7 +195,7 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
                     {
                         formData.notIncluded.list.map((item, index) => {
                             const itemNumber = index + 1;
-                            return <div className="flex gap-2 items-center">
+                            return <div key={itemNumber} className="flex gap-2 items-center">
                                 <span>{itemNumber}</span>
                                 <Input
                                     name={`notIncluded#${index}`}
@@ -160,9 +203,20 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
                                     onChange={handleChange}
                                     placeholder={`Non Inclusive # ${itemNumber}`}
                                 />
+                                <X
+                                    size={13}
+                                    className="text-red-500 cursor-pointer transition-transform hover:scale-150"
+                                    onClick={() => handleItemRemoval('notIncluded', index)}
+                                />
                             </div>
                         })
                     }
+
+                    <div className="flex justify-center">
+                        <Button type="button" variant="outline" size="sm" onClick={() => handleItemAddition('notIncluded')}>
+                            <CirclePlus /> Add item
+                        </Button>
+                    </div>
                 </div>
             </div>
 

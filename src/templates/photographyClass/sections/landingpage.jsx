@@ -35,7 +35,7 @@ const LandingPage = ({ editable, formSectionId, scheduleSectionId, section, onUp
 
   const landingDetail = [
     {
-      photo: bannerImage[0],
+      photo: bannerImage,
       photo2: landingphotomobile,
       title: title,
       description:

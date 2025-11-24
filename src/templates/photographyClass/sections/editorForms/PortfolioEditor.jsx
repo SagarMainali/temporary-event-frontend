@@ -13,8 +13,7 @@ function PortfolioEditor({ closeModal, section, onUpdateSection }) {
         title,
         socials
     });
-    console.log("🚀 ~ PortfolioEditor ~ formData:", formData)
-
+    
     // handling input changes
     const handleChange = (e) => {
         const { name, value } = e.target;

@@ -1,61 +1,61 @@
 import React from 'react';
-import hallroom from '../assets/images/hall.png';
+import Modal from '@/pages/user/components/Modal';
+import { Button } from '@/components/ui/button';
+import { Pen } from 'lucide-react';
+import LocationDetailsEditor from './editorForms/LocationDetailsEditor';
 
-const locationData = [
-  {
-    locationPhoto: hallroom,
-    eventLocation:
-      "Event Banquet, PatanDhoka, Lalitpur.",
-    book: "Find on Map",
-  },
-];
+const Location = ({ editable, section, onUpdateSection }) => {
+  console.log("🚀 ~ Location ~ section:", section)
 
-const Location = ({ Locationhead }) => {
-
+  const { title, images, googleMapLink } = section.content;
 
   return (
-    <div className="location mt-[100px]">
+    <div className="location mt-[100px] relative">
+
+      {
+        editable &&
+        <Modal
+          triggerer={
+            <Button className="flex absolute right-0">
+              <Pen size={16} />
+            </Button>
+          }
+          title="Landing Page"
+          description="Edit landing page contents"
+          content={<LocationDetailsEditor section={section} onUpdateSection={onUpdateSection} />}
+        />
+      }
 
       {/* Heading */}
       <h2 className="mb-8">
-        {Locationhead}
+        {title}
       </h2>
 
-
-
       {/* Location Cards */}
-      {locationData.map((location, index) => (
-        <div
-          className="bg-[var(--color-bglocation)] px-14 max-sm:px-6 max-lg:px-6 pt-14 max-sm:pt-6 max-lg:pt-6 pb-10 max-sm:pb-4 max-lg:pb-4 rounded-4xl border border-[var(--color-primary)] mb-25 max-[500px]:px-2 max-[500px]:pt-2 max-[500px]:pb-2 "
-          key={index}
-        >
-          <img
-            src={location.locationPhoto}
-            alt="Location"
-            className="w-full object-cover rounded-4xl mb-10 max-sm:mb-4 max-lg:mb-4"
-          />
+      <div
+        className="bg-[var(--color-bglocation)] px-14 max-sm:px-6 max-lg:px-6 pt-14 max-sm:pt-6 max-lg:pt-6 pb-10 max-sm:pb-4 max-lg:pb-4 rounded-4xl border border-[var(--color-primary)] mb-25 max-[500px]:px-2 max-[500px]:pt-2 max-[500px]:pb-2 "
+      >
+        <img
+          src={images[0]}
+          alt="Location"
+          className="w-full object-cover rounded-4xl mb-10 max-sm:mb-4 max-lg:mb-4 max-h-[600px]"
+        />
 
-          <div className="flex justify-between items-start">
-            <p className="italic font-bold max-[500px]:text-xs">
-              {location.eventLocation}
-            </p>
+        <div className="flex justify-between items-start">
+          <p className="italic font-bold max-[500px]:text-xs">
+            Event Banquet, PatanDhoka, Lalitpur
+          </p>
 
-            <a
-              href="https://www.google.com/maps/@27.7247547,85.3208659,3992m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D"
-              className="font-bold hover:underline max-[500px]:text-xs"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {location.book}
-            </a>
-
-
-
-          </div>
-
-
+          <a
+            href={googleMapLink}
+            className="font-bold hover:underline max-[500px]:text-xs"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Google Map
+          </a>
         </div>
-      ))}
+      </div>
     </div>
   );
 };

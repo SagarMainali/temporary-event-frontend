@@ -71,6 +71,32 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
         setEditedContentsPresentOnLocal(true);
     };
 
+    const [ticketDetailsSection, setTicketDetailsSection] = useState(() =>
+        getSectionData(
+            'photographyClassWebsite_TicketDetailsSection',
+            sections.find(section => section.sectionName === 'ticketDetails')
+        )
+    )
+
+    const handleUpdateTicketDetailsSection = (newSection) => {
+        localStorage.setItem('photographyClassWebsite_TicketDetailsSection', JSON.stringify(newSection));
+        setTicketDetailsSection(newSection);
+        setEditedContentsPresentOnLocal(true);
+    };
+
+    const [locaionDetailsSection, setLocaionDetailsSection] = useState(() =>
+        getSectionData(
+            'photographyClassWebsite_LocationDetailsSection',
+            sections.find(section => section.sectionName === 'locationDetails')
+        )
+    )
+
+    const handleUpdateLocaionDetailsSectionSection = (newSection) => {
+        localStorage.setItem('photographyClassWebsite_LocationDetailsSection', JSON.stringify(newSection));
+        setLocaionDetailsSection(newSection);
+        setEditedContentsPresentOnLocal(true);
+    };
+
     return (
         <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto p-4'>
             <div className='mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
@@ -102,10 +128,18 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
                         editable={true}
                     />
 
-                    <Bookticket />
+                    <Bookticket
+                        section={ticketDetailsSection}
+                        onUpdateSection={handleUpdateTicketDetailsSection}
+                        editable={true}
+                    />
                 </div>
 
-                <Location Locationhead="Location" />
+                <Location
+                    section={locaionDetailsSection}
+                    onUpdateSection={handleUpdateLocaionDetailsSectionSection}
+                    editable={true}
+                />
 
                 <Carousel />
 

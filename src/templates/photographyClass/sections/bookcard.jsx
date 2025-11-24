@@ -1,14 +1,22 @@
+import Modal from "@/pages/user/components/Modal";
 import qr from "../assets/images/bar-code.svg";
 import esewa from "../assets/images/esewa.svg";
 import ime from "../assets/images/ime.svg";
 import khalti from "../assets/images/khalti.svg";
+import TicketDetailsEditor from "./editorForms/TicketDetailsEditor";
+import { Button } from "@/components/ui/button";
+import { Pen } from "lucide-react";
 
-const Bookticket = () => {
+const Bookticket = ({ editable, section, onUpdateSection }) => {
+  console.log("🚀 ~ Bookticket ~ section:", section)
+
+  const { ticketPrice, eventDays } = section.content;
+
   const bookDetail = [
     {
       barcode: qr,
-      day: "3 Day Plan",
-      price: "Rs. 3500 /-",
+      day: `${eventDays} Day${eventDays > 1 ? 's' : ''} Plan`,
+      price: ticketPrice,
       date: "Apr 23rd - Apr 26th",
       location: "Location: Event Banquet, Lalitpur",
       organiser: "Organiser: Lotus Events",
@@ -23,24 +31,30 @@ const Bookticket = () => {
     },
   ];
 
-   
+
   return (
-    <>
-  
-
- 
+    <div className="relative">
+      {
+        editable &&
+        <Modal
+          triggerer={
+            <Button className="flex absolute left-0">
+              <Pen size={16} />
+            </Button>
+          }
+          title="Landing Page"
+          description="Edit landing page contents"
+          content={<TicketDetailsEditor section={section} onUpdateSection={onUpdateSection} />}
+        />
+      }
       {bookDetail.map((ticket, index) => (
-
         <div className="card w-[450px] p-10 max-md:p-8 max-sm:p-5 border border-[var(--color-primary)] rounded-tr-4xl rounded-bl-4xl bg-[var(--bgbook-card)] max-[500px]:w-full" key={index}>
-
-
           <div className="flex justify-end pb-5">
             <img src={ticket.barcode} alt="Barcode" />
           </div>
 
-
           <h3>{ticket.day}</h3>
-          <h2 className="pb-18 max-sm:pb-8 max-md:pb-8">{ticket.price}</h2>
+          <h2 className="pb-18 max-sm:pb-8 max-md:pb-8">Rs. {ticket.price} /-</h2>
 
           <p className="pb-2">{ticket.date}</p>
           <p className="pb-2">{ticket.location}</p>
@@ -64,18 +78,15 @@ const Bookticket = () => {
               <img
                 key={i}
                 className=" w-[100px] max-sm:w-[80px] h-[40px]"
-                
+
                 src={method.logo}
                 alt={method.name}
               />
             ))}
           </div>
-
-
         </div>
-
       ))}
-    </>
+    </div>
   );
 };
 

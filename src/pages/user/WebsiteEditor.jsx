@@ -40,6 +40,8 @@ export default function WebsiteEditor() {
     'photographyClassWebsite_PortfolioSection',
     'photographyClassWebsite_ScheduleSection',
     'photographyClassWebsite_BookingDetailsSection',
+    'photographyClassWebsite_TicketDetailsSection',
+    'photographyClassWebsite_LocationDetailsSection',
     // to add more here...
   ];
 
@@ -114,6 +116,7 @@ export default function WebsiteEditor() {
       const response = await axios.delete(deleteWebsiteUrl(websiteId));
       if (response.data.success) {
         toast.success("The website has been deleted. You are being redirected to another page...");
+        clearAllWebsiteSections();
         setTimeout(() => navigate(`/events`), 3000);
       }
     } catch (error) {

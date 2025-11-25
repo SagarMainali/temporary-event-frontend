@@ -43,19 +43,30 @@ export default function PhotographyClassView({ data }) {
                         section={sections.find(section => section.sectionName === 'bookingDetails')}
                     />
 
-                    <Bookticket />
+                    <Bookticket
+                        editable={false}
+                        section={sections.find(section => section.sectionName === 'ticketDetails')}
+                    />
                 </div>
 
                 <div>
-                    <Location Locationhead="Location" />
+                    <Location
+                        editable={false}
+                        section={sections.find(section => section.sectionName === 'locationDetails')}
+                    />
                 </div>
 
-                <Carousel />
+                <Carousel
+                    editable={false}
+                    section={sections.find(section => section.sectionName === 'testimonials')}
+                />
 
                 <Form
+                    section={sections.find(section => section.sectionName === 'contactForm')}
                     title="Register for Pre-Booking"
                     formSectionId={formSectionId}
                     ticketSectionId={ticketSectionId}
+                    organizerEmail={data.belongsToThisEvent.email}
                 />
 
                 <Footer

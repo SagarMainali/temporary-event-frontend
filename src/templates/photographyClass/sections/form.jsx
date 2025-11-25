@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import emailjs from "emailjs-com";
 import formimage from "../assets/images/fbi.png";
 import { scrollToSection } from "@/templates/utils/utils";
+import { toast } from "sonner";
+import axios from "@/axiosConfig";
+import { sendEmailUrl } from "@/config/urls";
+import CMSLoader from "@/components/loaders/CMSLoader";
 
-const Form = ({ title, formSectionId, ticketSectionId }) => { // Receive formRef as prop
+const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section }) => {
+  console.log("🚀 ~ Form ~ section:", section)
 
-  // this above  scrollToBuycard for "BUY NOW" ticket up scrolling
+  const { image } = section.content;
 
+  const [submitting, setSubmitting] = useState(false);
 
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -14,53 +19,44 @@ const Form = ({ title, formSectionId, ticketSectionId }) => { // Receive formRef
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setSubmitting(true)
 
     if (!firstname || !lastname || !email || !phone || !description) {
-      alert("Please fill in all fields.");
+      toast.error("Please fill in all the required fields");
       return;
     }
 
-    // EmailJS send method
-    emailjs
-      .send(
-        "service_ys2onepage", // replace with your EmailJS service ID
-        "template_y610agb", // replace with your EmailJS template ID
-        {
-          firstname: firstname,
-          lastname: lastname,
-          email: email,
-          phone: phone,
-          description: description,
-        },
-        "yHjjm7pAq80l3eQcy" // replace with your EmailJS public key
-      )
-      .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-          alert("Form submitted successfully!");
-          setFirstname("");
-          setLastname("");
-          setEmail("");
-          setPhone("");
-          setDescription("");
-        },
-        (err) => {
-          console.error("FAILED...", err);
-          alert("Something went wrong. Please try again.");
-        }
-      );
-  };
+    try {
+      const response = await axios.post(sendEmailUrl, {
+        firstname,
+        lastname,
+        phone,
+        description,
+        visitorEmail: email,
+        organizerEmail
+      })
 
-  // const handleViewTickets = () => {
-  //   alert("View Tickets Clicked");
-  // };
+      if (response.data.success) {
+        toast.success('Email sent successfully')
+        setFirstname('')
+        setLastname('')
+        setEmail('')
+        setPhone('')
+        setDescription('')
+      }
+    } catch (err) {
+      toast.error("Failed to send email.")
+      console.error("Failed to send email:", err)
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
-    <div id={formSectionId} className="mt-[100px] mb-[100px] "> {/* Attach ref here and fix the className */}
+    <div id={formSectionId} className="mt-[100px] mb-[100px] ">
 
-      {/* <h2 className="mb-6">{title}</h2> */}
       <div className="flex items-center justify-between gap-20 max-sm:flex-col max-md:flex-col max-lg:flex-col">
         <div className="w-[60%] max-sm:w-full max-md:w-[80%] max-lg:w-[90%]">
           <form onSubmit={handleSubmit}>
@@ -118,11 +114,6 @@ const Form = ({ title, formSectionId, ticketSectionId }) => { // Receive formRef
             />
 
             <div className="flex gap-4 mt-6">
-              <button type="submit" className="btn_main w-full capitalize">
-                Register now
-              </button>
-
-
               <button
                 type="button"
                 onClick={() => scrollToSection(ticketSectionId)}
@@ -131,15 +122,19 @@ const Form = ({ title, formSectionId, ticketSectionId }) => { // Receive formRef
                 View Tickets
               </button>
 
-
+              <button type="submit" className="btn_main w-full capitalize">
+                {
+                  submitting
+                    ? <CMSLoader />
+                    : 'register now'
+                }
+              </button>
             </div>
           </form>
         </div>
 
         <div>
-          <img className="w-[600px] h-[500px] object-cover rounded-xs max-sm:object-none max-sm:hidden max-lg:w-full" src={formimage} alt="booking form image..."
-
-          />
+          <img className="w-[600px] h-[500px] object-cover rounded-xs max-sm:object-none max-sm:hidden max-lg:w-full" src={image} alt="booking form image..." />
         </div>
       </div>
     </div>

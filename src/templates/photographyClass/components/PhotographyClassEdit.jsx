@@ -161,9 +161,11 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
                 />
 
                 <Form
+                    section={sections.find(section => section.sectionName === 'contactForm')}
                     title="Register for Pre-Booking"
                     formSectionId={formSectionId}
                     ticketSectionId={ticketSectionId}
+                    organizerEmail={data.belongsToThisEvent.email}
                 />
 
                 <Footer

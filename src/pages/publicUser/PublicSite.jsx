@@ -3,6 +3,7 @@ import { getPublicWebsiteUrl } from '@/config/urls';
 import PhotographyClassView from '@/templates/photographyClass/components/PhotographyClassView'
 import { Loader2 } from 'lucide-react';
 import axios from "@/axiosConfig"
+import { Toaster } from "sonner";
 
 function PublicSite({ subdomain }) {
   console.log("🚀 ~ PublicSite ~ subdomain:", subdomain)
@@ -41,7 +42,16 @@ function PublicSite({ subdomain }) {
 
   return (
     // from switch case render corresponding Template Component through website.baseTemplate.templateName and pass website data
-    <PhotographyClassView data={website} />
+    <>
+      <PhotographyClassView data={website} />
+      <Toaster
+        theme="dark" // light, dark or system
+        toastOptions={{
+          className: "bg-background text-foreground border border-border shadow-lg rounded-md",
+          duration: 1500,
+        }}
+      />
+    </>
   )
 }
 

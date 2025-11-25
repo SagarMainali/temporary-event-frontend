@@ -190,7 +190,7 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
 
             <div className="flex justify-center">
                 <Button type="button" variant="outline" size="sm" onClick={handleItemAddition}>
-                    <CirclePlus /> Add Item
+                    <CirclePlus /> Add Testimonial
                 </Button>
             </div>
 

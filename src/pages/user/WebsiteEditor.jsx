@@ -10,6 +10,7 @@ import PublishWebsiteForm from './PublishWebsiteForm';
 import { deleteWebsiteUrl, getWebsiteUrl, saveWebsiteUrl, unpublishWebsiteUrl } from '@/config/urls';
 import { toast } from 'sonner';
 import CMSLoader from '@/components/loaders/CMSLoader';
+import { sectionKeys } from '@/templates/photographyClass/constants';
 
 export default function WebsiteEditor() {
   const { websiteId } = useParams();
@@ -34,16 +35,6 @@ export default function WebsiteEditor() {
   useEffect(() => {
     fetchWebsite();
   }, []);
-
-  const sectionKeys = [
-    'photographyClassWebsite_HeroSection',
-    'photographyClassWebsite_PortfolioSection',
-    'photographyClassWebsite_ScheduleSection',
-    'photographyClassWebsite_BookingDetailsSection',
-    'photographyClassWebsite_TicketDetailsSection',
-    'photographyClassWebsite_LocationDetailsSection',
-    // to add more here...
-  ];
 
   // get all sections of photographyClass website from localstorage
   const getAllWebsiteSections = () => {

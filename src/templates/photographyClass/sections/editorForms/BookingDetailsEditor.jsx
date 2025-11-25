@@ -87,7 +87,7 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
             },
         }));
 
-        toast.success(" removed")
+        toast.success("Item removed")
     }
 
     // Handling form submission
@@ -166,7 +166,7 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
                                 />
                                 <X
                                     size={13}
-                                    className="text-red-500 cursor-pointer transition-transform hover:scale-150"
+                                    className="text-destructive cursor-pointer transition-transform hover:scale-150"
                                     onClick={() => handleItemRemoval('included', index)}
                                 />
                             </div>

@@ -97,6 +97,19 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
         setEditedContentsPresentOnLocal(true);
     };
 
+    const [testimonialsSection, setTestimonialsSection] = useState(() =>
+        getSectionData(
+            'photographyClassWebsite_TestimonialsSection',
+            sections.find(section => section.sectionName === 'testimonials')
+        )
+    )
+
+    const handleUpdateTestimonialsSectionSection = (newSection) => {
+        localStorage.setItem('photographyClassWebsite_TestimonialsSection', JSON.stringify(newSection));
+        setTestimonialsSection(newSection);
+        setEditedContentsPresentOnLocal(true);
+    };
+
     return (
         <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto p-4'>
             <div className='mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
@@ -141,7 +154,11 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
                     editable={true}
                 />
 
-                <Carousel />
+                <Carousel
+                    section={testimonialsSection}
+                    onUpdateSection={handleUpdateTestimonialsSectionSection}
+                    editable={true}
+                />
 
                 <Form
                     title="Register for Pre-Booking"

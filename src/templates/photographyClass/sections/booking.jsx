@@ -21,8 +21,8 @@ const Booking = ({ editable, section, onUpdateSection }) => {
                             <Pen size={16} />
                         </Button>
                     }
-                    title="Landing Page"
-                    description="Edit landing page contents"
+                    title="Booking Details"
+                    description="Edit booking details"
                     content={<BookingDetailsEditor section={section} onUpdateSection={onUpdateSection} />}
                 />
             }

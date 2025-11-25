@@ -15,48 +15,32 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import "./carousel.css";
+import Modal from "@/pages/user/components/Modal";
+import { Button } from "@/components/ui/button";
+import { Pen } from "lucide-react";
+import TestimonialsEditor from "./editorForms/TestimonialsEditor";
 
-const Carousel = () => {
-    const carouseList = [
-        {
-            carouseTeamPhoto: gone,
-            carouseTitle:
-                "Absolutely magical! Working with Shuttersoul was an unforgettable experience. From the moment we met, they made us feel completely at ease — like we were simply spending time with friends. The entire shoot felt natural and fun, and the results... breathtaking. Every photo captured real emotion, genuine connection, and stunning detail. We couldn’t be happier with how it all turned out. Truly beyond our expectations.",
-            carouseTeamName: "Jason Roy",
-            carouseTeamPost: "UI/UX Designer",
-        },
-        {
-            carouseTeamPhoto: gtwo,
-            carouseTitle:
-                "Absolutely magical! Working with Shuttersoul was an unforgettable experience. From the moment we met, they made us feel completely at ease — like we were simply spending time with friends. The entire shoot felt natural and fun, and the results... breathtaking.",
-            carouseTeamName: "Ishraq Khan",
-            carouseTeamPost: "Founder & CEO @Kodezi",
-        },
-        {
-            carouseTeamPhoto: gthree,
-            carouseTitle:
-                "Absolutely magical! Working with Shuttersoul was an unforgettable experience. From the moment we met, they made us feel completely at ease — like we were simply spending time with friends. The entire shoot felt natural and fun, and the results... breathtaking.",
-            carouseTeamName: "Sarah Johnson",
-            carouseTeamPost: "Creative Director",
-        },
-        {
-            carouseTeamPhoto: gfour,
-            carouseTitle:
-                "Absolutely magical! Working with Shuttersoul was an unforgettable experience. From the moment we met, they made us feel completely at ease — like we were simply spending time with friends. The entire shoot felt natural and fun, and the results... breathtaking.",
-            carouseTeamName: "Michael Smith",
-            carouseTeamPost: "Photographer",
-        },
-        {
-            carouseTeamPhoto: gfive,
-            carouseTitle:
-                "Absolutely magical! Working with Shuttersoul was an unforgettable experience. From the moment we met, they made us feel completely at ease — like we were simply spending time with friends. The entire shoot felt natural and fun, and the results... breathtaking.",
-            carouseTeamName: "Emily Davis",
-            carouseTeamPost: "Marketing Manager",
-        },
-    ];
+const Carousel = ({ editable, section, onUpdateSection }) => {
+    console.log("🚀 ~ Carousel ~ section:", section)
+
+    const { testimonials } = section.content;
 
     return (
-        <div className="carousel relative">
+        <div className="relative">
+            {
+                editable &&
+                <Modal
+                    triggerer={
+                        <Button className="flex absolute right-0 z-50">
+                            <Pen size={16} />
+                        </Button>
+                    }
+                    title="Testimonials Section"
+                    description="Edit testimonials section contents"
+                    content={<TestimonialsEditor section={section} onUpdateSection={onUpdateSection} />}
+                />
+            }
+
             <Swiper
                 modules={[Navigation, Autoplay]}
                 slidesPerView={1}
@@ -71,47 +55,34 @@ const Carousel = () => {
                     pauseOnMouseEnter: true, // optional: pause when hover
                 }}
             >
-                {carouseList.map((item, index) => (
+                {testimonials.map((item, index) => (
                     <SwiperSlide key={index}>
                         <div className="flex items-center gap-10 p-6 max-sm:p-0 max-md:p-0 max-lg:p-0 max-sm:flex-col max-md:flex-col max-lg:flex-col">
-
-
                             {/* Left Side - Image */}
-                            <div className="bg-[var(--color-primary)] max-sm:bg-transparent max-md:bg-transparent max-lg:bg-transparent rounded-2xl w-full">
+                            <div className="bg-[var(--color-primary)] max-sm:bg-transparent max-md:bg-transparent max-lg:bg-transparent rounded-2xl w-1/3 border border-orange-500">
                                 <img
-                                    src={item.carouseTeamPhoto}
-                                    alt={item.carouseTeamName}
-                                    className="w-[300px] h-[350px] max-sm:h-[300px] object-cover rounded-2xl max-sm:w-[300px] max-sm:object-fill"
+                                    src={item.photo}
+                                    alt={item.name}
+                                    className="object-cover rounded-2xl"
                                 />
                             </div>
 
                             {/* Right Side - Quote & Text */}
-                            <div>
-                              
-
-                               
+                            <div className="w-2/3">
                                 <BsQuote className="text-[50px] text-blue-500 mb-4" />
 
                                 <p className="text-lg uppercase font-bold mb-6">
-                                    {item.carouseTitle}
+                                    {item.review}
                                 </p>
 
-                               
-
-
                                 <h6 className="font-extrabold text-base uppercase">
-                                    {item.carouseTeamName}
+                                    {item.name}
                                 </h6>
-                                <p className="text-[var(--text-primary)] text-sm">{item.carouseTeamPost}</p>
-
+                                <p className="text-[var(--text-primary)] text-sm">{item.profession}</p>
                             </div>
-
                         </div>
-
                     </SwiperSlide>
                 ))}
-
-
 
                 {/* Custom Navigation Arrows inside Swiper */}
                 <div className="custom-swiper-buttons-wrapper">
@@ -123,8 +94,6 @@ const Carousel = () => {
                     </button>
                 </div>
             </Swiper>
-
-
         </div>
     );
 };

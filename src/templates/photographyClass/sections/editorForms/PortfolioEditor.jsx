@@ -110,7 +110,7 @@ function PortfolioEditor({ closeModal, section, onUpdateSection }) {
                         <Label>Social {i + 1}</Label>
                         <X
                             size={13}
-                            className="text-red-500 cursor-pointer transition-transform hover:scale-150"
+                            className="text-destructive cursor-pointer transition-transform hover:scale-150"
                             onClick={() => handleItemRemoval(i)}
                         />
                     </div>

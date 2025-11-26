@@ -62,7 +62,7 @@ function App() {
             <Route path="/events/:eventId/edit-website/:websiteId" element={<WebsiteEditor />} />
             
             <Route path="/websites" element={<ManageWebsites />} />
-            <Route path="/emails" element={<h3>*TO TRACK EMAILS HERE*</h3>} />
+            <Route path="/leads" element={<h3>*TO MANAGE USERS THAT SUBMITTED FORM*</h3>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<h3>*TO HANDLE SETTINGS HERE*</h3>} />
           </Route>

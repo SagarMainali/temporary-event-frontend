@@ -15,7 +15,7 @@ export const sidebarSections = [
     {
         title: "Tracking",
         items: [
-            { label: "Emails", href: "/emails" }
+            { label: "Leads", href: "/leads" }
         ],
     },
     {

@@ -154,7 +154,7 @@ export default function WebsiteEditor() {
           :
           <div className='space-x-2'>
             <Link to={`${import.meta.env.VITE_FRONTEND_BASE_URL}?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
-              <Button>View Saved Site <Eye /></Button>
+              <Button>Preview Website<Eye /></Button>
             </Link>
             <Modal
               triggerer={<Button>Publish Website <Globe /></Button>}

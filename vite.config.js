@@ -27,11 +27,7 @@ export default defineConfig({
     },
   },
   server: {
-    // VERY IMPORTANT:::this domain must be mapped to 127.0.0.1 in your hosts file, also be sure to update this domain in .env
-    host: 'tempevents.local',
     port: 5173,
     strictPort: true,
-    allowedHosts: ['test.tempevents.local']
-    // the dev server now runs on 'tempevents.local:5173' with this config
   },
 })

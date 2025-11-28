@@ -58,7 +58,7 @@ export default function WebsiteEditor() {
     const sections = getAllWebsiteSections();
 
     if (sections.length === 0) {
-      toast.warning("Nothnig to save. You have not edited any section.");
+      toast.warning("Nothing to save. You have not edited any section.");
       return;
     }
 

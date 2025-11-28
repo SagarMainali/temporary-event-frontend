@@ -1,7 +1,7 @@
 // ----------------- 🔐 Auth API Routes -----------------
 export const registerUserUrl = '/auth/register'
 export const loginUrl = '/auth/login'
-export const checkAuthStateUrl = 'auth/checkAuthState'
+export const checkAuthStateUrl = '/auth/checkAuthState'
 export const logoutUrl = '/auth/logout'
 export const forgotPasswordUrl = '/auth/forgot-password'
 export const resetPasswordUrl = '/auth/reset-password'

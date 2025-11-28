@@ -1,13 +1,13 @@
-// src/axiosConfig.js
 import axios from "axios";
+import { toast } from "sonner";
 
-// // Set the base URL for all requests (update this to your backend URL)
+// set the base backend URL for all requests
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
 
-// Enable sending cookies with each request (important for authentication)
+// set cookies in every request
 axios.defaults.withCredentials = true;
 
-// Request Interceptor: Automatically attach access token (via cookies)
+// Request Interceptor
 axios.interceptors.request.use(
   (config) => {
     // Axios will automatically include the cookies (like access_token, refresh_token) with every request.
@@ -16,32 +16,43 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Handle token expiration
-axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    // If a 401 Unauthorized error is returned, it might be because the access token expired
-    if (error.response && error.response.status === 401) {
-      // Try to refresh the access token using the refresh token
-      try {
-        const refreshResponse = await axios.post("/auth/refresh-token");
+// dedicated axios instance for refreshing access token (see the reason where its being used)
+const refreshAxios = axios.create({
+  baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
+  withCredentials: true
+})
 
-        // If the refresh was successful, retry the original request
-        if (refreshResponse.data.success) {
-          // Retry the original request with the new access token (from the cookies)
-          const originalRequest = error.config;
-          return axios(originalRequest);
+// Response Interceptor
+axios.interceptors.response.use(
+  (response) => response, // positive response handling -> return response as it is without doing anything
+  async (error) => { // errored response handling
+    const originalRequest = error.config
+
+    // status 401 is invalid/expired token, this condition handles token expiration and its refreshing
+    if (error.response.status === 401 && error.response.data.message === 'Token has expired') {
+      try {
+        await refreshAxios.post("/auth/refresh-token");
+        // for refresh-token api, use dedicated axios instance that has no interceptors
+        // using the same axios instance would trigger this interceptor again creating recursion which are more prone to bugs if not handeled properly
+        // for example: if the refresh-token api returns error this interceptor would run again creating nested interceptor(recursion), only after its full execution it would move to catch block due to the recursive nature
+        return axios(originalRequest);
+      } catch (refreshAccessTokenError) { // Handle errors (e.g., refresh token expired or invalid)        
+        if (window.location.pathname !== '/login') {
+          toast.error(
+            "Your session has expired. Please login again to continue. Redirecting to login page...",
+            { duration: 5000 }
+          )
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 5000)
         }
-      } catch (refreshError) {
-        // Handle errors (e.g., refresh token expired or invalid)
-        console.error("Refresh token error", refreshError);
-        // Optionally, redirect the user to the login page
+        return Promise.reject(refreshAccessTokenError);
       }
     }
 
-    // If it's not a 401 error, just propagate the original error
+    // propagate other type of errors without doing anything
     return Promise.reject(error);
   }
 );
 
-export default axios; // Export the configured Axios instance
+export default axios;

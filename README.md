@@ -5,18 +5,9 @@
 A prototype CMS (Content Management System) for event organizers to create, customize, and publish temporary event websites. Built as a multi-tenant SaaS-like application, it allows users to manage multiple events, clone templates, edit content section-by-section, and publish sites via custom subdomains.
 This is a high-level prototype; future iterations may migrate to Next.js + TypeScript and incorporate state management (e.g., Redux/Zustand) and form handling libraries (e.g., React Hook Form).
 
-
-
-
-
-
-
-
-
-
 ---
 
-## Tech Stack
+## ⚙️Tech Stack
 
 | Layer       | Technology                                     | Purpose                         |
 | ----------- | ---------------------------------------------- | ------------------------------- |
@@ -28,34 +19,74 @@ This is a high-level prototype; future iterations may migrate to Next.js + TypeS
 | Database    | MongoDB (single DB, 4 collections)             | Multi-tenant relational data    |
 | Deployment  | Vercel (wildcard subdomains)                   | Zero-config hosting             |
 
+---
 
+## 👥User Types
 
-
-
-
-
+| User Type       | URL Example                                 | Experience                          | Auth Required? |
+| --------------- | ------------------------------------------- | ----------------------------------- | -------------- |
+| Event Organizer | `https://domain.com` (main domain)          | Full CMS dashboard & editor         | Yes (JWT)      |
+| Website Visitor | `https://*subdomain.domain.com` (subdomain) | Public published event website only | No             |
 
 ---
 
-## Key Concepts & User Types
+## 🔷User Flow and Actions(Diagram)
 
-| User Type       | URL Example                        | Experience                          | Auth Required? |
-| --------------- | ---------------------------------- | ----------------------------------- | -------------- |
-| Event Organizer | `https://domain.com` (main domain) | Full CMS dashboard & editor         | Yes (JWT)      |
-| Website Visitor | `https://*.domain.com` (subdomain) | Public published event website only | No             |
+This diagram illustrates the flow for both the main Content Management System (CMS) and the individual tenant websites.
 
-[reason]
+```
+              +------------------------------------+
+              | domain.com / *subdomain.domain.com |
+              +------------------------------------+
+                                  |
+                                  v
+               +----------------------------------+
+               |         Vercel Hosting           |
+               |      (Single React Build)        |
+               +----------------------------------+
+                                  |
+                                  v
+                           +-------------+
+                           |  Subdomain? |
+                           +-------------+
+                                  |
+                +-----------------|---------------+
+           (No) |                 |               | (Yes)
+                v                 |               v
++--------------------------+      |    +--------------------+
+| **CMS** (User Actions)   |      |    | **Website**        |
++--------------------------+      |    | (User Actions)     |
+| 1. Register/Login        |      |    +--------------------+
+| 2. Create Event          |      |    | 1. View Website    |
+| 3. Select Template       |      |    | 2. Submit Form/    |
+| 4. Start editing sections|      |    | Make payments      |
+| 5. Save contents on DB   |      |    +--------------------+
+| 6. Provide subdomain &   |      |              |
+|    publish site          |      |              |
+| 7. Unpublish/Delete      |      |              |
++--------------------------+------|--------------+
+                                  |
+                                  v
+         +-------------------------------------------------+
+         |               **Express Backend**               |
+         |                  (Shared APIs & logis)          |
+         +-------------------------------------------------+
+                                  |
+                                  v
+         +-------------------------------------------------+
+         |                  **MongoDB**                    |
+         |  (One DB, shared collections using reference)   |
+         | I. Users(CMS tenants)                           |
+         | II. Events                                      |
+         | III. Websites                                   |
+         | IV. Templates                                   |
+         +-------------------------------------------------+
 
-
-
-
-
-
-
+```
 
 ---
 
-## CMS: User Flow and Actions
+## 👨‍💻User Flow and Actions(CMS)
 
 This section outlines the high-level steps for event organizers using the CMS. All actions require authentication; unauthenticated users are redirected to login screen.
 
@@ -95,7 +126,7 @@ After login, the user lands on the homepage of the CMS. The editor allows user t
 - Upon template selection, automatically navigate to the event's website editor.
 - The editable sections (e.g., Hero, Schedule, Gallery, Footer, etc) are marked with an 'edit icon' to edit which can be clicked to open its corresponding editor.
   - Each section supports content types like text, images and video(to be added later).
-  - The updated contents are saved locally first by sections. [reason]
+  - The updated contents are saved locally first by sections.
 - Real-time previews of the updated website.
 - **"Save All"**: Updates the **Website** document in the database with the updated contents. This action also clears the locally saved data.
 
@@ -122,53 +153,85 @@ After login, the user lands on the homepage of the CMS. The editor allows user t
   - remove associated subdomain
   - remove references(Cascading Delete)
 
-
-
-
-
-
-
-
-
 ---
 
-## Website: User Flow and Actions
+## 👨‍💻User Flow and Actions(Website)
 
 ### 1. Submit form
 
-- If the published website has a form, visitor can submit by filling necessary information. For eg: _register_, _contact_, etc.
+- If the website has a form, it can be submitted by filling necessary information. For eg: _register_, _contact_, etc.
 
-### 2. Make Payments(eg: for later)
+### 2. Make Payment(to be added later)
 
-- User should also be able to make payments(for eg: _buy ticket_)
+- If the website has payment feature(_eg: make payment for event ticket purchase_), user should be able to make payment from the website.
 
+---
 
+## 📦Database Schema and Relationships
 
+| Collection    | Description                                                                         | Key Relations                                                                                                                                             |
+| ------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Users**     | Stores user profiles, authentication data, and owned events.                        | `events`: Array of Event IDs created by the user in **Events** Collection.                                                                                |
+| **Events**    | Stores event details (e.g., title, date, description).                              | `website`: ID of the associated Website document in **Websites** Collection;<br>`organizer` : ID of the associated User document in **Users** Collection. |
+| **Templates** | Pre-defined placeholder templates for cloning.                                      | `baseTemplate`: Referenced by Websites as the source template ID.                                                                                         |
+| **Websites**  | Stores customized, published/unpublished sites with section content (text, images). | `baseTemplate`: ID of the cloned Template from **Templates** Collection;<br>`belongsToThisEvent` : ID of the associated event from **Events** Collection. |
 
+---
 
+This diagram illustrates the relationships between the core collections in the database.
+
+```
+
++---------------+
+|   Users       |
+|---------------|
+| _id           |
+| events: [ids]-|--(Reference)
+| ...           |      |
++---------------+      |
+                       |     +-------------+
+                       |     |   Events    |
+                       |     |-------------|
+                       |     | _id         |
+                       |-----| organizer   |
+                             | website    -|--(Reference)
+                             | ...         |       |
+                             +-------------+       |
+                                                   |     +-------------------+
+                                                   |     |   Websites        |
+                                                   |     |-------------------|
+                                                   |     | _id               |
+                                                   |-----| belongsToThisEvent|
+                                                         | baseTemplate     -|--(Reference)
+                                                         +-------------------+       |
+                                                                                     |
+                                                                                     |        +-------------+
+                                                                                     |        |  Templates  |
+                                                                                     |        |-------------|
+                                                                                     |--------| _id         |
+                                                                                              | ...         |
+                                                                                              +-------------+
+
+```
+
+---
+
+## ❓Reason for this over that (to be discussed later)
+
+1. Implemented a **Single API Call** for content updates instead of sending multiple requests for individual sections due to the following architectural benefits:
+    - **Efficiency:** Aggregating data into one request **minimizes network overhead** and **latency** (fewer $\text{HTTP}$ round-trips).
+    - **Data Integrity:** The single call ensures the entire payload is treated as one **atomic database transaction**, guaranteeing the website document is either fully updated or not updated at all (no inconsistent partial saves).
+    - **User Experience (UX):** Allows user edits to be staged **client-side** (local state). This supports rapid editing and reduces unnecessary **write load** on the MongoDB database until the user performs an explicit Save/Publish action.
+
+2. Single build rather than separate builds for CMS and Website
+   - Using wildcard subdomains from vercel makes it much simpler to just use one single build and let the app decide which major component to load simply by reading url.
+
+3. React over Next(needs migration later)
 
 
 ---
 
-## MongoDb Collections Overview
-
-| Collection    | Description                                                                         | Key Relations                                                      |
-| ------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| **Users**     | Stores user profiles, authentication data, and owned events.                        | `events`: Array of Event IDs created by the user.                  |
-| **Events**    | Stores event details (e.g., title, date, description).                              | `website`: ID of the associated Website document.                  |
-| **Templates** | Pre-defined placeholder templates for cloning.                                      | `baseTemplate`: Referenced by Websites as the source template ID.  |
-| **Websites**  | Stores customized, published/unpublished sites with section content (text, images). | `baseTemplate`: ID of the cloned Template; linked to parent Event. |
-
----
-
-
-
-
-
-
-
-
-## Project Setup
+## 🖥️Project Setup
 
 ### Installation
 
@@ -193,26 +256,3 @@ After login, the user lands on the homepage of the CMS. The editor allows user t
    ```bash
    npm run dev
    ```
-
-### Build and Production
-
-1. **Build for production**:
-
-   ```bash
-   npm run build
-   ```
-
-2. **Preview the build**:
-
-   ```bash
-   npm run preview
-   ```
-
-3. **Deploy to Vercel**:
-   - Connect the repo via the Vercel dashboard for automatic deploys.
-
-### Scripts (from `package.json`)
-
-- **dev**: Start the dev server with Vite.
-- **build**: Build optimized assets.
-- **preview**: Serve the production build locally.

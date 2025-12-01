@@ -60,9 +60,9 @@ function App() {
             <Route path="/events/:eventId" element={<EventDetail />} />
             <Route path="/events/:eventId/select-website-template" element={<TemplateSelector />} />
             <Route path="/events/:eventId/edit-website/:websiteId" element={<WebsiteEditor />} />
-            
+
             <Route path="/websites" element={<ManageWebsites />} />
-            <Route path="/leads" element={<h3>*TO MANAGE USERS THAT SUBMITTED FORM*</h3>} />
+            <Route path="/leads" element={<h3>*TO MANAGE USeERS THAT SUBMITTED FORM*</h3>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<h3>*TO HANDLE SETTINGS HERE*</h3>} />
           </Route>

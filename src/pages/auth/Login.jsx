@@ -6,7 +6,7 @@ import axios from "@/axiosConfig"
 import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
-    const { setIsLoggedIn, setUserData } = useLogin();
+    const { setIsLoggedIn } = useLogin();
 
     const [formData, setFormData] = useState(
         {
@@ -29,26 +29,21 @@ export default function LoginPage() {
         )
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const logInUser = async () => {
-            try {
-                const response = await axios.post(loginUrl, {
-                    ...formData
-                });
-                console.log("🚀 ~ logInUser ~ response:", response)
-                if (response.data.success)
-                    toast.success("Successfully logged in");
-                setIsLoggedIn(true);
-                setUserData(response.data.data);
-            } catch (error) {
-                toast.error("Failed to login");
-                console.error("Error logging in", error);
-            }
-        };
-
-        logInUser();
+        try {
+            const response = await axios.post(loginUrl, {
+                ...formData
+            });
+            console.log("🚀 ~ logInUser ~ response:", response)
+            if (response.data.success)
+                toast.success("Successfully logged in");
+            setIsLoggedIn(true);
+        } catch (error) {
+            toast.error("Failed to login");
+            console.error("Error logging in", error);
+        }
     };
 
     return (

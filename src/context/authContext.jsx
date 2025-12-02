@@ -8,7 +8,6 @@ const LoginContext = createContext();
 export const LoginProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const checkAuthState = async () => {
@@ -16,9 +15,7 @@ export const LoginProvider = ({ children }) => {
         const res = await axios.get(checkAuthStateUrl);
 
         if (res.data.success) {
-          const data = res.data.data;
           setIsLoggedIn(true);
-          setUserData(data);
         }
       } catch (err) {
         setIsLoggedIn(false);
@@ -36,7 +33,6 @@ export const LoginProvider = ({ children }) => {
       if (result.data.success) {
         toast.success("Successfully logged out");
         setIsLoggedIn(false);
-        setUserData(null);
       }
     } catch (err) {
       toast.error("Failed to logout");
@@ -45,7 +41,7 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ loading, isLoggedIn, setIsLoggedIn, logout, userData, setUserData }}>
+    <LoginContext.Provider value={{ loading, isLoggedIn, setIsLoggedIn, logout }}>
       {children}
     </LoginContext.Provider>
   );

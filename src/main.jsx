@@ -15,7 +15,7 @@ const Website = React.lazy(() => import("./pages/publicUser/PublicSite.jsx"))
 const subdomain = extractSubdomain();
 
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
+  <StrictMode>
     <ThemeProvider>
       <Suspense fallback={
         <PrimaryLoader />
@@ -30,5 +30,5 @@ createRoot(document.getElementById("root")).render(
         )}
       </Suspense>
     </ThemeProvider>
-  // </StrictMode>
+  </StrictMode>
 );

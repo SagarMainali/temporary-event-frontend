@@ -18,66 +18,64 @@ export default function PhotographyClassView({ data }) {
 
     return (
         <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto p-4'>
-            <div className='mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
-                <LandingPage
-                    formSectionId={formSectionId}
-                    scheduleSectionId={scheduleSectionId}
+            <LandingPage
+                formSectionId={formSectionId}
+                scheduleSectionId={scheduleSectionId}
+                editable={false}
+                section={sections.find(section => section.sectionName === 'hero')}
+            />
+
+            <Portfolio
+                editable={false}
+                section={sections.find(section => section.sectionName === 'portfolio')}
+            />
+
+            <Schedule
+                scheduleSectionId={scheduleSectionId}
+                editable={false}
+                section={sections.find(section => section.sectionName === 'programDetails')}
+            />
+
+            <div id={ticketSectionId} className='flex gap-20 max-lg:gap-10 items-center justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
+                <Booking
                     editable={false}
-                    section={sections.find(section => section.sectionName === 'hero')}
+                    section={sections.find(section => section.sectionName === 'bookingDetails')}
                 />
 
-                <Portfolio
+                <Bookticket
                     editable={false}
-                    section={sections.find(section => section.sectionName === 'portfolio')}
-                />
-
-                <Schedule
-                    scheduleSectionId={scheduleSectionId}
-                    editable={false}
-                    section={sections.find(section => section.sectionName === 'programDetails')}
-                />
-
-                <div id={ticketSectionId} className='flex gap-20 max-lg:gap-10 items-center justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
-                    <Booking
-                        editable={false}
-                        section={sections.find(section => section.sectionName === 'bookingDetails')}
-                    />
-
-                    <Bookticket
-                        editable={false}
-                        section={sections.find(section => section.sectionName === 'ticketDetails')}
-                    />
-                </div>
-
-                <div>
-                    <Location
-                        editable={false}
-                        section={sections.find(section => section.sectionName === 'locationDetails')}
-                    />
-                </div>
-
-                <Carousel
-                    editable={false}
-                    section={sections.find(section => section.sectionName === 'testimonials')}
-                />
-
-                <Form
-                    section={sections.find(section => section.sectionName === 'contactForm')}
-                    title="Register for Pre-Booking"
-                    formSectionId={formSectionId}
-                    ticketSectionId={ticketSectionId}
-                    organizerEmail={data.belongsToThisEvent.email}
-                />
-
-                <Footer
-                    day="3-Day Photography Masterclass with Sijan Tamang"
-                    date="Apr 23rd -  Apr 26th"
-                    location="Event Banquet, Lalitpur"
-                    organiser="Event Organized by Lotus Events"
-                    phone="8XXXXXXXX, 98XXXXXXXX"
-                    mail="inquiry@lotusEvents.com"
+                    section={sections.find(section => section.sectionName === 'ticketDetails')}
                 />
             </div>
+
+            <div>
+                <Location
+                    editable={false}
+                    section={sections.find(section => section.sectionName === 'locationDetails')}
+                />
+            </div>
+
+            <Carousel
+                editable={false}
+                section={sections.find(section => section.sectionName === 'testimonials')}
+            />
+
+            <Form
+                section={sections.find(section => section.sectionName === 'contactForm')}
+                title="Register for Pre-Booking"
+                formSectionId={formSectionId}
+                ticketSectionId={ticketSectionId}
+                organizerEmail={data.belongsToThisEvent.email}
+            />
+
+            <Footer
+                day="3-Day Photography Masterclass with Sijan Tamang"
+                date="Apr 23rd -  Apr 26th"
+                location="Event Banquet, Lalitpur"
+                organiser="Event Organized by Lotus Events"
+                phone="8XXXXXXXX, 98XXXXXXXX"
+                mail="inquiry@lotusEvents.com"
+            />
         </div>
     )
 }

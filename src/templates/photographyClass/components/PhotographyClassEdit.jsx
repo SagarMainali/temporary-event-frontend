@@ -10,9 +10,12 @@ import Carousel from '../sections/carousel'
 import Form from '../sections/form'
 import Footer from '../sections/footer'
 import { getSectionData } from '../../utils/utils'
+import { useSidebar } from '@/components/ui/sidebar'
 
 export default function PhotographyClassEdit({ data, setEditedContentsPresentOnLocal }) {
     console.log("🚀 ~ PhotographyClassEdit ~ data:", data);
+
+    const { open: isSidebarOpen } = useSidebar();
 
     const { sections } = data;
 
@@ -111,72 +114,72 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
     };
 
     return (
-        <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto p-4'>
-            <div className='mx-auto max-sm:max-w-[95%] max-md:max-w-[95%] max-lg:max-w-[95%] max-xl:max-w-[95%] max-2xl:max-w-[95%]'>
-                <LandingPage
-                    formSectionId={formSectionId}
-                    scheduleSectionId={scheduleSectionId}
-                    section={heroSection}
-                    onUpdateSection={handleUpdateHeroSection}
+        <div className={`bg-[var(--allbodybg-color)] mx-auto p-4 w-full
+            ${isSidebarOpen ? 'max-[1400px]:max-w-[1000px] max-[1600px]:max-w-[1200px] max-w-[1600px]' : ''}
+            `}>
+            <LandingPage
+                formSectionId={formSectionId}
+                scheduleSectionId={scheduleSectionId}
+                section={heroSection}
+                onUpdateSection={handleUpdateHeroSection}
+                editable={true}
+            />
+
+            <Portfolio
+                section={portfolioSection}
+                onUpdateSection={handleUpdatePortfolioSection}
+                editable={true}
+            />
+
+            <Schedule
+                scheduleSectionId={scheduleSectionId}
+                section={scheduleSection}
+                onUpdateSection={handleUpdateScheduleSection}
+                editable={true}
+            />
+
+            <div id={ticketSectionId} className='flex gap-10 justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
+                <Booking
+                    section={bookingDetailsSection}
+                    onUpdateSection={handleUpdateBookingDetailsSection}
                     editable={true}
                 />
 
-                <Portfolio
-                    section={portfolioSection}
-                    onUpdateSection={handleUpdatePortfolioSection}
+                <Bookticket
+                    section={ticketDetailsSection}
+                    onUpdateSection={handleUpdateTicketDetailsSection}
                     editable={true}
-                />
-
-                <Schedule
-                    scheduleSectionId={scheduleSectionId}
-                    section={scheduleSection}
-                    onUpdateSection={handleUpdateScheduleSection}
-                    editable={true}
-                />
-
-                <div id={ticketSectionId} className='flex gap-10 justify-between max-sm:flex-col max-md:flex-col max-lg:flex-col'>
-                    <Booking
-                        section={bookingDetailsSection}
-                        onUpdateSection={handleUpdateBookingDetailsSection}
-                        editable={true}
-                    />
-
-                    <Bookticket
-                        section={ticketDetailsSection}
-                        onUpdateSection={handleUpdateTicketDetailsSection}
-                        editable={true}
-                    />
-                </div>
-
-                <Location
-                    section={locaionDetailsSection}
-                    onUpdateSection={handleUpdateLocaionDetailsSectionSection}
-                    editable={true}
-                />
-
-                <Carousel
-                    section={testimonialsSection}
-                    onUpdateSection={handleUpdateTestimonialsSectionSection}
-                    editable={true}
-                />
-
-                <Form
-                    section={sections.find(section => section.sectionName === 'contactForm')}
-                    title="Register for Pre-Booking"
-                    formSectionId={formSectionId}
-                    ticketSectionId={ticketSectionId}
-                    organizerEmail={data.belongsToThisEvent.email}
-                />
-
-                <Footer
-                    day="3-Day Photography Masterclass with Sijan Tamang"
-                    date="Apr 23rd -  Apr 26th"
-                    location="Event Banquet, Lalitpur"
-                    organiser="Event Organized by Lotus Events"
-                    phone="8XXXXXXXX, 98XXXXXXXX"
-                    mail="inquiry@lotusEvents.com"
                 />
             </div>
+
+            <Location
+                section={locaionDetailsSection}
+                onUpdateSection={handleUpdateLocaionDetailsSectionSection}
+                editable={true}
+            />
+
+            <Carousel
+                section={testimonialsSection}
+                onUpdateSection={handleUpdateTestimonialsSectionSection}
+                editable={true}
+            />
+
+            <Form
+                section={sections.find(section => section.sectionName === 'contactForm')}
+                title="Register for Pre-Booking"
+                formSectionId={formSectionId}
+                ticketSectionId={ticketSectionId}
+                organizerEmail={data.belongsToThisEvent.email}
+            />
+
+            <Footer
+                day="3-Day Photography Masterclass with Sijan Tamang"
+                date="Apr 23rd -  Apr 26th"
+                location="Event Banquet, Lalitpur"
+                organiser="Event Organized by Lotus Events"
+                phone="8XXXXXXXX, 98XXXXXXXX"
+                mail="inquiry@lotusEvents.com"
+            />
         </div>
     )
 }

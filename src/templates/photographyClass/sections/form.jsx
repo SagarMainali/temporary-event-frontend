@@ -6,7 +6,8 @@ import axios from "@/axiosConfig";
 import { sendEmailUrl } from "@/config/urls";
 import CMSLoader from "@/components/loaders/CMSLoader";
 
-const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section }) => {
+const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section, disabled }) => {
+  console.log("🚀 ~ Form ~ organizerEmail:", organizerEmail)
   console.log("🚀 ~ Form ~ section:", section)
 
   const { image } = section.content;
@@ -122,7 +123,7 @@ const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section }
                 View Tickets
               </button>
 
-              <button type="submit" className="btn_main w-full capitalize">
+              <button type="submit" className="btn_main w-full capitalize" disabled={disabled}>
                 {
                   submitting
                     ? <CMSLoader />

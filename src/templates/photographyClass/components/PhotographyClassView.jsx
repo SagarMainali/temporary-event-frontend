@@ -65,7 +65,8 @@ export default function PhotographyClassView({ data }) {
                 title="Register for Pre-Booking"
                 formSectionId={formSectionId}
                 ticketSectionId={ticketSectionId}
-                organizerEmail={data.belongsToThisEvent.email}
+                organizerEmail={data.type !== 'template' ? data.belongsToThisEvent.email : null}
+                disabled={data.type === 'template'}
             />
 
             <Footer

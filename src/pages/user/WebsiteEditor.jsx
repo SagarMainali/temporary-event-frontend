@@ -83,7 +83,7 @@ export default function WebsiteEditor() {
     }
   };
 
-  // to unpublish website through alert model
+  // to unpublish website through alert modal
   const unpublishWebsite = async () => {
     setLoading(true);
 
@@ -101,7 +101,7 @@ export default function WebsiteEditor() {
     }
   }
 
-  // to delete website through alert model
+  // to delete website through alert modal
   const deleteWebsite = async () => {
     try {
       const response = await axios.delete(deleteWebsiteUrl(websiteId));

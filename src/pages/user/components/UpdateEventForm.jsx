@@ -36,7 +36,7 @@ function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
     const handleDateChange = (selectedDate) => {
         setFormData({
             ...formData,
-            date: selectedDate ? selectedDate.toLocaleDateString("en-US") : "", // Format date to string
+            date: selectedDate,
         });
     };
 
@@ -59,7 +59,7 @@ function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
                     location: "",
                     date: "",
                     time: "",
-                    expectedNumberOfPeople: "",
+                    expectedNumberOfPeople: 0,
                     phone: "",
                     email: "",
                 });

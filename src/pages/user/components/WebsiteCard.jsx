@@ -4,7 +4,7 @@ import { ExternalLink, Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
-import { getformattedDate } from "@/utils/utils";
+import { formatDate } from "@/utils/utils";
 
 const WebsiteCard = ({ publishedWebsite: { eventName, website } }) => {
     return (
@@ -25,10 +25,10 @@ const WebsiteCard = ({ publishedWebsite: { eventName, website } }) => {
                     Template: <Label className="border py-2 px-4 rounded-lg">{website.baseTemplate.templateName}</Label>
                 </div>
                 <div className="flex gap-2 items-center">
-                    Published On: <Label className="border py-2 px-4 rounded-lg">{getformattedDate(website.publishedOn)}</Label>
+                    Published On: <Label className="border py-2 px-4 rounded-lg">{formatDate(website.publishedOn)}</Label>
                 </div>
                 <div className="flex gap-2 items-center">
-                    Last Updated: <Label className="border py-2 px-4 rounded-lg">{getformattedDate(website.updatedAt)}</Label>
+                    Last Updated: <Label className="border py-2 px-4 rounded-lg">{formatDate(website.updatedAt)}</Label>
                 </div>
             </CardContent>
             <CardFooter className="w-full flex gap-2.5 justify-end mt-auto h-[50px]">

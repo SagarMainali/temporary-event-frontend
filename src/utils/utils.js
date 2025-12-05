@@ -17,16 +17,22 @@ export const getQueryParams = () => {
     return { appMode, websiteId };
 }
 
-// format date
-export const getformattedDate = (date) => {
-    return new Date(date).toLocaleString('en-US', {
-        // weekday: 'long', // 'long' or 'short'
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        // second: '2-digit',
-        hour12: true, // AM/PM
-    })
+// format date(only for displaying)
+export function formatDate(date) {
+    if (!date) {
+        return "N/A";
+    }
+
+    const dateObj = new Date(date) // convert to dateObj
+
+    // Check if the conversion is valid
+    if (!(dateObj instanceof Date) || isNaN(dateObj)) {
+        return "Invalid Date";
+    }
+
+    return dateObj.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    });
 }

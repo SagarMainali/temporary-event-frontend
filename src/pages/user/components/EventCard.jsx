@@ -13,7 +13,7 @@ import { deleteEventUrl } from "@/config/urls";
 import UpdateEventForm from "./UpdateEventForm";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
-import { getformattedDate } from "@/utils/utils";
+import { formatDate } from "@/utils/utils";
 
 const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
     // ref attached to hidden Modal triggerer element
@@ -74,7 +74,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     </div>
                     <div className="mb-3">
                         <strong className="text-sm text-gray-600">Date:</strong>
-                        <p className="text-sm text-gray-700">{getformattedDate(event.date)}</p>
+                        <p className="text-sm text-gray-700">{formatDate(event.date)}</p>
                     </div>
                     <div className="mb-3">
                         <strong className="text-sm text-gray-600">Time:</strong>

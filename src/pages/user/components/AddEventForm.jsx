@@ -17,7 +17,7 @@ function AddEventForm({ closeModal, onAddSuccess }) {
         location: "",
         date: "",
         time: "",
-        expectedNumberOfPeople: "",
+        expectedNumberOfPeople: 0,
         phone: "",
         email: "",
     });
@@ -35,7 +35,7 @@ function AddEventForm({ closeModal, onAddSuccess }) {
     const handleDateChange = (selectedDate) => {
         setFormData({
             ...formData,
-            date: selectedDate ? selectedDate.toLocaleDateString("en-US") : "", // Format date to string
+            date: selectedDate,
         });
     };
 
@@ -58,7 +58,7 @@ function AddEventForm({ closeModal, onAddSuccess }) {
                     location: "",
                     date: "",
                     time: "",
-                    expectedNumberOfPeople: "",
+                    expectedNumberOfPeople: 0,
                     phone: "",
                     email: "",
                 });

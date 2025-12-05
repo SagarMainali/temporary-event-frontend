@@ -11,40 +11,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-function formatDate(date) {
-  if (!date) {
-    return "";
-  }
-
-  return date.toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-function isValidDate(date) {
-  if (!date) {
-    return false;
-  }
-  return !isNaN(date.getTime());
-}
+import { formatDate } from "@/utils/utils";
 
 export default function DatePicker({ value, onSelect }) {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState(value ? new Date(value) : new Date());
   const [month, setMonth] = React.useState(date);
   const [inputValue, setInputValue] = React.useState(formatDate(date));
-
-  React.useEffect(() => {
-    // Update date and input value when `value` prop changes
-    if (value && value !== inputValue) {
-      const newDate = new Date(value);
-      setDate(newDate);
-      setInputValue(formatDate(newDate));
-    }
-  }, [value, inputValue]);
 
   const handleDateChange = (newDate) => {
     setDate(newDate);
@@ -64,14 +37,7 @@ export default function DatePicker({ value, onSelect }) {
           value={inputValue}
           placeholder="Enter event date"
           className="bg-background pr-10"
-          onChange={(e) => {
-            const date = new Date(e.target.value);
-            setInputValue(e.target.value);
-            if (isValidDate(date)) {
-              setDate(date);
-              setMonth(date);
-            }
-          }}
+          readOnly
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
               e.preventDefault();

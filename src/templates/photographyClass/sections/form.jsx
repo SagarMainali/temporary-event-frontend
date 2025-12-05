@@ -7,7 +7,6 @@ import { sendEmailUrl } from "@/config/urls";
 import CMSLoader from "@/components/loaders/CMSLoader";
 
 const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section, disabled }) => {
-  console.log("🚀 ~ Form ~ organizerEmail:", organizerEmail)
   console.log("🚀 ~ Form ~ section:", section)
 
   const { image } = section.content;

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea";
 import { useRef, useState } from "react";
 import { toast } from "sonner"
-import { fileToBase64 } from "@/templates/utils/utils";
+import { uploadToCloudinary } from "@/utils/cloudinaryUpload";
 
 function LandingPageEditor({ closeModal, section, onUpdateSection }) {
     const { title, description, topics, bannerImage } = section.content;
@@ -30,10 +30,9 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
 
     // handle iamge change
     const handleImageChange = async (file) => {
-        const processedFile = await fileToBase64(file);
         setFormData((prevData) => ({
             ...prevData,
-            bannerImage: [processedFile]
+            bannerImage: file
         }))
     }
 
@@ -54,15 +53,18 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
         e.preventDefault();
 
         try {
+            const imageUrl = await uploadToCloudinary(formData.bannerImage);
+
             const updatedSection = {
                 ...section,
                 content: {
                     ...section.content,
                     ...formData,
+                    bannerImage: imageUrl
                 }
             };
 
-            // update local storage as well as local state
+            // updates local storage as well as local state
             onUpdateSection(updatedSection);
             toast.success("Section saved locally.");
             closeModal();
@@ -81,7 +83,12 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
                     formData.bannerImage
                     &&
                     <div className="p-1 border border-gray-200 rounded-md flex justify-center">
-                        <img src={formData.bannerImage}
+                        <img
+                            src={
+                                formData.bannerImage instanceof File
+                                    ? URL.createObjectURL(formData.bannerImage)
+                                    : formData.bannerImage
+                            }
                             alt="banner_image"
                             className="max-h-[300px]"
                         />

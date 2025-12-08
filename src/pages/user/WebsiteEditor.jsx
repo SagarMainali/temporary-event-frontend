@@ -17,6 +17,8 @@ export default function WebsiteEditor() {
   const [website, setWebsite] = useState();
   const [loading, setLoading] = useState();
   const [websiteUrl, setWebsiteUrl] = useState(null);
+  // this is used to mark that the section has been updated and saved on localstorage, which then will be used to render buttons conditionally
+  // for eg: show "Save All" button only when one of the sections gets updated
   const [editedContentsPresentOnLocal, setEditedContentsPresentOnLocal] = useState(false);
   console.log("🚀 ~ WebsiteEditor ~ website:", website);
 

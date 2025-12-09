@@ -19,7 +19,7 @@ import { scrollToSection } from "@/templates/utils/utils";
 const LandingPage = ({ editable, formSectionId, scheduleSectionId, section, onUpdateSection }) => {
   console.log("🚀 ~ LandingPage ~ section:", section)
 
-  const { title, description, bannerImage, buttonNames, topics } = section.content;
+  const { title, description, image, buttonNames, topics } = section.content;
 
   // Get theme context
   const {
@@ -35,7 +35,7 @@ const LandingPage = ({ editable, formSectionId, scheduleSectionId, section, onUp
 
   const landingDetail = [
     {
-      photo: bannerImage,
+      photo: image,
       photo2: landingphotomobile,
       title: title,
       description:

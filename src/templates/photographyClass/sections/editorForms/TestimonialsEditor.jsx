@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import { fileToBase64 } from "@/templates/utils/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { CirclePlus, X } from "lucide-react";
+import { uploadToCloudinary } from "@/templates/utils/utils";
 
 function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
     const { testimonials } = section.content;
@@ -25,7 +26,7 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
         const [field, index] = name.split("#")
 
         let value;
-        if (field === 'photo') {
+        if (field === 'image') {
             const image = e.target.files[0]
             try {
                 if (image && image.type.startsWith('image/')) {
@@ -67,7 +68,7 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
                 testimonials: [
                     ...prevData.testimonials,
                     {
-                        photo: '',
+                        image: '',
                         name: '',
                         profession: '',
                         review: ''
@@ -126,9 +127,9 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="photo">Photo</Label>
+                            <Label htmlFor="image">Image</Label>
                             <div className="p-1 border border-gray-200 rounded-md flex justify-center">
-                                <img src={t.photo}
+                                <img src={t.image}
                                     alt={t.name}
                                     className="max-h-[300px]"
                                 />
@@ -146,7 +147,7 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
                             <Input
                                 type="file"
                                 hidden
-                                name={`photo#${index}`}
+                                name={`image#${index}`}
                                 onChange={handleChange}
                                 ref={(el) => (imageInputRefs.current[index] = el)}
                             />

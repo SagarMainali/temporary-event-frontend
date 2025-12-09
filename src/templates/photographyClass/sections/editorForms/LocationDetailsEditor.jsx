@@ -3,14 +3,14 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useRef, useState } from "react";
 import { toast } from "sonner"
-import { fileToBase64 } from "@/templates/utils/utils";
+import { uploadToCloudinary } from "@/templates/utils/utils";
 
 function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
-    const { images, googleMapLink } = section.content;
+    const { image, googleMapLink } = section.content;
 
     // Initializing state for form inputs
     const [formData, setFormData] = useState({
-        images,
+        image,
         googleMapLink
     });
 
@@ -27,10 +27,9 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
 
     // handle iamge change
     const handleImageChange = async (file) => {
-        const processedFile = await fileToBase64(file);
         setFormData((prevData) => ({
             ...prevData,
-            images: [processedFile]
+            image: file
         }))
     }
 
@@ -38,20 +37,29 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const loadingToast = toast.loading("Updating section...");
+
         try {
+            const imageUrl = await uploadToCloudinary(formData.image)
+
             const updatedSection = {
                 ...section,
                 content: {
                     ...section.content,
                     ...formData,
+                    image: imageUrl
                 }
             };
 
-            // update local storage as well as local state
             onUpdateSection(updatedSection);
-            toast.success("Section saved locally.");
+
+            toast.dismiss(loadingToast);
+            toast.success("Section saved locally")
+
+            // update local storage as well as local state
             closeModal();
         } catch (error) {
+            toast.dismiss(loadingToast);
             toast.error("Failed to update section locally. Please try again later.")
             console.error("Error updating section locally", error);
         }
@@ -64,10 +72,14 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
                 <div className="space-y-2">
                     <Label htmlFor="locationImage">Location Image</Label>
                     {
-                        formData.images.length > 0
+                        formData.image
                         &&
                         <div className="p-1 border border-gray-200 rounded-md flex justify-center">
-                            <img src={formData.images[0]}
+                            <img src={
+                                formData.image instanceof File
+                                    ? URL.createObjectURL(formData.image)
+                                    : formData.image
+                            }
                                 alt="location_image"
                                 className="max-h-[300px]"
                             />
@@ -85,8 +97,8 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
                     </div>
                     <Input
                         type="file"
-                        id="bannerImage"
-                        name="bannerImage"
+                        id="image"
+                        name="image"
                         onChange={(e) => handleImageChange(e.target.files[0])}
                         placeholder="Choose banner image"
                         hidden

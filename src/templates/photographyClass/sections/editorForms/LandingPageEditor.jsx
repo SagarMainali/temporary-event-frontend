@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea";
 import { useRef, useState } from "react";
 import { toast } from "sonner"
-import { uploadToCloudinary } from "@/utils/cloudinaryUpload";
+import { uploadToCloudinary } from "@/templates/utils/utils";
 
 function LandingPageEditor({ closeModal, section, onUpdateSection }) {
-    const { title, description, topics, bannerImage } = section.content;
+    const { title, description, topics, image } = section.content;
 
     // Initializing state for form inputs
     const [formData, setFormData] = useState({
-        bannerImage,
+        image,
         title,
         description,
         topics
@@ -32,7 +32,7 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
     const handleImageChange = async (file) => {
         setFormData((prevData) => ({
             ...prevData,
-            bannerImage: file
+            image: file
         }))
     }
 
@@ -51,25 +51,31 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
     // Handling form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
+        const loadingToast = toast.loading("Updating section...");
+        
         try {
-            const imageUrl = await uploadToCloudinary(formData.bannerImage);
+            const imageUrl = await uploadToCloudinary(formData.image);
 
             const updatedSection = {
                 ...section,
                 content: {
                     ...section.content,
                     ...formData,
-                    bannerImage: imageUrl
+                    image: imageUrl
                 }
             };
-
+            
             // updates local storage as well as local state
             onUpdateSection(updatedSection);
-            toast.success("Section saved locally.");
+
+            toast.dismiss(loadingToast);
+            toast.success("Section saved locally")
+
             closeModal();
         } catch (error) {
-            toast.error("Failed to update section locally. Please try again later.")
+            toast.dismiss(loadingToast);
+            toast.error("Failed to update section locally. Please try again later.");
             console.error("Error updating section locally", error);
         }
     };
@@ -78,16 +84,16 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
         <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Banner Image */}
             <div className="space-y-2">
-                <Label htmlFor="bannerImage">Banner Image</Label>
+                <Label htmlFor="image">Banner Image</Label>
                 {
-                    formData.bannerImage
+                    formData.image
                     &&
                     <div className="p-1 border border-gray-200 rounded-md flex justify-center">
                         <img
                             src={
-                                formData.bannerImage instanceof File
-                                    ? URL.createObjectURL(formData.bannerImage)
-                                    : formData.bannerImage
+                                formData.image instanceof File
+                                    ? URL.createObjectURL(formData.image)
+                                    : formData.image
                             }
                             alt="banner_image"
                             className="max-h-[300px]"
@@ -106,8 +112,8 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
                 </div>
                 <Input
                     type="file"
-                    id="bannerImage"
-                    name="bannerImage"
+                    id="image"
+                    name="image"
                     onChange={(e) => handleImageChange(e.target.files[0])}
                     placeholder="Choose banner image"
                     hidden

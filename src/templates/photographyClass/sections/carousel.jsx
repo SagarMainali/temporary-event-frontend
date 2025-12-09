@@ -61,7 +61,7 @@ const Carousel = ({ editable, section, onUpdateSection }) => {
                             {/* Left Side - Image */}
                             <div className="bg-[var(--color-primary)] max-sm:bg-transparent max-md:bg-transparent max-lg:bg-transparent rounded-2xl w-1/3 border border-orange-500">
                                 <img
-                                    src={item.photo}
+                                    src={item.image}
                                     alt={item.name}
                                     className="object-cover rounded-2xl"
                                 />

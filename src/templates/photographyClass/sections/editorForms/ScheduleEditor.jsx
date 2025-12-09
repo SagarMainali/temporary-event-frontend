@@ -95,7 +95,7 @@ const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
                         {schedule.sessions.map((session, sessionIndex) => (
                             <div key={sessionIndex} className="mb-4 border-t pt-4">
                                 <h4 className="font-semibold mb-2">Session {sessionIndex + 1}</h4>
-                                {["time", "location", "name", "post", "photo"].map((field) => (
+                                {["time", "location", "name", "post", "image"].map((field) => (
                                     <div key={field} className="mb-2">
                                         <Label className="block text-sm font-medium capitalize">{field}</Label>
                                         <Input

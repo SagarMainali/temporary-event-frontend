@@ -63,7 +63,7 @@ const Schedule = ({ editable, scheduleSectionId, section, onUpdateSection }) => 
                 <p className="uppercase text-2xl font-bold w-[25%] max-sm:text-xl">{session.name}</p>
                 <p className="text-xl w-[35%]">{session.post}</p>
                 <img
-                  src={session.photo || sphoto}
+                  src={session.image || sphoto}
                   alt={session.name}
                   width={60}
                   height={60}

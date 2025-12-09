@@ -3,7 +3,6 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useRef, useState } from "react";
 import { toast } from "sonner"
-import { fileToBase64 } from "@/templates/utils/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { CirclePlus, X } from "lucide-react";
 import { uploadToCloudinary } from "@/templates/utils/utils";
@@ -28,30 +27,25 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
         let value;
         if (field === 'image') {
             const image = e.target.files[0]
-            try {
-                if (image && image.type.startsWith('image/')) {
-                    value = await fileToBase64(image); // flleToBase64 -> converts raw image file to base64 string
-                } else {
-                    toast.error("Invalid file type. File must be an image.");
-                    return;
-                }
-            } catch (error) {
-                toast.error("Error selecting image.");
-                console.error("Error converting file to base64:", error);
+            if (image && image.type.startsWith('image/')) {
+                value = image
+            } else {
+                toast.error("Invalid file type. File must be an image.");
                 return;
             }
-        } else { // to reading values ot type text
+
+        } else { // for reading values of type text
             value = e.target.value;
         }
 
         setFormData((prevData) => {
-            const updatedTestimonials = prevData.testimonials.map((testimonial, i) => (
+            const updatedTestimonials = prevData.testimonials.map((t, i) => (
                 i === parseInt(index)
                     ? {
-                        ...testimonial,
+                        ...t,
                         [field]: value
                     }
-                    : testimonial
+                    : t
             ))
 
             return {
@@ -91,20 +85,42 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const loadingToast = toast.loading("Updaing section...");
+
         try {
+            const updatedTestimonials = await Promise.all(
+                formData.testimonials.map(async (t) => {
+                    const isImage = t.image instanceof File
+
+                    if (isImage) {
+                        const imageUrl = await uploadToCloudinary(t.image)
+                        return {
+                            ...t,
+                            image: imageUrl
+                        }
+                    } else {
+                        return t
+                    }
+                })
+            )
+
             const updatedSection = {
                 ...section,
                 content: {
                     ...section.content,
-                    ...formData,
+                    testimonials: updatedTestimonials,
                 }
             };
 
             // update local storage as well as local state
             onUpdateSection(updatedSection);
+
+            toast.dismiss(loadingToast);
             toast.success("Section saved locally.");
+
             closeModal();
         } catch (error) {
+            toast.dismiss(loadingToast)
             toast.error("Failed to update section locally. Please try again later.")
             console.error("Error updating section locally", error);
         }
@@ -129,7 +145,11 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
                         <div className="space-y-2">
                             <Label htmlFor="image">Image</Label>
                             <div className="p-1 border border-gray-200 rounded-md flex justify-center">
-                                <img src={t.image}
+                                <img src={
+                                    t.image instanceof File
+                                        ? URL.createObjectURL(t.image)
+                                        : t.image
+                                }
                                     alt={t.name}
                                     className="max-h-[300px]"
                                 />

@@ -51,12 +51,12 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
                 }
             };
 
+            // update local storage as well as local state
             onUpdateSection(updatedSection);
 
             toast.dismiss(loadingToast);
             toast.success("Section saved locally")
 
-            // update local storage as well as local state
             closeModal();
         } catch (error) {
             toast.dismiss(loadingToast);

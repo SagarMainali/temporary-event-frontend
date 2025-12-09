@@ -37,7 +37,7 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const loadingToast = toast.loading("Updating section...");
+        const loadingToast = toast.loading("Updating Section...");
 
         try {
             const imageUrl = await uploadToCloudinary(formData.image)
@@ -100,7 +100,6 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
                         id="image"
                         name="image"
                         onChange={(e) => handleImageChange(e.target.files[0])}
-                        placeholder="Choose banner image"
                         hidden
                         ref={imageInputRef}
                     />

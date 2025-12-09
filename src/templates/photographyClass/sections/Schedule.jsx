@@ -4,6 +4,7 @@ import Modal from "@/pages/user/components/Modal";
 import { Button } from "@/components/ui/button";
 import { Pen } from "lucide-react";
 import ScheduleEditor from "./editorForms/ScheduleEditor";
+import { formatDate } from "@/utils/utils";
 
 const Schedule = ({ editable, scheduleSectionId, section, onUpdateSection }) => {  //Receive formRef as prop from app.jsx
   console.log("🚀 ~ Schedule ~ section:", section)
@@ -39,13 +40,13 @@ const Schedule = ({ editable, scheduleSectionId, section, onUpdateSection }) => 
             <button
               key={index}
               onClick={() => setActiveIndex(index)}
-              className={`w-[100px] max-sm:w-[80px] h-[100px] max-sm:h-[80px] rounded-full flex items-center justify-center font-bold max-sm:text-sm transition
+              className={`w-[100px] text-xs max-sm:w-[80px] h-[100px] max-sm:h-[80px] rounded-full flex items-center justify-center font-bold max-sm:text-sm transition
                 ${activeIndex === index
                   ? "bg-[var(--color-primary)]  text-[var(--text-white)]"
                   : "bg-[var(--color-white)] text-[var(--text-primary)]  border border-[var(--color-primary)]"
                 }`}
             >
-              {schedule.date}
+              {formatDate(schedule.date)}
             </button>
           ))}
         </div>

@@ -3,6 +3,8 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useState } from "react";
 import { toast } from "sonner"
+import DatePicker from "@/pages/user/components/DatePicker";
+import { uploadToCloudinary } from "@/templates/utils/utils";
 
 const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
     const { title, schedules } = section.content;
@@ -19,8 +21,8 @@ const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
         }));
     };
 
-    const handleDateChange = (index, value) => {
-        const schedules = [...formData.schedules];;
+    const handleDateChange = (value, index) => {
+        const schedules = [...formData.schedules];
         schedules[index].date = value;
         setFormData((prev) => ({
             ...prev,
@@ -29,7 +31,7 @@ const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
     };
 
     const handleSessionChange = (scheduleIndex, sessionIndex, field, value) => {
-        const schedules = [...formData.schedules];;
+        const schedules = [...formData.schedules];
         schedules[scheduleIndex].sessions[sessionIndex][field] = value;
         setFormData((prev) => ({
             ...prev,
@@ -41,18 +43,49 @@ const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const loadingToast = toast.loading("Updating Section...")
+
         try {
+            const updatedSchedules = await Promise.all(
+                formData.schedules.map(async (schedule) => {
+                    const updatedSessions = await Promise.all(
+                        schedule.sessions.map(async (session) => {
+                            const isImage = session.image && session.image instanceof File;
+
+                            if (isImage) {
+                                const imageUrl = await uploadToCloudinary(session.image);
+                                return {
+                                    ...session,
+                                    image: imageUrl
+                                };
+                            } else {
+                                return session;
+                            }
+                        })
+                    );
+
+                    return {
+                        ...schedule,
+                        sessions: updatedSessions
+                    };
+                })
+            );
+
             const updatedSection = {
                 ...section,
                 content: {
                     ...section.content,
                     ...formData,
+                    schedules: updatedSchedules
                 }
             };
 
             // update local storage as well as local state
             onUpdateSection(updatedSection);
-            toast.success("Section saved locally.");
+
+            toast.dismiss(loadingToast)
+            toast.success("Section saved locally");
+
             closeModal();
         } catch (error) {
             toast.error("Failed to update section locally. Please try again later.")
@@ -83,29 +116,54 @@ const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
                     <div className="mb-8 border p-4 rounded-lg">
                         <div className="mb-4">
                             <Label className="block font-medium">Date</Label>
-                            <Input
-                                type="text"
+                            <DatePicker
                                 value={schedule.date}
-                                onChange={(e) => handleDateChange(scheduleIndex, e.target.value)}
-                                className="border p-2 w-full"
+                                // pass whole arrow function to capture scheduleIndex, newDate will come from calling onSelect
+                                onSelect={(newDate) => handleDateChange(newDate, scheduleIndex)}
                             />
                         </div>
 
                         {/* Sessions */}
                         {schedule.sessions.map((session, sessionIndex) => (
-                            <div key={sessionIndex} className="mb-4 border-t pt-4">
+                            <div key={sessionIndex} className="mb-4 border-t-2 border-gray-700 pt-4">
                                 <h4 className="font-semibold mb-2">Session {sessionIndex + 1}</h4>
-                                {["time", "location", "name", "post", "image"].map((field) => (
+                                {Object.keys(session).map((field) => (
+                                    // fileds are time, location, name, post, image
                                     <div key={field} className="mb-2">
                                         <Label className="block text-sm font-medium capitalize">{field}</Label>
-                                        <Input
-                                            type="text"
-                                            value={session[field]}
-                                            onChange={(e) =>
-                                                handleSessionChange(scheduleIndex, sessionIndex, field, e.target.value)
-                                            }
-                                            className="border p-1 w-full"
-                                        />
+                                        {
+                                            field === 'image'
+                                                ? (<>
+                                                    {session.image &&
+                                                        <img
+                                                            src={
+                                                                session.image instanceof File
+                                                                    ? URL.createObjectURL(session.image)
+                                                                    : session.image
+                                                            }
+                                                            alt="session_image"
+                                                            className="max-h-[300px]"
+                                                        />
+                                                    }
+                                                    <Input
+                                                        type="file"
+                                                        id="image"
+                                                        name="image"
+                                                        onChange={(e) => handleSessionChange(scheduleIndex, sessionIndex, field, e.target.files[0])}
+                                                    />
+                                                </>
+                                                )
+                                                : (
+                                                    <Input
+                                                        type={field === 'time' ? 'time' : 'text'}
+                                                        value={session[field]}
+                                                        onChange={(e) =>
+                                                            handleSessionChange(scheduleIndex, sessionIndex, field, e.target.value)
+                                                        }
+                                                        className="border p-1 w-full"
+                                                    />
+                                                )
+                                        }
                                     </div>
                                 ))}
                             </div>

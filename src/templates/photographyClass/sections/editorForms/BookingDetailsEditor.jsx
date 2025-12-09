@@ -91,8 +91,10 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
     }
 
     // Handling form submission
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+
+        const loadingToast = toast.loading("Updaing Section...")
 
         try {
             const updatedSection = {
@@ -105,9 +107,13 @@ function BookingDetailsEditor({ closeModal, section, onUpdateSection }) {
 
             // update local storage as well as local state
             onUpdateSection(updatedSection);
-            toast.success("Section saved locally.");
+
+            toast.dismiss(loadingToast)
+            toast.success("Section saved locally");
+            
             closeModal();
         } catch (error) {
+            toast.dismiss(loadingToast)
             toast.error("Failed to update section locally. Please try again later.")
             console.error("Error updating section locally", error);
         }

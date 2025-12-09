@@ -26,6 +26,8 @@ function TicketDetailsEditor({ closeModal, section, onUpdateSection }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const loadingToast = toast.loading("Updaing Section...")
+
         try {
             const updatedSection = {
                 ...section,
@@ -37,9 +39,13 @@ function TicketDetailsEditor({ closeModal, section, onUpdateSection }) {
 
             // update local storage as well as local state
             onUpdateSection(updatedSection);
-            toast.success("Section saved locally.");
+
+            toast.dismiss(loadingToast)
+            toast.success("Section saved locally");
+
             closeModal();
         } catch (error) {
+            toast.dismiss(loadingToast)
             toast.error("Failed to update section locally. Please try again later.")
             console.error("Error updating section locally", error);
         }

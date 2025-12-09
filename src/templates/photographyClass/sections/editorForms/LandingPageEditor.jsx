@@ -51,9 +51,9 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
     // Handling form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const loadingToast = toast.loading("Updating section...");
-        
+
+        const loadingToast = toast.loading("Updating Section...");
+
         try {
             const imageUrl = await uploadToCloudinary(formData.image);
 
@@ -65,7 +65,7 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
                     image: imageUrl
                 }
             };
-            
+
             // updates local storage as well as local state
             onUpdateSection(updatedSection);
 
@@ -85,22 +85,17 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
             {/* Banner Image */}
             <div className="space-y-2">
                 <Label htmlFor="image">Banner Image</Label>
-                {
-                    formData.image
-                    &&
-                    <div className="p-1 border border-gray-200 rounded-md flex justify-center">
-                        <img
-                            src={
-                                formData.image instanceof File
-                                    ? URL.createObjectURL(formData.image)
-                                    : formData.image
-                            }
-                            alt="banner_image"
-                            className="max-h-[300px]"
-                        />
-                    </div>
-
-                }
+                <div className="p-1 border border-gray-200 rounded-md flex justify-center">
+                    <img
+                        src={
+                            formData.image instanceof File
+                                ? URL.createObjectURL(formData.image)
+                                : formData.image
+                        }
+                        alt="banner_image"
+                        className="max-h-[300px]"
+                    />
+                </div>
                 <div className="flex justify-end">
                     <Button type="button" variant="outline" size="sm" onClick={() => {
                         if (imageInputRef) {
@@ -115,7 +110,6 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
                     id="image"
                     name="image"
                     onChange={(e) => handleImageChange(e.target.files[0])}
-                    placeholder="Choose banner image"
                     hidden
                     ref={imageInputRef}
                 />

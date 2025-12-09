@@ -85,7 +85,7 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const loadingToast = toast.loading("Updaing section...");
+        const loadingToast = toast.loading("Updaing Section...");
 
         try {
             const updatedTestimonials = await Promise.all(
@@ -116,7 +116,7 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
             onUpdateSection(updatedSection);
 
             toast.dismiss(loadingToast);
-            toast.success("Section saved locally.");
+            toast.success("Section saved locally");
 
             closeModal();
         } catch (error) {

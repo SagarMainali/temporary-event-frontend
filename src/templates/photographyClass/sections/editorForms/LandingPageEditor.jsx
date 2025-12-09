@@ -55,14 +55,17 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
         const loadingToast = toast.loading("Updating Section...");
 
         try {
-            const imageUrl = await uploadToCloudinary(formData.image);
+            let imageUrl = null;
+            if (formData.image instanceof File) {
+                imageUrl = await uploadToCloudinary(formData.image);
+            }
 
             const updatedSection = {
                 ...section,
                 content: {
                     ...section.content,
                     ...formData,
-                    image: imageUrl
+                    image: imageUrl ?? formData.image
                 }
             };
 

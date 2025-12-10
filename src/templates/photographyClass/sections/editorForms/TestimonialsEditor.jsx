@@ -14,7 +14,10 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
     const [formData, setFormData] = useState({
         testimonials
     });
+
     console.log("🚀 ~ TestimonialsEditor ~ formData:", formData)
+
+    const [imagesToDelete, setImagesToDelete] = useState([])
 
     // for referencing array of hidden of input fields of type file
     const imageInputRefs = useRef([]);
@@ -27,8 +30,15 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
         let value;
         if (field === 'image') {
             const image = e.target.files[0]
+
             if (image && image.type.startsWith('image/')) {
-                value = image
+                const oldImage = formData.testimonials[index].image;
+
+                if (typeof oldImage === 'string') {
+                    setImagesToDelete((prevImages) => [...prevImages, oldImage]);
+                }
+
+                value = image;
             } else {
                 toast.error("Invalid file type. File must be an image.");
                 return;
@@ -85,7 +95,7 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const loadingToast = toast.loading("Updaing Section...");
+        const loadingToast = toast.loading("Updating Section...");
 
         try {
             const updatedTestimonials = await Promise.all(
@@ -109,7 +119,8 @@ function TestimonialsEditor({ closeModal, section, onUpdateSection }) {
                 content: {
                     ...section.content,
                     testimonials: updatedTestimonials,
-                }
+                },
+                imagesToDelete
             };
 
             // update local storage as well as local state

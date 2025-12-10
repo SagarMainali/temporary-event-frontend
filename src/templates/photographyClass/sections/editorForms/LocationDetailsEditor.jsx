@@ -14,6 +14,8 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
         googleMapLink
     });
 
+    const [imagesToDelete, setImagesToDelete] = useState([])
+
     const imageInputRef = useRef();
 
     // handling input changes
@@ -25,8 +27,12 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
         }));
     };
 
-    // handle iamge change
+    // handle imamge change
     const handleImageChange = async (file) => {
+        if (typeof formData.image === 'string') {
+            setImagesToDelete((prevImages) => [...prevImages, formData.image]);
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             image: file
@@ -41,7 +47,7 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
 
         try {
             let imageUrl = null;
-            if (formData.image instanceof File) {
+            if (formData.image instanceof File && imagesToDelete.length > 0) {
                 imageUrl = await uploadToCloudinary(formData.image)
             }
 
@@ -51,7 +57,8 @@ function LocationDetailsEditor({ closeModal, section, onUpdateSection }) {
                     ...section.content,
                     ...formData,
                     image: imageUrl ?? formData.image
-                }
+                },
+                imagesToDelete
             };
 
             // update local storage as well as local state

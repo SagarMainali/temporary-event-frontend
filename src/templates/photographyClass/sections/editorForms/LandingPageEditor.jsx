@@ -14,8 +14,11 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
         image,
         title,
         description,
-        topics
+        topics,
     });
+
+    // to append old images here on every new image update
+    const [imagesToDelete, setImagesToDelete] = useState([]);
 
     const imageInputRef = useRef();
 
@@ -28,15 +31,20 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
         }));
     };
 
-    // handle iamge change
+    // handle image field change
     const handleImageChange = async (file) => {
+        // capture old image
+        if (typeof formData.image === "string") {
+            setImagesToDelete((prevImages) => [...prevImages, formData.image]);
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             image: file
         }))
     }
 
-    // Handling date change from DatePicker
+    // Handling topics change
     const handleTopicsChange = (index, value) => {
         const topics = [...formData.topics];
         topics[index] = value;
@@ -56,7 +64,7 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
 
         try {
             let imageUrl = null;
-            if (formData.image instanceof File) {
+            if (formData.image instanceof File && imagesToDelete.length > 0) {
                 imageUrl = await uploadToCloudinary(formData.image);
             }
 
@@ -66,7 +74,8 @@ function LandingPageEditor({ closeModal, section, onUpdateSection }) {
                     ...section.content,
                     ...formData,
                     image: imageUrl ?? formData.image
-                }
+                },
+                imagesToDelete
             };
 
             // updates local storage as well as local state

@@ -87,7 +87,7 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
         setEditedContentsPresentOnLocal(true);
     };
 
-    const [locaionDetailsSection, setLocaionDetailsSection] = useState(() =>
+    const [locaionDetailsSection, setLocationDetailsSection] = useState(() =>
         getSectionData(
             'photographyClassWebsite_LocationDetailsSection',
             sections.find(section => section.sectionName === 'locationDetails')
@@ -96,7 +96,7 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
 
     const handleUpdateLocaionDetailsSectionSection = (newSection) => {
         localStorage.setItem('photographyClassWebsite_LocationDetailsSection', JSON.stringify(newSection));
-        setLocaionDetailsSection(newSection);
+        setLocationDetailsSection(newSection);
         setEditedContentsPresentOnLocal(true);
     };
 

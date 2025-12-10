@@ -59,11 +59,11 @@ const Carousel = ({ editable, section, onUpdateSection }) => {
                     <SwiperSlide key={index}>
                         <div className="flex items-center gap-10 p-6 max-sm:p-0 max-md:p-0 max-lg:p-0 max-sm:flex-col max-md:flex-col max-lg:flex-col">
                             {/* Left Side - Image */}
-                            <div className="bg-[var(--color-primary)] max-sm:bg-transparent max-md:bg-transparent max-lg:bg-transparent rounded-2xl w-1/3 border border-orange-500">
+                            <div className="rounded-2xl w-1/3 border-2 border-orange-500 flex justify-center">
                                 <img
                                     src={item.image}
                                     alt={item.name}
-                                    className="object-cover rounded-2xl"
+                                    className="object-cover rounded-2xl max-h-[400px]"
                                 />
                             </div>
 

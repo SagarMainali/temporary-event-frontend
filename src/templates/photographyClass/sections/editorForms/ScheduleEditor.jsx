@@ -14,6 +14,8 @@ const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
         schedules
     })
 
+    const [imagesToDelete, setImagesToDelete] = useState([])
+
     const handleTitleChange = (e) => {
         setFormData((prev) => ({
             ...prev,
@@ -31,6 +33,13 @@ const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
     };
 
     const handleSessionChange = (scheduleIndex, sessionIndex, field, value) => {
+        if (field === 'image') {
+            const oldImage = formData.schedules[scheduleIndex].sessions[sessionIndex].image;
+            
+            if(typeof oldImage === 'string'){
+                setImagesToDelete((prevImages) => [...prevImages, oldImage])
+            }
+        }
         const schedules = [...formData.schedules];
         schedules[scheduleIndex].sessions[sessionIndex][field] = value;
         setFormData((prev) => ({
@@ -77,7 +86,8 @@ const ScheduleEditor = ({ closeModal, section, onUpdateSection }) => {
                     ...section.content,
                     ...formData,
                     schedules: updatedSchedules
-                }
+                },
+                imagesToDelete
             };
 
             // update local storage as well as local state

@@ -114,8 +114,8 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
     };
 
     return (
-        <div className={`bg-[var(--allbodybg-color)] mx-auto p-4 w-full
-            ${isSidebarOpen ? 'max-[1400px]:max-w-[1000px] max-[1600px]:max-w-[1200px] max-w-[1600px]' : ''}
+        <div className={`bg-[var(--allbodybg-color)] mx-auto px-8 py-4 w-full
+            ${isSidebarOpen ? 'max-[1400px]:max-w-[1000px] max-[1600px]:max-w-[1240px] max-w-[1600px]' : ''}
             `}>
             <LandingPage
                 formSectionId={formSectionId}

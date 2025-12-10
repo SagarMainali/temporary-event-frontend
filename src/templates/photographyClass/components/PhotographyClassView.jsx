@@ -17,7 +17,7 @@ export default function PhotographyClassView({ data }) {
     const { formSectionId, scheduleSectionId, ticketSectionId } = sectionIds;
 
     return (
-        <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto p-4'>
+        <div className='bg-[var(--allbodybg-color)] max-w-[1600px] w-full mx-auto px-16'>
             <LandingPage
                 formSectionId={formSectionId}
                 scheduleSectionId={scheduleSectionId}

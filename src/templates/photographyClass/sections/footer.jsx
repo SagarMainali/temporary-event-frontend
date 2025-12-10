@@ -16,7 +16,7 @@ const Footer = ({ day, date, location, organiser, phone, mail }) => {
       </div>
 
 
-      <div className='flex flex-col gap-2.5 w-[17] max-sm:w-[50%]'>
+      <div className='flex flex-col gap-2.5'>
         <p>{organiser}</p>
         <p>{phone}</p>
         <p>{mail}</p>

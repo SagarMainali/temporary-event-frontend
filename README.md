@@ -125,7 +125,7 @@ After login, the user lands on the homepage of the CMS. The editor allows user t
 
 - Upon template selection, automatically navigate to the event's website editor.
 - The editable sections (e.g., Hero, Schedule, Gallery, Footer, etc) are marked with an 'edit icon' to edit which can be clicked to open its corresponding editor.
-  - Each section supports content types like text, images and video(to be added later).
+  - Each section supports content types like text and images.
   - The updated contents are saved locally first by sections.
 - Real-time previews of the updated website.
 - **"Save All"**: Updates the **Website** document in the database with the updated contents. This action also clears the locally saved data.
@@ -216,18 +216,25 @@ This diagram illustrates the relationships between the core collections in the d
 
 ---
 
-## ❓Reason for this over that (to be discussed later)
+## ❓Reason for this over that! (topics to be discussed later)
 
 1. Implemented a **Single API Call** for content updates instead of sending multiple requests for individual sections due to the following architectural benefits:
-    - **Efficiency:** Aggregating data into one request **minimizes network overhead** and **latency** (fewer $\text{HTTP}$ round-trips).
-    - **Data Integrity:** The single call ensures the entire payload is treated as one **atomic database transaction**, guaranteeing the website document is either fully updated or not updated at all (no inconsistent partial saves).
-    - **User Experience (UX):** Allows user edits to be staged **client-side** (local state). This supports rapid editing and reduces unnecessary **write load** on the MongoDB database until the user performs an explicit Save/Publish action.
+
+   - **Efficiency:** Aggregating data into one request **minimizes network overhead** and **latency** (fewer $\text{HTTP}$ round-trips).
+   - **Data Integrity:** The single call ensures the entire payload is treated as one **atomic database transaction**, guaranteeing the website document is either fully updated or not updated at all (no inconsistent partial saves).
+   - **User Experience (UX):** Allows user edits to be staged **client-side** (local state). This supports rapid editing and reduces unnecessary **write load** on the MongoDB database until the user performs an explicit "Save" action.
 
 2. Single build rather than separate builds for CMS and Website
-   - Using wildcard subdomains from vercel makes it much simpler to just use one single build and let the app decide which major component to load simply by reading url.
 
-3. React over Next(needs migration later)
+   - Using wildcard subdomains from vercel makes it much simpler to just use one single build and let the app decide which major component to load simply by reading url. So a single project can serve two different modes(CMS for main domain/Website for subdomain using wildcard subdomains).
 
+3. Images Handling(Cloudinary): Uploads from frontend and deletion from backend
+
+   - **Reduced Bandwidth:** Since contents are first saved locally, uploading directly to cloudinary(using unsigned preset) allows to save the links locally and only send json data(smaller payload) to backend. By utilizing Cloudinary's direct upload feature, files are sent directly from the user's browser to Cloudinary, avoiding unnecessary round trips to the backend. This not only reduces bandwidth but also minimizes server load and processing time.
+   - **Privacy:** By limiting image deletion functionality to the backend, it's ensured that sensitive credentials (API key and secret) remain secure. This allows only authenticated user to perform deletetion.
+   - **Scalability:**: Cloudinary offloads image storage and delivery, reducing the need for the backend to handle large files and configurations hence allowing it to scale more easily.
+
+4. React over Next(needs migration later)
 
 ---
 

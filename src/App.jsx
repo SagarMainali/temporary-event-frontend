@@ -73,8 +73,8 @@ function App() {
 
   const { appMode, websiteId } = getQueryParams();
   if (appMode === 'website' && websiteId) {
-    console.log("🚀 ~ App ~ appMode:", appMode)
-    console.log("🚀 ~ App ~ websiteId:", websiteId)
+    console.log("💻 ~ App ~ appMode:", appMode)
+    console.log("💻 ~ App ~ websiteId:", websiteId)
     return <ViewWebsite websiteId={websiteId} />
   }
 
@@ -101,7 +101,7 @@ function App() {
           <Route
             element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
           >
-            <Route path="/dashboard" element={<h3>*Dashboard Contents*</h3>} />
+            <Route path="/dashboard" element={<h3>*DASHBOARD*</h3>} />
 
             <Route path="/events" element={<ManageEvents />} />
             <Route path="/events/:eventId" element={<EventDetail />} />
@@ -109,9 +109,9 @@ function App() {
             <Route path="/events/:eventId/edit-website/:websiteId" element={<WebsiteEditor />} />
 
             <Route path="/websites" element={<ManageWebsites />} />
-            <Route path="/leads" element={<h3>*TO MANAGE USeERS THAT SUBMITTED FORM*</h3>} />
+            <Route path="/leads" element={<h3>*TO MANAGE USEERS THAT SUBMITTED FORM FROM THE SITE*</h3>} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<h3>*TO HANDLE SETTINGS HERE*</h3>} />
+            <Route path="/settings" element={<h3>*TO HANDLE SETTINGS*</h3>} />
           </Route>
 
           {/* Catch-all Route for any invalid path */}

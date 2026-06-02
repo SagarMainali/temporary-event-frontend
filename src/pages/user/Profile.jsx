@@ -1,14 +1,12 @@
-import { useLogin } from '@/context/authContext';
 import React from 'react'
 
 export default function Profile() {
 
-    const { userData } = useLogin();
-    console.log("🚀 ~ Profile ~ userData:", userData);
-
     return (
         <div>
-            Logged in as <strong>{userData?.username}</strong>
+            <h3>
+                *TO MANAGE PROFILE*
+            </h3>
         </div>
     )
 }

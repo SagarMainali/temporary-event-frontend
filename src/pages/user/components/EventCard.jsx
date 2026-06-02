@@ -38,7 +38,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
     }
 
     return (
-        <Card className="py-0 w-[300px] rounded-xl shadow-lg gap-0 overflow-hidden">
+        <Card className="py-0 w-[300px] rounded-xl shadow-lg gap-0 overflow-hidden hover:shadow-2xl transition-all duration-300 group bg-slate-300/60">
             <CardHeader className="flex justify-between items-center p-6 bg-accent mb-auto">
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800">{event.eventName}</h2>
@@ -66,7 +66,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     content={<UpdateEventForm event={event} onUpdateSuccess={onUpdateSuccess} />}
                 />
             </CardHeader>
-            <CardContent className="p-6 bg-white transition-all cursor-pointer hover:scale-[1.03] hover:shadow-2xl h-full">
+            <CardContent className="p-6 bg-white h-full cursor-pointer group-hover:bg-slate-200/70 group-hover:scale-[0.95] transition-all duration-500">
                 <Link to={event._id}>
                     <div className="mb-3">
                         <strong className="text-sm text-gray-600">Location:</strong>

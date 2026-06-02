@@ -33,10 +33,10 @@ const WebsiteCard = ({ publishedWebsite: { eventName, website } }) => {
             </CardContent>
             <CardFooter className="w-full flex gap-2.5 justify-end mt-auto h-[50px]">
                 <Link to={`/events/${website.belongsToThisEvent}/edit-website/${website._id}`} title="Edit site">
-                    <Pencil size={14} className=" text-blue-600 transition-all hover:scale-[1.3]" />
+                    <Pencil size={20} className=" text-blue-600 transition-all hover:scale-[1.3] duration-200" />
                 </Link>
                 <a href={website.url} target="_blank" rel="noopener noreferrer" title="Open site in a new tab">
-                    <ExternalLink className=" text-blue-600 transition-all hover:scale-[1.3]" size={14} />
+                    <ExternalLink className=" text-blue-600 transition-all hover:scale-[1.3] duration-200" size={20} />
                 </a>
             </CardFooter>
         </Card>

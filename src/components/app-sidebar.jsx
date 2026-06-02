@@ -18,6 +18,8 @@ import {
 import { Button } from "./ui/button";
 import { useLogin } from "@/context/authContext";
 import { sidebarSections } from "@/lib/sidebar-config";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export function AppSidebar({
   ...props
@@ -25,11 +27,17 @@ export function AppSidebar({
 
   const location = useLocation();
   const { logout } = useLogin();
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  const handleLogOut = async () => {
+    setLoggingOut(true);
+    await logout();
+  };
 
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <h3 className="p-3">EMS</h3>
+        <h3 className="p-3">Evento</h3>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
@@ -51,7 +59,13 @@ export function AppSidebar({
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
-        <Button className="mt-auto mb-2 mx-3" onClick={() => logout()}>Logout</Button>
+        <Button className="mt-auto mb-2 mx-3" onClick={handleLogOut} disabled={loggingOut}>
+          {
+            loggingOut
+              ? <span className="flex gap-2 items-center">Logging Out <Loader2 className="animate-spin text-gray-600" size={24} /></span>
+              : 'Logout'
+          }
+        </Button>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

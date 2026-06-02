@@ -26,8 +26,8 @@ function App() {
 
   const { appMode, websiteId } = getQueryParams();
   if (appMode === 'website' && websiteId) {
-    console.log("🚀 ~ App ~ appMode:", appMode)
-    console.log("🚀 ~ App ~ websiteId:", websiteId)
+    console.log("💻 ~ App ~ appMode:", appMode)
+    console.log("💻 ~ App ~ websiteId:", websiteId)
     return <ViewWebsite websiteId={websiteId} />
   }
 

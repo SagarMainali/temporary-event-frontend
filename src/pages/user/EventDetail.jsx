@@ -41,13 +41,13 @@ const EventDetail = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <Card className="bg-white rounded-xl shadow-xl overflow-hidden p-6 mb-8">
+      <Card className="bg-white rounded-xl shadow-xl overflow-hidden px-6 py-6 md:px-10 md:py-14 mb-8">
         <CardHeader>
           <h2 className="text-3xl font-semibold text-gray-800">{event.eventName}</h2>
-          <p className="text-sm text-gray-600 mt-2">{event.description}</p>
+          <p className="text-md text-gray-600 -mt-1">{event.description}</p>
         </CardHeader>
 
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <p className="text-sm text-gray-600 font-medium">Location</p>
@@ -62,7 +62,7 @@ const EventDetail = () => {
               <p className="text-sm text-gray-800">{event.time}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600 font-medium">Expected Attendees</p>
+              <p className="text-sm text-gray-600 font-medium">Expected Number of People</p>
               <p className="text-sm text-gray-800">{event.expectedNumberOfPeople}</p>
             </div>
             <div>
@@ -71,12 +71,12 @@ const EventDetail = () => {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <p className="text-sm text-gray-600 font-medium">Status</p>
             <p className={`text-sm font-semibold ${event.status === 'Completed' ? 'text-green-600' : event.status === 'Failed' ? 'text-red-500' : 'text-blue-600'}`}>
               {event.status.toUpperCase()}
             </p>
-          </div>
+          </div> */}
         </CardContent>
 
         <CardFooter className="flex justify-end">

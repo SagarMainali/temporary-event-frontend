@@ -38,7 +38,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
     }
 
     return (
-        <Card className="py-0 w-[300px] rounded-xl shadow-lg gap-0 overflow-hidden">
+        <Card className="py-0 w-[300px] rounded-xl shadow-lg gap-0 overflow-hidden hover:shadow-2xl transition-all duration-300">
             <CardHeader className="flex justify-between items-center p-6 bg-accent mb-auto">
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800">{event.eventName}</h2>
@@ -66,7 +66,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     content={<UpdateEventForm event={event} onUpdateSuccess={onUpdateSuccess} />}
                 />
             </CardHeader>
-            <CardContent className="p-6 bg-white transition-all cursor-pointer hover:scale-[1.03] hover:shadow-2xl h-full">
+            <CardContent className="p-6 bg-white h-full cursor-pointer hover:bg-slate-100 hover:scale-[1.03] transition-all duration-300">
                 <Link to={event._id}>
                     <div className="mb-3">
                         <strong className="text-sm text-gray-600">Location:</strong>
@@ -90,7 +90,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     </div>
                 </Link>
             </CardContent>
-            <CardFooter className="p-6 bg-accent flex items-center gap-1 font-semibold mt-auto">
+            {/* <CardFooter className="p-6 bg-accent flex items-center gap-1 font-semibold mt-auto">
                 <span>
                     Status:
                 </span>
@@ -104,7 +104,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                 >
                     {event.status.toUpperCase()}
                 </span>
-            </CardFooter>
+            </CardFooter> */}
         </Card>
     );
 };

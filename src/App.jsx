@@ -14,6 +14,7 @@ import Profile from './pages/user/Profile';
 import TemplatePreviewer from './pages/user/TemplatePreviewer';
 import WebsiteEditor from './pages/user/WebsiteEditor';
 import ViewWebsite from './pages/website/ViewWebsite';
+import Leads from "./pages/user/Leads";
 
 function App() {
   const { loading, isLoggedIn } = useLogin();
@@ -64,13 +65,14 @@ function App() {
           {message}
         </p>
 
-        <p className="text-sm text-gray-500">
+        {/* <p className="text-sm text-gray-500">
           Subsequent requests will be much faster.
-        </p>
+        </p> */}
       </div>
     );
   }
 
+  // unplished website preview (opened from website editor when the site hasn't been published yet and doesn't have a subdomain yet)
   const { appMode, websiteId } = getQueryParams();
   if (appMode === 'website' && websiteId) {
     console.log("💻 ~ App ~ appMode:", appMode)
@@ -78,7 +80,9 @@ function App() {
     return <ViewWebsite websiteId={websiteId} />
   }
 
-  // Main domain (for organizers)
+  console.log('regular test')
+
+  // Main domain/CMS (for organizers)
   return (
     <>
       <Router>
@@ -109,7 +113,7 @@ function App() {
             <Route path="/events/:eventId/edit-website/:websiteId" element={<WebsiteEditor />} />
 
             <Route path="/websites" element={<ManageWebsites />} />
-            <Route path="/leads" element={<h3>*TO MANAGE USERS THAT SUBMITTED FORM FROM THE SITE*</h3>} />
+            <Route path="/leads" element={<Leads />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<h3>*TO HANDLE SETTINGS*</h3>} />
           </Route>
@@ -125,7 +129,7 @@ function App() {
         theme="dark" // light, dark or system
         toastOptions={{
           className: "bg-background text-foreground border border-border shadow-lg rounded-md",
-          duration: 1500,
+          duration: 3500,
         }}
       />
     </>

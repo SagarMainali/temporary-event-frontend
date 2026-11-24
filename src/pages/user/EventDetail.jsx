@@ -5,6 +5,7 @@ import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 import { fetchEventUrl } from '@/config/urls';
 import axios from "@/axiosConfig";
 import CMSLoader from '@/components/loaders/CMSLoader';
+import { formatDate } from '@/utils/utils';
 
 const EventDetail = () => {
   const { eventId } = useParams();
@@ -55,7 +56,8 @@ const EventDetail = () => {
             </div>
             <div>
               <p className="text-sm text-gray-600 font-medium">Date</p>
-              <p className="text-sm text-gray-800">{new Date(event.date).toLocaleDateString()}</p>
+              {/* <p className="text-sm text-gray-800">{new Date(event.date).toLocaleDateString()}</p> */}
+              <p className="text-sm text-gray-800">{formatDate(event.date)}</p>
             </div>
             <div>
               <p className="text-sm text-gray-600 font-medium">Time</p>

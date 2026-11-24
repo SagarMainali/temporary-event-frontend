@@ -22,7 +22,7 @@ createRoot(document.getElementById("root")).render(
       }
       >
         {subdomain ? (
-          <Website subdomain={subdomain} />
+          <Website subdomain={subdomain} /> // published site(one that has subdomain)
         ) : (
           <LoginProvider>
             <CMS />

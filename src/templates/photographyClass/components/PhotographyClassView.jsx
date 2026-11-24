@@ -7,7 +7,7 @@ import Bookticket from '../sections/bookcard'
 import Location from '../sections/location'
 import Carousel from '../sections/carousel'
 import Form from '../sections/form'
-import Footer from '../sections/footer'
+// import Footer from '../sections/footer'
 
 export default function PhotographyClassView({ data }) {
     console.log("🚀 ~ PhotographyClassView ~ data:", data);
@@ -62,21 +62,21 @@ export default function PhotographyClassView({ data }) {
 
             <Form
                 section={sections.find(section => section.sectionName === 'contactForm')}
-                title="Register for Pre-Booking"
+                title="Have Some Queries? Send it."
                 formSectionId={formSectionId}
                 ticketSectionId={ticketSectionId}
                 organizerEmail={data.type !== 'template' ? data.belongsToThisEvent.email : null}
                 disabled={data.type === 'template'}
             />
 
-            <Footer
+            {/* <Footer
                 day="3-Day Photography Masterclass with Sijan Tamang"
                 date="Apr 23rd -  Apr 26th"
                 location="Event Banquet, Lalitpur"
                 organiser="Event Organized by Lotus Events"
                 phone="8XXXXXXXX, 98XXXXXXXX"
                 mail="inquiry@lotusEvents.com"
-            />
+            /> */}
         </div>
     )
 }

@@ -27,6 +27,7 @@ export const publishWebsiteUrl = (websiteId) => `/website/publish/${websiteId}`
 export const unpublishWebsiteUrl = (websiteId) => `/website/unpublish/${websiteId}`
 export const getPublishedWebsitesUrl = '/website/published/'
 export const sendEmailUrl = '/website/sendEmail'
+export const getSubmissionsUrl = '/website/submissions'
 
 // ----------------- 📋 Temmplate API Routes -----------------
 export const addTemplateUrl = '/template/add'

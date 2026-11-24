@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import formimage from "../assets/images/fbi.png";
+// import formimage from "../assets/images/fbi.png";
 import { scrollToSection } from "@/templates/utils/utils";
 import { toast } from "sonner";
 import axios from "@/axiosConfig";
@@ -39,7 +39,7 @@ const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section, 
       })
 
       if (response.data.success) {
-        toast.success('Email sent successfully')
+        toast.success('Your data has been recorded')
         setFirstname('')
         setLastname('')
         setEmail('')
@@ -47,7 +47,7 @@ const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section, 
         setDescription('')
       }
     } catch (err) {
-      toast.error("Failed to send email.")
+      toast.error("Failed to submit form at the moment")
       console.error("Failed to send email:", err)
     } finally {
       setSubmitting(false)
@@ -122,11 +122,11 @@ const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section, 
                 View Tickets
               </button>
 
-              <button type="submit" className="btn_main w-full capitalize" disabled={disabled}>
+              <button type="submit" className="btn_main w-full capitalize disabled:opacity-50 disabled:pointer-events-none" disabled={disabled}>
                 {
                   submitting
                     ? <CMSLoader />
-                    : 'register now'
+                    : 'Submit'
                 }
               </button>
             </div>

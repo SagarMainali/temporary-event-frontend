@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Login from "./pages/auth/Login";
 import DashboardLayout from "./pages/user/layout/DashboardLayout";
 import { getQueryParams } from './utils/utils'
@@ -9,67 +8,18 @@ import TemplateSelector from "./pages/user/TemplateSelector";
 import EventDetail from "./pages/user/EventDetail";
 import { useLogin } from "./context/authContext";
 import { Toaster } from "sonner";
-import { Loader2 } from 'lucide-react';
 import Profile from './pages/user/Profile';
 import TemplatePreviewer from './pages/user/TemplatePreviewer';
 import WebsiteEditor from './pages/user/WebsiteEditor';
 import ViewWebsite from './pages/website/ViewWebsite';
 import Leads from "./pages/user/Leads";
+import ServerWakeupLoader from "./pages/user/components/ServerWakeupLoader";
 
 function App() {
   const { loading, isLoggedIn } = useLogin();
 
-  const [elapsed, setElapsed] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setElapsed((prev) => prev + 1);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const loadingStages = [
-    { after: 0, text: "Connecting..." },
-    { after: 4, text: "Starting the server..." },
-    {
-      after: 11,
-      text: "The server was inactive and is waking up. This may take up to a 50 seconds.",
-    },
-    {
-      after: 25,
-      text: "Still starting the server. Thanks for your patience.",
-    },
-    {
-      after: 40,
-      text: "Almost there..."
-    }
-  ];
-
-  const message =
-    [...loadingStages]
-      .reverse()
-      .find((stage) => elapsed >= stage.after)?.text ??
-    loadingStages[0].text;
-
   if (loading) {
-    return (
-      // <div className="flex justify-center items-center h-screen">
-      //   <Loader2 className="animate-spin text-gray-600" size={40} />
-      // </div>
-
-      <div className="flex flex-col items-center justify-center h-screen gap-4">
-        <Loader2 className="animate-spin text-gray-600" size={40} />
-
-        <p className="text-center text-gray-600">
-          {message}
-        </p>
-
-        {/* <p className="text-sm text-gray-500">
-          Subsequent requests will be much faster.
-        </p> */}
-      </div>
-    );
+    return <ServerWakeupLoader />
   }
 
   // unplished website preview (opened from website editor when the site hasn't been published yet and doesn't have a subdomain yet)
@@ -79,8 +29,6 @@ function App() {
     console.log("💻 ~ App ~ websiteId:", websiteId)
     return <ViewWebsite websiteId={websiteId} />
   }
-
-  console.log('regular test')
 
   // Main domain/CMS (for organizers)
   return (

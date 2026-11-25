@@ -25,7 +25,7 @@ export default function Page() {
 
         </header>
 
-        <div className="flex-1 p-6">
+        <div className="flex-1 py-8 px-10">
           <Outlet />
         </div>
       </SidebarInset>

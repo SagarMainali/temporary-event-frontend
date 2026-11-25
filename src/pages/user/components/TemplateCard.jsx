@@ -4,15 +4,16 @@ import { ExternalLink, CircleCheckBig } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
-const TemplateCard = ({ template, isSelected, onClick }) => {
+const TemplateCard = ({ template, isSelected = false, onClick }) => {
     return (
         <Card
             className={cn(
-                "w-full py-0 max-w-sm rounded-xl shadow-lg overflow-hidden transform transition-all gap-0 cursor-pointer hover:scale-[1.03] hover:shadow-2xl",
+                "w-full py-0 max-w-sm rounded-xl shadow-lg overflow-hidden transform transition-all gap-0", 
+                onClick && "cursor-pointer hover:scale-[1.03] hover:shadow-2xl",
                 isSelected ? "border-2 border-blue-500 shadow-2xl" : "border-2 border-gray-100"
             )}
             onClick={onClick}
-            title="Select template"
+            title={onClick ? "Select template" : undefined}
         >
             <CardHeader className="flex justify-between items-start p-6 bg-accent h-[110px]">
                 <div>

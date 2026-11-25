@@ -39,7 +39,7 @@ const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section, 
       })
 
       if (response.data.success) {
-        toast.success('Your data has been recorded')
+        toast.success('Your data has been submitted. Please check your inbox.')
         setFirstname('')
         setLastname('')
         setEmail('')

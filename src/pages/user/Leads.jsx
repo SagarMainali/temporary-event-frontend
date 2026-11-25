@@ -44,7 +44,7 @@ export default function Leads() {
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
+        <div className="max-w-7xl mx-auto">
             <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">Form Submissions</h2>
                 <span className="text-sm text-gray-500">Total: {submissions.length}</span>
@@ -74,12 +74,12 @@ export default function Leads() {
                             submissions.map((item) => (
                                 <tr key={item._id} className="hover:bg-gray-50 transition-colors">
                                     <td className="py-3.5 px-4 font-medium text-gray-900">
-                                        {item.subdomain}
+                                        {`${item.subdomain}.${import.meta.env.VITE_DOMAIN_NAME}`}
                                     </td>
                                     <td className="py-3.5 px-4 text-gray-600 capitalize">
                                         {item.firstname + ' ' + item.lastname}
                                     </td>
-                                    <td className="py-3.5 px-4 max-w-xs truncate text-gray-600" title={item.message}>
+                                    <td className="py-3.5 px-4 max-w-xs text-gray-600" title={item.message}>
                                         {item.description || "—"}
                                     </td>
                                     <td className="py-3.5 px-4 text-gray-600">

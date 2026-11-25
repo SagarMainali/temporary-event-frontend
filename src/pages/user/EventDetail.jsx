@@ -84,7 +84,7 @@ const EventDetail = () => {
         <CardFooter className="flex justify-end">
           {
             event.website
-              ? <Button onClick={() => handleEditWebsite(event.website._id)} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">
+              ? <Button onClick={() => handleEditWebsite(event.website)} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">
                 Edit Website
               </Button>
               : <Button onClick={handleCreateWebsite} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">

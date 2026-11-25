@@ -67,10 +67,10 @@ const EventDetail = () => {
               <p className="text-sm text-gray-600 font-medium">Expected Number of People</p>
               <p className="text-sm text-gray-800">{event.expectedNumberOfPeople}</p>
             </div>
-            <div>
+            {/* <div>
               <p className="text-sm text-gray-600 font-medium">Contact</p>
               <p className="text-sm text-gray-800">{event.phone} | {event.email}</p>
-            </div>
+            </div> */}
           </div>
 
           {/* <div>

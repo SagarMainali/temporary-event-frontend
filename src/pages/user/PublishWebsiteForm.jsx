@@ -7,29 +7,36 @@ import { toast } from 'sonner';
 import { X } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 
-export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUrl }) {
-    const [subdomain, setSubdomain] = useState('');
+const protocol = import.meta.env.DEV ? 'http' : 'https';
+
+// export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUrl }) {
+export default function PublishWebsiteForm({ closeModal, websiteId, setSubdomain }) {
+    // const [subdomain, setSubdomain] = useState('');
+    const [userInput, setUserInput] = useState('');
 
     const handleSubmission = async (e) => {
         e.preventDefault();
 
         try {
             const response = await axios.patch(publishWebsiteUrl(websiteId), {
-                subdomain
+                subdomain: userInput
             });
 
             if (response.data.success) {
-                const publishedUrl = response.data.data.url;
-                console.log("🚀 ~ handleSubmission ~ publishedUrl:", publishedUrl)
+                // const publishedUrl = response.data.data.url;
+                const subdomain = response.data.data.subdomain;
+                console.log("🚀🚀🚀 ~ handleSubmission ~ subdomain:", subdomain)
 
                 closeModal();
 
-                setWebsiteUrl(publishedUrl);
+                // setWebsiteUrl(publishedUrl);
+                setSubdomain(subdomain);
 
                 toast.success(
                     <div className='flex gap-1 items-center'>
                         <p>Successfully published website</p>
-                        <a href={publishedUrl} target="_blank" rel="noopener noreferrer" className='text-blue-400 underline'>
+                        {/* <a href={publishedUrl} target="_blank" rel="noopener noreferrer" className='text-blue-400 underline'> */}
+                        <a href={`${protocol}://${subdomain}.${import.meta.env.VITE_DOMAIN_NAME}`} target="_blank" rel="noopener noreferrer" className='text-blue-400 underline'>
                             View Website
                         </a>
                     </div>,
@@ -66,8 +73,8 @@ export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUr
                 <Input
                     type="text"
                     placeholder="Enter subdomain"
-                    value={subdomain}
-                    onChange={(e) => setSubdomain(e.target.value)}
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
                     className="rounded-tr-none rounded-br-none border-none focus-visible:ring-0"
                 />
                 <Label className="px-2 bg-gray-200 text-gray-600">

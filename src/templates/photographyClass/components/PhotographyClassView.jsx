@@ -65,7 +65,7 @@ export default function PhotographyClassView({ data }) {
                 title="Have Some Queries? Send it."
                 formSectionId={formSectionId}
                 ticketSectionId={ticketSectionId}
-                organizerEmail={data.type !== 'template' ? data.belongsToThisEvent.email : null}
+                // organizerEmail={data.type !== 'template' ? data.belongsToThisEvent.email : null}
                 disabled={data.type === 'template'}
             />
 

@@ -84,10 +84,10 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                         <strong className="text-sm text-gray-600">Expected Number of People:</strong>
                         <p className="text-sm text-gray-700">{event.expectedNumberOfPeople}</p>
                     </div>
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <strong className="text-sm text-gray-600">Contact:</strong>
                         <p className="text-sm text-gray-700">{event.phone} | {event.email}</p>
-                    </div>
+                    </div> */}
                 </Link>
             </CardContent>
             {/* <CardFooter className="p-6 bg-accent flex items-center gap-1 font-semibold mt-auto">

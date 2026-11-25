@@ -18,8 +18,8 @@ function AddEventForm({ closeModal, onAddSuccess }) {
         date: "",
         time: "",
         expectedNumberOfPeople: 0,
-        phone: "",
-        email: "",
+        // phone: "",
+        // email: "",
     });
 
     // Handling input changes
@@ -59,8 +59,8 @@ function AddEventForm({ closeModal, onAddSuccess }) {
                     date: "",
                     time: "",
                     expectedNumberOfPeople: 0,
-                    phone: "",
-                    email: "",
+                    // phone: "",
+                    // email: "",
                 });
                 closeModal();
                 onAddSuccess(newEvent);
@@ -146,7 +146,7 @@ function AddEventForm({ closeModal, onAddSuccess }) {
             </div>
 
             {/* Phone */}
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
                 <Label htmlFor="phone">Phone</Label>
                 <Input
                     type="tel"
@@ -156,10 +156,10 @@ function AddEventForm({ closeModal, onAddSuccess }) {
                     onChange={handleChange}
                     placeholder="Enter phone number"
                 />
-            </div>
+            </div> */}
 
             {/* Email */}
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                     type="email"
@@ -169,8 +169,7 @@ function AddEventForm({ closeModal, onAddSuccess }) {
                     onChange={handleChange}
                     placeholder="Enter email address"
                 />
-            </div>
-
+            </div> */}
 
             {/* Submit Button */}
             <div className="flex justify-center">

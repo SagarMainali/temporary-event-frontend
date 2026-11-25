@@ -9,7 +9,8 @@ import axios from "@/axiosConfig";
 import { toast } from "sonner"
 
 function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
-    const { _id, eventName, description, location, date, time, expectedNumberOfPeople, phone, email } = event;
+    // const { _id, eventName, description, location, date, time, expectedNumberOfPeople, phone, email } = event;
+    const { _id, eventName, description, location, date, time, expectedNumberOfPeople } = event;
 
     // Initializing state for form inputs
     const [formData, setFormData] = useState({
@@ -19,8 +20,8 @@ function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
         date,
         time,
         expectedNumberOfPeople,
-        phone,
-        email,
+        // phone,
+        // email,
     });
 
     // Handling input changes
@@ -60,8 +61,8 @@ function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
                     date: "",
                     time: "",
                     expectedNumberOfPeople: 0,
-                    phone: "",
-                    email: "",
+                    // phone: "",
+                    // email: "",
                 });
                 closeModal();
                 onUpdateSuccess(updatedEvent);
@@ -147,7 +148,7 @@ function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
             </div>
 
             {/* Phone */}
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
                 <Label htmlFor="phone">Phone</Label>
                 <Input
                     type="tel"
@@ -157,10 +158,10 @@ function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
                     onChange={handleChange}
                     placeholder="Enter phone number"
                 />
-            </div>
+            </div> */}
 
             {/* Email */}
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                     type="email"
@@ -170,7 +171,7 @@ function UpdateEventForm({ closeModal, event, onUpdateSuccess }) {
                     onChange={handleChange}
                     placeholder="Enter email address"
                 />
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <div className="flex justify-center">

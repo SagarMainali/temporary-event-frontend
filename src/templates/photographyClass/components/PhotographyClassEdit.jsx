@@ -169,7 +169,7 @@ export default function PhotographyClassEdit({ data, setEditedContentsPresentOnL
                 title="Have Some Queries? Send it."
                 formSectionId={formSectionId}
                 ticketSectionId={ticketSectionId}
-                organizerEmail={data.belongsToThisEvent.email}
+                // organizerEmail={data.belongsToThisEvent.email}
                 disabled={true}
             />
 

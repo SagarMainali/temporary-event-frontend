@@ -6,7 +6,7 @@ import axios from "@/axiosConfig";
 import { sendEmailUrl } from "@/config/urls";
 import CMSLoader from "@/components/loaders/CMSLoader";
 
-const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section, disabled }) => {
+const Form = ({ title, formSectionId, ticketSectionId, section, disabled }) => {
   console.log("🚀 ~ Form ~ section:", section)
 
   const { image } = section.content;
@@ -35,7 +35,7 @@ const Form = ({ title, formSectionId, ticketSectionId, organizerEmail, section, 
         phone,
         description,
         visitorEmail: email,
-        organizerEmail
+        // organizerEmail
       })
 
       if (response.data.success) {

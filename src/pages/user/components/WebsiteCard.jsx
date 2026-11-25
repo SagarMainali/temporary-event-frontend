@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { formatDate } from "@/utils/utils";
 
+const protocol = import.meta.env.DEV ? 'http' : 'https';
+
 const WebsiteCard = ({ publishedWebsite: { eventName, website } }) => {
     return (
         <Card
@@ -35,7 +37,9 @@ const WebsiteCard = ({ publishedWebsite: { eventName, website } }) => {
                 <Link to={`/events/${website.belongsToThisEvent}/edit-website/${website._id}`} title="Edit site">
                     <Pencil size={20} className=" text-blue-600 transition-all hover:scale-[1.3] duration-200" />
                 </Link>
-                <a href={website.url} target="_blank" rel="noopener noreferrer" title="Open site in a new tab">
+                {/* website.url is not flexible because the url is either dev or prod */}
+                {/* <a href={website.url} target="_blank" rel="noopener noreferrer" title="Open site in a new tab"> */}
+                <a href={`${protocol}://${website.subdomain}.${import.meta.env.VITE_DOMAIN_NAME}`} target="_blank" rel="noopener noreferrer" title="Open site in a new tab">
                     <ExternalLink className=" text-blue-600 transition-all hover:scale-[1.3] duration-200" size={20} />
                 </a>
             </CardFooter>

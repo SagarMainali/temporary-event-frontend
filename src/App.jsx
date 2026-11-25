@@ -14,6 +14,7 @@ import WebsiteEditor from './pages/user/WebsiteEditor';
 import ViewWebsite from './pages/website/ViewWebsite';
 import Leads from "./pages/user/Leads";
 import ServerWakeupLoader from "./pages/user/components/ServerWakeupLoader";
+import ManageTemplates from "./pages/user/ManageTemplates";
 
 function App() {
   const { loading, isLoggedIn } = useLogin();
@@ -61,6 +62,7 @@ function App() {
             <Route path="/events/:eventId/edit-website/:websiteId" element={<WebsiteEditor />} />
 
             <Route path="/websites" element={<ManageWebsites />} />
+            <Route path="/templates" element={<ManageTemplates />} />
             <Route path="/leads" element={<Leads />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<h3>*TO HANDLE SETTINGS*</h3>} />

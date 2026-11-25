@@ -2,8 +2,8 @@
 export const extractSubdomain = () => {
     const domain = import.meta.env.VITE_DOMAIN_NAME;
 
-    const hostname = window.location.hostname;
-    const parts = hostname.split(`.${domain}`);
+    const host = window.location.host;
+    const parts = host.split(`.${domain}`);
 
     return parts[0] !== domain ? parts[0] : null
 };

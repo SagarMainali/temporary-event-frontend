@@ -38,7 +38,7 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
     }
 
     return (
-        <Card className="py-0 w-[300px] rounded-xl shadow-lg gap-0 overflow-hidden hover:shadow-2xl transition-all duration-300">
+        <Card className="py-0 w-[325px] rounded-xl shadow-lg gap-0 overflow-hidden hover:shadow-2xl transition-all duration-300">
             <CardHeader className="flex justify-between items-center p-6 bg-accent mb-auto">
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800">{event.eventName}</h2>
@@ -58,14 +58,14 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                     </DropdownMenuContent>
                 </DropdownMenu>
 
-                {/* triggered via ddmenu item - placed outside of ddmenu because after the click ddmenu closes which automatically closes the modal as well */}
-                <Modal
-                    title="Update Event"
-                    description="Update existing details for your event"
-                    triggerer={<span ref={editModalRef} />}
-                    content={<UpdateEventForm event={event} onUpdateSuccess={onUpdateSuccess} />}
-                />
             </CardHeader>
+            {/* triggered via ddmenu item - placed outside of ddmenu because after the click ddmenu closes which automatically closes the modal as well */}
+            <Modal
+                title="Update Event"
+                description="Update existing details for your event"
+                triggerer={<span ref={editModalRef} />}
+                content={<UpdateEventForm event={event} onUpdateSuccess={onUpdateSuccess} />}
+            />
             <CardContent className="p-6 bg-white h-full cursor-pointer hover:bg-slate-100 hover:scale-[1.03] transition-all duration-300">
                 <Link to={event._id}>
                     <div className="mb-3">
@@ -84,10 +84,10 @@ const EventCard = ({ event, onDeleteSuccess, onUpdateSuccess }) => {
                         <strong className="text-sm text-gray-600">Expected Number of People:</strong>
                         <p className="text-sm text-gray-700">{event.expectedNumberOfPeople}</p>
                     </div>
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <strong className="text-sm text-gray-600">Contact:</strong>
                         <p className="text-sm text-gray-700">{event.phone} | {event.email}</p>
-                    </div>
+                    </div> */}
                 </Link>
             </CardContent>
             {/* <CardFooter className="p-6 bg-accent flex items-center gap-1 font-semibold mt-auto">

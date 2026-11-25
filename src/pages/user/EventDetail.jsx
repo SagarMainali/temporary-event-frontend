@@ -67,10 +67,10 @@ const EventDetail = () => {
               <p className="text-sm text-gray-600 font-medium">Expected Number of People</p>
               <p className="text-sm text-gray-800">{event.expectedNumberOfPeople}</p>
             </div>
-            <div>
+            {/* <div>
               <p className="text-sm text-gray-600 font-medium">Contact</p>
               <p className="text-sm text-gray-800">{event.phone} | {event.email}</p>
-            </div>
+            </div> */}
           </div>
 
           {/* <div>
@@ -84,7 +84,7 @@ const EventDetail = () => {
         <CardFooter className="flex justify-end">
           {
             event.website
-              ? <Button onClick={() => handleEditWebsite(event.website._id)} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">
+              ? <Button onClick={() => handleEditWebsite(event.website)} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">
                 Edit Website
               </Button>
               : <Button onClick={handleCreateWebsite} className="bg-blue-600 text-white hover:bg-blue-700 transition-all">

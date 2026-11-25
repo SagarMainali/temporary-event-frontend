@@ -10,6 +10,7 @@ export const sidebarSections = [
         items: [
             { label: "Events", href: "/events" },
             { label: "Websites", href: "/websites" },
+            { label: "Templates", href: "/templates" },
         ],
     },
     {

@@ -12,11 +12,14 @@ import { toast } from 'sonner';
 import CMSLoader from '@/components/loaders/CMSLoader';
 import { sectionKeys } from '@/templates/photographyClass/constants';
 
+const protocol = import.meta.env.DEV ? 'http' : 'https';
+
 export default function WebsiteEditor() {
   const { websiteId } = useParams();
   const [website, setWebsite] = useState();
   const [loading, setLoading] = useState();
-  const [websiteUrl, setWebsiteUrl] = useState(null);
+  const [subdomain, setSubdomain] = useState(null);
+  // const [websiteUrl, setWebsiteUrl] = useState(null);
   // this is used to mark that the section has been updated and saved on localstorage, which then will be used to render buttons conditionally
   // for eg: show "Save All" button only when one of the sections gets updated
   const [editedContentsPresentOnLocal, setEditedContentsPresentOnLocal] = useState(false);
@@ -28,7 +31,8 @@ export default function WebsiteEditor() {
     try {
       const response = await axios.get(getWebsiteUrl(websiteId));
       setWebsite(response.data.data);
-      setWebsiteUrl(response.data.data.url);
+      // setWebsiteUrl(response.data.data.url);
+      setSubdomain(response.data.data.subdomain)
     } catch (error) {
       console.error("Error fetching website", error);
     }
@@ -93,7 +97,8 @@ export default function WebsiteEditor() {
       const response = await axios.patch(unpublishWebsiteUrl(websiteId));
       if (response.data.success) {
         toast.success("The website has been unpublished");
-        setWebsiteUrl(null);
+        // setWebsiteUrl(null);
+        setSubdomain(null);
       }
     } catch (error) {
       toast.error("Couldn't unpublish this site at the moment. Please try again later.");
@@ -140,10 +145,13 @@ export default function WebsiteEditor() {
           }
         </div>
 
-        {websiteUrl
+        {/* {websiteUrl */}
+        {subdomain
           ?
           <div className='space-x-2'>
-            <Link to={websiteUrl} target="_blank" rel="noopener noreferrer">
+            {/* website.url is not flexible because the url is either dev or prod */}
+            {/* <Link to={websiteUrl} target="_blank" rel="noopener noreferrer"> */}
+            <Link to={`${protocol}://${subdomain}.${import.meta.env.VITE_DOMAIN_NAME}`} target="_blank" rel="noopener noreferrer">
               <Button>View Published Site <Globe className='text-green-400 animate-pulse' /></Button>
             </Link>
             <Alert
@@ -155,14 +163,16 @@ export default function WebsiteEditor() {
           </div>
           :
           <div className='space-x-2'>
-            <Link to={`${import.meta.env.VITE_FRONTEND_BASE_URL}?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
+            {/* <Link to={`${import.meta.env.VITE_FRONTEND_BASE_URL}?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer"> */}
+            <Link to={`/?appMode=website&websiteId=${websiteId}`} target="_blank" rel="noopener noreferrer">
               <Button>Preview Website<Eye /></Button>
             </Link>
             <Modal
               triggerer={<Button>Publish Website <Globe /></Button>}
               title="Pubilsh this website"
               description="Add a suitable subdomain for your website. This subdomain will be used to access your website once it goes live."
-              content={<PublishWebsiteForm websiteId={websiteId} setWebsiteUrl={setWebsiteUrl} />}
+              // content={<PublishWebsiteForm websiteId={websiteId} setWebsiteUrl={setWebsiteUrl} />}
+              content={<PublishWebsiteForm websiteId={websiteId} subdomain={subdomain} setSubdomain={setSubdomain} />}
             />
           </div>
         }

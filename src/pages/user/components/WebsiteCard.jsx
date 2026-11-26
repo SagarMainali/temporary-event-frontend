@@ -4,9 +4,7 @@ import { ExternalLink, Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
-import { formatDate } from "@/utils/utils";
-
-const protocol = import.meta.env.DEV ? 'http' : 'https';
+import { buildWebsiteUrl, formatDate } from "@/utils/utils";
 
 const WebsiteCard = ({ publishedWebsite: { eventName, website } }) => {
     return (
@@ -39,7 +37,7 @@ const WebsiteCard = ({ publishedWebsite: { eventName, website } }) => {
                 </Link>
                 {/* website.url is not flexible because the url is either dev or prod */}
                 {/* <a href={website.url} target="_blank" rel="noopener noreferrer" title="Open site in a new tab"> */}
-                <a href={`${protocol}://${website.subdomain}.${import.meta.env.VITE_DOMAIN_NAME}`} target="_blank" rel="noopener noreferrer" title="Open site in a new tab">
+                <a href={buildWebsiteUrl(website.subdomain)} target="_blank" rel="noopener noreferrer" title="Open site in a new tab">
                     <ExternalLink className=" text-blue-600 transition-all hover:scale-[1.3] duration-200" size={20} />
                 </a>
             </CardFooter>

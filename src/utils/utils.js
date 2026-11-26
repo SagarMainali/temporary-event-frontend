@@ -36,3 +36,13 @@ export function formatDate(date) {
         year: "numeric",
     });
 }
+
+const protocol = import.meta.env.DEV ? "http" : "https";
+const domainName = import.meta.env.VITE_DOMAIN_NAME;
+
+export function buildWebsiteUrl(subdomain) {
+  if (!subdomain) return "#";
+  return domainName
+    ? `${protocol}://${subdomain}.${domainName}`
+    : `${protocol}://${subdomain}`;
+}

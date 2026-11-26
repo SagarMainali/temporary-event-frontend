@@ -15,6 +15,7 @@ import ViewWebsite from './pages/website/ViewWebsite';
 import Leads from "./pages/user/Leads";
 import ServerWakeupLoader from "./pages/user/components/ServerWakeupLoader";
 import ManageTemplates from "./pages/user/ManageTemplates";
+import Dashboard from "./pages/user/Dashboard";
 
 function App() {
   const { loading, isLoggedIn } = useLogin();
@@ -54,7 +55,7 @@ function App() {
           <Route
             element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
           >
-            <Route path="/dashboard" element={<h3>*DASHBOARD*</h3>} />
+            <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/events" element={<ManageEvents />} />
             <Route path="/events/:eventId" element={<EventDetail />} />

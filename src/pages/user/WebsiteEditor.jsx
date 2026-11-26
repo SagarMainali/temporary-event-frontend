@@ -11,8 +11,7 @@ import { deleteWebsiteUrl, getWebsiteUrl, saveWebsiteUrl, unpublishWebsiteUrl } 
 import { toast } from 'sonner';
 import CMSLoader from '@/components/loaders/CMSLoader';
 import { sectionKeys } from '@/templates/photographyClass/constants';
-
-const protocol = import.meta.env.DEV ? 'http' : 'https';
+import { buildWebsiteUrl } from '@/utils/utils';
 
 export default function WebsiteEditor() {
   const { websiteId } = useParams();
@@ -151,7 +150,7 @@ export default function WebsiteEditor() {
           <div className='space-x-2'>
             {/* website.url is not flexible because the url is either dev or prod */}
             {/* <Link to={websiteUrl} target="_blank" rel="noopener noreferrer"> */}
-            <Link to={`${protocol}://${subdomain}.${import.meta.env.VITE_DOMAIN_NAME}`} target="_blank" rel="noopener noreferrer">
+            <Link to={buildWebsiteUrl(subdomain)} target="_blank" rel="noopener noreferrer">
               <Button>View Published Site <Globe className='text-green-400 animate-pulse' /></Button>
             </Link>
             <Alert

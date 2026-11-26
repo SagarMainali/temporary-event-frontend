@@ -6,8 +6,7 @@ import axios from "@/axiosConfig";
 import { toast } from 'sonner';
 import { X } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-
-const protocol = import.meta.env.DEV ? 'http' : 'https';
+import { buildWebsiteUrl } from '@/utils/utils';
 
 // export default function PublishWebsiteForm({ closeModal, websiteId, setWebsiteUrl }) {
 export default function PublishWebsiteForm({ closeModal, websiteId, setSubdomain }) {
@@ -36,7 +35,7 @@ export default function PublishWebsiteForm({ closeModal, websiteId, setSubdomain
                     <div className='flex gap-1 items-center'>
                         <p>Successfully published website</p>
                         {/* <a href={publishedUrl} target="_blank" rel="noopener noreferrer" className='text-blue-400 underline'> */}
-                        <a href={`${protocol}://${subdomain}.${import.meta.env.VITE_DOMAIN_NAME}`} target="_blank" rel="noopener noreferrer" className='text-blue-400 underline'>
+                        <a href={buildWebsiteUrl(subdomain)} target="_blank" rel="noopener noreferrer" className='text-blue-400 underline'>
                             View Website
                         </a>
                     </div>,
